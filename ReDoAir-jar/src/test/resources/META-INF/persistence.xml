@@ -1,0 +1,55 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!--
+    Due to JPA's reluctance to allow more flexible persistence.xml configurations, (which by the way is
+    unspeakably lame) we are forced to duplicate the entire context for the tests, strip out the managed stuff,
+    and manually list all entity classes.
+    Check with teacher for details on this subject, or wait for the wonderful world of Spring.
+
+    Alternative testing strategies (possibly in combination):
+        - Use commit strategy for tests
+                + Eyeball asserts!
+                + Almost transparent schema updates (by using hbm2ddl.auto = create)
+                - Slow
+                - Need to reload Database each time (using DBUnit or other frameworks)
+        - Use rollback instead of commit at end of tests
+                + No need to reload database every time (using something like DBUnit)
+                - No eyeball asserts
+        - Use in-memory db strategy for unit tests
+                + Fast
+                - Not as close to real environment
+                - No eyeball asserts
+        - Use in-container tests (such as with Arquillian)
+                + Less hassle once (if ever) you figure out how to configure it
+                - Tests rely on app server (maybe not a real issue if also adding functional tests such as with Selenium)
+                - Slow
+                - No mocking/stubbing
+                - No breakpoints (runs in separate VM)
+        - Use mocks/stubs
+                + Fast
+                + The way of TDD
+                + True unit tests (less integration)
+
+    The choice made here is:
+        - Commit strategy using DBUnit and actual database (mysql).
+        - Prefer mocks/stubs for non-persistence layers
+        ==> Maximize true unit tests, mocks and stubs, allow eyeball assertions on database.
+
+    When you start with your project, you decide which strategy is best for your situation.
+-->
+<persistence xmlns="http://xmlns.jcp.org/xml/ns/persistence"
+             xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+             xsi:schemaLocation="http://xmlns.jcp.org/xml/ns/persistence http://xmlns.jcp.org/xml/ns/persistence/persistence_2_1.xsd"
+             version="2.1">
+
+    <persistence-unit name="MyTestPersistenceUnit" transaction-type="RESOURCE_LOCAL">
+        <provider>org.hibernate.jpa.HibernatePersistenceProvider</provider>
+
+        <class>com.realdolmen.redoair.Flight</class>
+
+        <properties>
+            <property name="hibernate.dialect" value="org.hibernate.dialect.MySQL5InnoDBDialect" />
+            <property name="hibernate.hbm2ddl.auto" value="create" />
+        </properties>
+    </persistence-unit>
+</persistence>
