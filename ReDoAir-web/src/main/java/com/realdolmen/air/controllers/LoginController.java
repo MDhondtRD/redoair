@@ -1,4 +1,4 @@
-package com.realdolmen.air;
+package com.realdolmen.air.controllers;
 
 import com.realdolmen.redoair.ejb.UserRepository;
 import com.realdolmen.redoair.entities.User;
