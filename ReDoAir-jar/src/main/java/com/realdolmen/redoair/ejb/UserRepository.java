@@ -39,7 +39,13 @@ public class UserRepository implements UserRepositoryInterface {
 
     @Override
     public User getUserByEmail(String email) {
-        return em.createQuery("SELECT u FROM User u WHERE u.email = :email", User.class).setParameter("email", email).getSingleResult();
+        List results = em.createQuery("SELECT u FROM User u WHERE u.email = :email", User.class).setParameter("email", email).getResultList();
+        if(!results.isEmpty()) {
+            return (User)results.get(0);
+        }
+        else {
+            return null;
+        }
     }
 
     @Override
@@ -50,6 +56,24 @@ public class UserRepository implements UserRepositoryInterface {
     @Override
     public void deleteUser(User user) {
         em.remove(user);
+    }
+
+    @Override
+    public boolean validateUser(User userToCheck) {
+        String emailOrUsername = userToCheck.getEmail();
+        User user;
+        if(emailOrUsername.contains("@")) { //checks whether it's a username or email address
+            user = getUserByEmail(emailOrUsername);
+        }
+        else {
+            user = getUserByUsername(emailOrUsername);
+        }
+        if(user == null) {//The email-address entered is invalid or the user does not exist in the database
+            return false;
+        }
+        else {
+            return userToCheck.getPassword().equals(user.getPassword());
+        }
     }
 
     public EntityManager getEntityManager(){

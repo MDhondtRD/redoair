@@ -16,5 +16,5 @@ public interface UserRepositoryInterface {
     public User getUserByEmail(String email);
     public void createUser(User user);
     public void deleteUser(User user);
-
+    public boolean validateUser(User user);
 }
