@@ -123,8 +123,14 @@ public class User implements Serializable{
         this.type = type;
     }
 
+    public String getEmail() {
+        return email;
+    }
 
-    /**
+    public void setEmail(String email) {
+        this.email = email;
+    }
+/**
      * METHODS
      */
 
