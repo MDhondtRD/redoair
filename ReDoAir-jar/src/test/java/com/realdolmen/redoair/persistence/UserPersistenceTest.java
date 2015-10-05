@@ -25,7 +25,7 @@ public class UserPersistenceTest extends DataPersistenceTest{
         User u2 = new User("MDhondt1", "123", UserType.CUSTOMER, "maarten.dhondt@realdolmen.com");
         User u3 = new User("MDhondt2", "123", UserType.EMPLOYEE, "maarten.dhondt@realdolmen.com");
         User u4 = new User("MDhondt3", "123", UserType.PARTNER, "maarten.dhondt@realdolmen.com");
-        User u5 = new User("MDhondt4", "Maarten", "Dhondt", "123", new Address("Croix ou Pile 1", "Saint-Sauveur", "7912", "Belgium"), UserType.EMPLOYEE,"maarten.dhondt@realdolmen.com");
+        User u5 = new User("MDhondt4", "Maarten", "Dhondt", "123", new Address("Croix ou Pile 1", null, "Saint-Sauveur", "7912", "Belgium"), UserType.EMPLOYEE,"maarten.dhondt@realdolmen.com", null);
     }
 
     @Test

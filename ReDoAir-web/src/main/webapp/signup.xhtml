@@ -11,19 +11,32 @@
     </ui:define>
     <ui:define name="pageContent">
         <h:form>
-            First name<h:inputText value = "#{loginController.user.name}"></h:inputText>
-            Last name<h:inputText value = "#{loginController.user.surName}"></h:inputText>
-            Email<h:inputText value = "#{loginController.user.surName}"></h:inputText>
-            Password<h:inputSecret value = "#{loginController.user.password}"></h:inputSecret>
-            Re-enter Password<h:inputText></h:inputText>
-            Birthdate<h:inputText value = "#{loginController.user.birthDate}"></h:inputText>
-            Street1<h:inputText value = "#{loginController.user.address.street1}"></h:inputText>
-            Street2<h:inputText value = "#{loginController.user.address.street2}"></h:inputText>
-            City<h:inputText value = "#{loginController.user.address.city}"></h:inputText>
-            Postal code<h:inputText value = "#{loginController.user.address.postalCode}"></h:inputText>
-            Country<h:selectOneListbox value = "#{loginController.user.address.country}"></h:selectOneListbox>
+            <h:outputLabel value="First name:" />
+            <h:inputText value = "#{signUpController.user.name}" id="name"></h:inputText>
+            <h:outputLabel value="Last name:" />
+            <h:inputText value = "#{signUpController.user.surname}" id="surname"></h:inputText>
+            <h:outputLabel value="Email:" />
+            <h:inputText value = "#{signUpController.user.email}" id="email"></h:inputText>
+            <h:outputLabel value="Username"/>
+            <h:inputText value = "#{signUpController.user.username}" id="username"></h:inputText>
+            <h:outputLabel value="Password:" />
+            <h:inputSecret value = "#{signUpController.user.password}" id="password"></h:inputSecret>
+            <h:outputLabel value="Re-enter Password:" />
+            <h:inputSecret></h:inputSecret>
+<!--            <h:outputLabel value="Date of Birth:" />
+            <h:inputText value = "#{signUpController.user.dateOfBirth}"></h:inputText>-->
+            <h:outputLabel value="Street1:" />
+            <h:inputText value = "#{signUpController.address.street1}" id="street1"></h:inputText>
+            <h:outputLabel value="Street2:" />
+            <h:inputText value = "#{signUpController.address.street2}" id="street2"></h:inputText>
+            <h:outputLabel value="City:" />
+            <h:inputText value = "#{signUpController.address.city}" id="city"></h:inputText>
+            <h:outputLabel value="Postal Code:" />
+            <h:inputText value = "#{signUpController.address.postalCode}" id="postalCode"></h:inputText>
+            <h:outputLabel value="Country:" />
+            <h:selectOneListbox value = "#{signUpController.address.country}" id="country"></h:selectOneListbox>
             <h:button value="Cancel"/>
-            <h:commandButton type="submit" value="Sign Up"/>
+            <h:commandButton value="Sign Up" action = "#{signUpController.createUser()}"/>
         </h:form>
     </ui:define>
 </ui:composition>

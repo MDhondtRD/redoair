@@ -2,6 +2,9 @@ package com.realdolmen.redoair.entities;
 
 import javax.persistence.*;
 import java.io.Serializable;
+import java.time.LocalDate;
+import java.time.ZoneId;
+import java.util.Date;
 
 @Entity
 public class User implements Serializable{
@@ -11,15 +14,13 @@ public class User implements Serializable{
      */
 
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
-
 
 
     /**
      * ATTRIBUTES
      */
-
     @Column(nullable = false, unique = true)
     private String username;
 
@@ -35,10 +36,13 @@ public class User implements Serializable{
 
     @Enumerated(EnumType.STRING)
     @Column(nullable = false)
-    private UserType type;
+    private UserType type = UserType.CUSTOMER;
 
     @Column(nullable = false, unique = true)
     private String email;
+
+    @Temporal(TemporalType.DATE)
+    private Date dateOfBirth;
 
 
     /**
@@ -56,7 +60,7 @@ public class User implements Serializable{
         this.email = email;
     }
 
-    public User(String username, String name, String surname, String password, Address address, UserType type, String email) {
+    public User(String username, String name, String surname, String password, Address address, UserType type, String email, Date dateOfBirth) {
         this.username = username;
         this.name = name;
         this.surname = surname;
@@ -64,6 +68,7 @@ public class User implements Serializable{
         this.address = address;
         this.type = type;
         this.email = email;
+        this.dateOfBirth = dateOfBirth;
     }
 
 
@@ -130,6 +135,15 @@ public class User implements Serializable{
     public void setEmail(String email) {
         this.email = email;
     }
+
+    public Date getDateOfBirth() {
+        return dateOfBirth;
+    }
+
+    public void setDateOfBirth(LocalDate date) {
+        this.dateOfBirth= Date.from(date.atStartOfDay(ZoneId.systemDefault()).toInstant());
+    }
+
 /**
      * METHODS
      */
