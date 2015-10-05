@@ -5,10 +5,39 @@ import javax.persistence.Embeddable;
 @Embeddable
 public class Address {
 
+    /**
+     * ATTRIBUTES
+     */
+
     private String street;
+
     private String city;
+
     private String zipcode;
+
     private String country;
+
+
+    /**
+     * CONSTRUCTORS
+     */
+
+    public Address() {
+        // required no-argument constructor
+    }
+
+    public Address(String street, String city, String zipcode, String country) {
+        this.street = street;
+        this.city = city;
+        this.zipcode = zipcode;
+        this.country = country;
+    }
+
+
+
+    /**
+     * GETTERS & SETTERS
+     */
 
     public String getStreet() {
         return street;
@@ -42,15 +71,10 @@ public class Address {
         this.country = country;
     }
 
-    public Address(String street, String city, String zipcode, String country) {
 
-        this.street = street;
-        this.city = city;
-        this.zipcode = zipcode;
-        this.country = country;
-    }
+    /**
+     * METHODS
+     */
 
-    public Address() {
 
-    }
 }

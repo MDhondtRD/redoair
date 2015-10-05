@@ -5,26 +5,68 @@ import javax.persistence.*;
 @Entity
 public class User {
 
+    /**
+     * ID
+     */
+
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
-    Integer id;
+    private Integer id;
+
+
+
+    /**
+     * ATTRIBUTES
+     */
 
     @Column(nullable = false)
-    String username;
+    private String username;
 
-    String name;
+    private String name;
 
-    String surname;
+    private String surname;
 
     @Column(nullable = false)
-    String password;
+    private String password;
 
     @Embedded
-    Address address;
+    private Address address;
 
     @Enumerated(EnumType.STRING)
     @Column(nullable = false)
-    UserType type;
+    private UserType type;
+
+    private String email;
+
+
+    /**
+     * CONSTRUCTORS
+     */
+
+    protected User() {
+        // required no-argument constructor
+    }
+
+    protected User(String username, String password, UserType type) {
+        this.username = username;
+        this.password = password;
+        this.type = type;
+    }
+
+    protected User(String username, String name, String surname, String password, Address address, UserType type, String email) {
+        this.username = username;
+        this.name = name;
+        this.surname = surname;
+        this.password = password;
+        this.address = address;
+        this.type = type;
+        this.email = email;
+    }
+
+
+    /**
+     * GETTERS & SETTERS
+     */
 
     public Integer getId() {
         return id;
@@ -78,24 +120,10 @@ public class User {
         this.type = type;
     }
 
-    public User(String username, String name, String surname, String password, Address address, UserType type) {
 
-        this.username = username;
-        this.name = name;
-        this.surname = surname;
-        this.password = password;
-        this.address = address;
-        this.type = type;
-    }
+    /**
+     * METHODS
+     */
 
-    public User(String username, String password, UserType type) {
 
-        this.username = username;
-        this.password = password;
-        this.type = type;
-    }
-
-    public User() {
-
-    }
 }
