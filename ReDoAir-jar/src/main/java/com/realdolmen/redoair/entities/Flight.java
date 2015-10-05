@@ -1,13 +1,10 @@
-package com.realdolmen.redoair;
+package com.realdolmen.redoair.entities;
 
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 
-/**
- * Created by MDNAX30 on 2/10/2015.
- */
 @Entity
 public class Flight {
 
