@@ -10,16 +10,16 @@ import java.util.Set;
 public interface FlightRepositoryInterface {
 
     public List<Flight> getAllFlights();
-    public List<Flight> getAllFlightsByDestinationCity();
-    public List<Flight> getAllFlightsByDepartureCity();
-    public List<Flight> getAllFutureFlightsByDestinationCity();
-    public List<Flight> getAllFutureFlightsByDepartureCity();
+    public List<Flight> getAllFlightsByDestinationCity(String city);
+    public List<Flight> getAllFlightsByDepartureCity(String city);
+    public List<Flight> getAllFutureFlightsByDestinationCity(String city);
+    public List<Flight> getAllFutureFlightsByDepartureCity(String city);
     public Set<String> getAllDestinationCities();
     public Set<String> getAllDepartureCities();
     public Set<String> getAllDestinationCitiesServedByFutureFlights();
-    public Set<String> getAllDepartureCitiesServedByFurtureFlights();
-    public Flight getFlightById();
-    public List<Flight> getFlightsByCode();
+    public Set<String> getAllDepartureCitiesServedByFutureFlights();
+    public Flight getFlightById(Integer id);
+    public List<Flight> getFlightsByCode(String code);
     public void createFlight(Flight flight);
     public void deleteFlight(Flight flight);
 

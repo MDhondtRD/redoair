@@ -38,7 +38,7 @@ public class Flight implements Serializable {
     private int availableSeats;
 
     @Column(nullable = false)
-    private float price;
+    private double price;
 
 
     /**
@@ -49,7 +49,7 @@ public class Flight implements Serializable {
         // required no-argument constructor
     }
 
-    public Flight(String code, String departureCity, String destinationCity, Date departure, int availableSeats, float price) {
+    public Flight(String code, String departureCity, String destinationCity, Date departure, int availableSeats, double price) {
         this.setCode(code);
         this.setDepartureCity(departureCity);
         this.setDestinationCity(destinationCity);
@@ -118,11 +118,11 @@ public class Flight implements Serializable {
         this.availableSeats = availableSeats;
     }
 
-    public float getPrice() {
+    public double getPrice() {
         return price;
     }
 
-    public void setPrice(float price) {
+    public void setPrice(double price) {
         if (price < 0.0)
             throw new IllegalArgumentException("A flight should have a price >= 0");
         this.price = BigDecimal.valueOf(price).setScale(2,BigDecimal.ROUND_HALF_UP).floatValue();

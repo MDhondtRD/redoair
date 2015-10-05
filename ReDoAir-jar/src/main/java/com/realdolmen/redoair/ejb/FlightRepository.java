@@ -4,6 +4,9 @@ import com.realdolmen.redoair.entities.Flight;
 
 import javax.ejb.LocalBean;
 import javax.ejb.Stateless;
+import javax.persistence.EntityManager;
+import javax.persistence.PersistenceContext;
+import javax.persistence.TemporalType;
 import java.util.List;
 import java.util.Set;
 
@@ -11,68 +14,83 @@ import java.util.Set;
 @LocalBean
 public class FlightRepository implements FlightRepositoryInterface {
 
+    @PersistenceContext
+    private EntityManager em;
+
     @Override
     public List<Flight> getAllFlights() {
-        return null;
+        return em.createQuery("SELECT f FROM Flight f", Flight.class).getResultList();
     }
 
     @Override
-    public List<Flight> getAllFlightsByDestinationCity() {
-        return null;
+    public List<Flight> getAllFlightsByDestinationCity(String city) {
+        return em.createQuery("SELECT f FROM Flight f WHERE f.destinationCity = :city", Flight.class)
+                .setParameter("city", city).getResultList();
     }
 
     @Override
-    public List<Flight> getAllFlightsByDepartureCity() {
-        return null;
+    public List<Flight> getAllFlightsByDepartureCity(String city) {
+        return em.createQuery("SELECT f FROM Flight f WHERE f.departureCity = :city", Flight.class)
+                .setParameter("city", city).getResultList();
     }
 
     @Override
-    public List<Flight> getAllFutureFlightsByDestinationCity() {
-        return null;
+    public List<Flight> getAllFutureFlightsByDestinationCity(String city) {
+        return em.createQuery("SELECT f FROM Flight f WHERE f.destinationCity = :city AND f.departure > CURRENT_TIMESTAMP", Flight.class)
+                .setParameter("city", city).getResultList();
     }
 
     @Override
-    public List<Flight> getAllFutureFlightsByDepartureCity() {
-        return null;
+    public List<Flight> getAllFutureFlightsByDepartureCity(String city) {
+        return em.createQuery("SELECT f FROM Flight f WHERE f.departureCity = :city AND f.departure > CURRENT_TIMESTAMP", Flight.class)
+                .setParameter("city", city).getResultList();
     }
 
     @Override
     public Set<String> getAllDestinationCities() {
-        return null;
+        return (Set<String>) em.createQuery("SELECT f.destinationCity FROM Flight f", String.class).getResultList();
     }
 
     @Override
     public Set<String> getAllDepartureCities() {
-        return null;
+        return (Set<String>) em.createQuery("SELECT f.departureCity FROM Flight f", String.class).getResultList();
     }
 
     @Override
     public Set<String> getAllDestinationCitiesServedByFutureFlights() {
-        return null;
+        return (Set<String>) em.createQuery("SELECT f.destinationCity FROM Flight f WHERE f.departure > CURRENT_TIMESTAMP", String.class).getResultList();
     }
 
     @Override
-    public Set<String> getAllDepartureCitiesServedByFurtureFlights() {
-        return null;
+    public Set<String> getAllDepartureCitiesServedByFutureFlights() {
+        return (Set<String>) em.createQuery("SELECT f.departureCity FROM Flight f WHERE f.departure > CURRENT_TIMESTAMP", String.class).getResultList();
     }
 
     @Override
-    public Flight getFlightById() {
-        return null;
+    public Flight getFlightById(Integer id) {
+        return em.find(Flight.class, id);
     }
 
     @Override
-    public List<Flight> getFlightsByCode() {
-        return null;
+    public List<Flight> getFlightsByCode(String code) {
+        return em.createQuery("SELECT f FROM Flight f WHERE f.code = :code", Flight.class).setParameter("code", code).getResultList();
     }
 
     @Override
     public void createFlight(Flight flight) {
-
+        em.persist(flight);
     }
 
     @Override
     public void deleteFlight(Flight flight) {
+        em.remove(flight);
+    }
 
+    public EntityManager getEntityManager(){
+        return em;
+    }
+
+    public void setEntityManager(EntityManager em){
+        this.em = em;
     }
 }
