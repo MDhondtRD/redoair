@@ -1,9 +1,10 @@
 package com.realdolmen.redoair.entities;
 
 import javax.persistence.*;
+import java.io.Serializable;
 
 @Entity
-public class User {
+public class User implements Serializable{
 
     /**
      * ID
@@ -19,7 +20,7 @@ public class User {
      * ATTRIBUTES
      */
 
-    @Column(nullable = false)
+    @Column(nullable = false, unique = true)
     private String username;
 
     private String name;
@@ -36,6 +37,7 @@ public class User {
     @Column(nullable = false)
     private UserType type;
 
+    @Column(nullable = false, unique = true)
     private String email;
 
 
@@ -43,17 +45,18 @@ public class User {
      * CONSTRUCTORS
      */
 
-    protected User() {
+    public User() {
         // required no-argument constructor
     }
 
-    protected User(String username, String password, UserType type) {
+    public User(String username, String password, UserType type, String email) {
         this.username = username;
         this.password = password;
         this.type = type;
+        this.email = email;
     }
 
-    protected User(String username, String name, String surname, String password, Address address, UserType type, String email) {
+    public User(String username, String name, String surname, String password, Address address, UserType type, String email) {
         this.username = username;
         this.name = name;
         this.surname = surname;
