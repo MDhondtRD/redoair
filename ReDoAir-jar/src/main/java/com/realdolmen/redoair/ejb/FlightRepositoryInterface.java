@@ -10,6 +10,7 @@ import java.util.Set;
 public interface FlightRepositoryInterface {
 
     public List<Flight> getAllFlights();
+    public List<Flight> getAllFutureFlights();
     public List<Flight> getAllFlightsByDestinationCity(String city);
     public List<Flight> getAllFlightsByDepartureCity(String city);
     public List<Flight> getAllFutureFlightsByDestinationCity(String city);
@@ -19,7 +20,7 @@ public interface FlightRepositoryInterface {
     public Set<String> getAllDestinationCitiesServedByFutureFlights();
     public Set<String> getAllDepartureCitiesServedByFutureFlights();
     public Flight getFlightById(Integer id);
-    public List<Flight> getFlightsByCode(String code);
+    public List<Flight> getAllFlightsByCode(String code);
     public void createFlight(Flight flight);
     public void deleteFlight(Flight flight);
 

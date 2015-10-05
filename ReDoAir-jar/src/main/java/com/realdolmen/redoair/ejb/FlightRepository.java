@@ -7,6 +7,7 @@ import javax.ejb.Stateless;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 import javax.persistence.TemporalType;
+import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 
@@ -20,6 +21,11 @@ public class FlightRepository implements FlightRepositoryInterface {
     @Override
     public List<Flight> getAllFlights() {
         return em.createQuery("SELECT f FROM Flight f", Flight.class).getResultList();
+    }
+
+    @Override
+    public List<Flight> getAllFutureFlights() {
+        return em.createQuery("SELECT f FROM Flight f WHERE f.departure > current_timestamp").getResultList();
     }
 
     @Override
@@ -48,22 +54,26 @@ public class FlightRepository implements FlightRepositoryInterface {
 
     @Override
     public Set<String> getAllDestinationCities() {
-        return (Set<String>) em.createQuery("SELECT f.destinationCity FROM Flight f", String.class).getResultList();
+        List<String> list = em.createQuery("SELECT f.destinationCity FROM Flight f", String.class).getResultList();
+        return new HashSet<String>(list);
     }
 
     @Override
     public Set<String> getAllDepartureCities() {
-        return (Set<String>) em.createQuery("SELECT f.departureCity FROM Flight f", String.class).getResultList();
+        List<String> list = em.createQuery("SELECT f.departureCity FROM Flight f", String.class).getResultList();
+        return new HashSet<String>(list);
     }
 
     @Override
     public Set<String> getAllDestinationCitiesServedByFutureFlights() {
-        return (Set<String>) em.createQuery("SELECT f.destinationCity FROM Flight f WHERE f.departure > CURRENT_TIMESTAMP", String.class).getResultList();
+        List<String> list = em.createQuery("SELECT f.destinationCity FROM Flight f WHERE f.departure > CURRENT_TIMESTAMP", String.class).getResultList();
+        return new HashSet<String>(list);
     }
 
     @Override
     public Set<String> getAllDepartureCitiesServedByFutureFlights() {
-        return (Set<String>) em.createQuery("SELECT f.departureCity FROM Flight f WHERE f.departure > CURRENT_TIMESTAMP", String.class).getResultList();
+        List<String> list = em.createQuery("SELECT f.departureCity FROM Flight f WHERE f.departure > CURRENT_TIMESTAMP", String.class).getResultList();
+        return new HashSet<String>(list);
     }
 
     @Override
@@ -72,7 +82,7 @@ public class FlightRepository implements FlightRepositoryInterface {
     }
 
     @Override
-    public List<Flight> getFlightsByCode(String code) {
+    public List<Flight> getAllFlightsByCode(String code) {
         return em.createQuery("SELECT f FROM Flight f WHERE f.code = :code", Flight.class).setParameter("code", code).getResultList();
     }
 
