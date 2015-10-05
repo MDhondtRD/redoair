@@ -41,6 +41,7 @@ public class Flight implements Serializable {
     private double price;
 
 
+
     /**
      * CONSTRUCTORS
      */

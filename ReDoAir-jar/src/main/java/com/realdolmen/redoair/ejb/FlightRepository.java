@@ -8,6 +8,7 @@ import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 import javax.persistence.TemporalType;
 import java.util.HashSet;
+import java.util.Iterator;
 import java.util.List;
 import java.util.Set;
 
@@ -96,11 +97,32 @@ public class FlightRepository implements FlightRepositoryInterface {
         em.remove(flight);
     }
 
+    @Override
+    public Set<String> getAllCodesFromPartner(String username){
+        List<String> list = em.createQuery("SELECT f.code FROM Flight f", String.class).getResultList();
+        Set<String> codes =  new HashSet<String>(list);
+        String airlineCode = getAirlineCodeFromUsername(username);
+        Set<String> partnerCodes = new HashSet<String>();
+        for (String code : codes)
+            if (code.contains(airlineCode))
+                partnerCodes.add(code);
+        return partnerCodes;
+    }
+
     public EntityManager getEntityManager(){
         return em;
     }
 
     public void setEntityManager(EntityManager em){
         this.em = em;
+    }
+
+
+    private String getAirlineCodeFromUsername(String username){
+        String airlineCode = "";
+        for (int i = 0; i < username.length(); i++)
+            if(Character.isUpperCase(username.charAt(i)))
+                airlineCode += username.charAt(i);
+        return airlineCode;
     }
 }

@@ -23,5 +23,6 @@ public interface FlightRepositoryInterface {
     public List<Flight> getAllFlightsByCode(String code);
     public void createFlight(Flight flight);
     public void deleteFlight(Flight flight);
+    public Set<String> getAllCodesFromPartner(String username);
 
 }
