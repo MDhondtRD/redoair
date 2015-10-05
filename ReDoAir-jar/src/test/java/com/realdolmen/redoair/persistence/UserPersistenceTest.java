@@ -42,6 +42,24 @@ public class UserPersistenceTest extends DataPersistenceTest{
         assertNotNull(u3.getId());
     }
 
+    @Test
+    public void usersCanBeRemoved(){
+        assertEquals(1, ur.getAllUsers().size());
+        User u1 = new User("MDhondt1", "123", UserType.CUSTOMER, "maarten.dhondt1@realdolmen.com");
+        User u2 = new User("MDhondt2", "123", UserType.EMPLOYEE, "maarten.dhondt2@realdolmen.com");
+        User u3 = new User("MDhondt3", "123", UserType.PARTNER, "maarten.dhondt3@realdolmen.com");
+        ur.createUser(u1); ur.createUser(u2); ur.createUser(u3); ur.getEntityManager().flush();
+        assertEquals(4, ur.getAllUsers().size());
+        ur.deleteUser(u1);
+        ur.deleteUser(u2);
+        ur.getEntityManager().flush();
+        assertEquals(2, ur.getAllUsers().size());
+        ur.deleteUser(u3);
+        ur.deleteUser(ur.getUserByUsername("MDhondt"));
+        ur.getEntityManager().flush();
+        assertEquals(0, ur.getAllUsers().size());
+    }
+
     @Test(expected = PersistenceException.class)
     public void userNameMustBeUnique1(){
         // database already has a user "MDhondt"
