@@ -7,11 +7,7 @@ import org.junit.Test;
 import javax.persistence.PersistenceException;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
-import java.time.LocalTime;
 
-/**
- * Created by MDNAX30 on 6/10/2015.
- */
 public class TripPersistenceTest extends DataPersistenceTest {
 
     @Test

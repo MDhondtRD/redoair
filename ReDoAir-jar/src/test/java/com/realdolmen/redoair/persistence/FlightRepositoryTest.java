@@ -11,9 +11,6 @@ import java.time.LocalDateTime;
 import java.time.LocalTime;
 import java.util.Date;
 
-/**
- * Created by JDOAX80 on 6/10/2015.
- */
 public class FlightRepositoryTest extends DataPersistenceTest {
 
     private FlightRepository repo;
