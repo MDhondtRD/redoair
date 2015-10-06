@@ -3,6 +3,7 @@ package com.realdolmen.redoair.entities;
 import javax.persistence.*;
 import java.time.LocalDateTime;
 import java.time.ZoneId;
+import java.time.ZoneOffset;
 import java.time.temporal.ChronoUnit;
 import java.util.Date;
 
@@ -88,9 +89,12 @@ public class Trip {
     }
 
     public void setReturnDate(LocalDateTime returnDate) {
-        if(returnDate != null)
+        if(returnDate != null) {
+            if (Date.from(returnDate.atZone(ZoneId.systemDefault()).toInstant()).toInstant().truncatedTo(ChronoUnit.DAYS)
+                    .isBefore(departureDate.toInstant().truncatedTo(ChronoUnit.DAYS)))
+                throw new IllegalArgumentException("Return date should not be before departure date.");
             this.returnDate = Date.from(returnDate.atZone(ZoneId.systemDefault()).toInstant());
-        else
+        } else
             this.returnDate = null; //Will throw a persistence exception if trying to persist a flight with a null as departure value.
     }
 
