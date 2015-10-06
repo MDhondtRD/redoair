@@ -2,6 +2,6 @@
 
     <user id="1" username="MDhondt" password="a665a45920422f9d417e4867efdc4fb8a04a1f3fff1fa07e998e86f7f7a27ae3" type="CUSTOMER" email="maarten.dhondt@skynet.be"/>
 
-    <flight id="1" availableSeats="10" code="MD1991" departure="2015-10-05 14:00:00" departureCity="Brussels" destinationCity="New York" price="123.45" />
+    <flight id="1" availableSeats="10" code="MD1991" departure="2015-10-05 14:00:00" departureCity="Brussels" destinationCity="New York" price="123.45" endUserPrice = "500" lengthOfFlight = "170.5"/>
 
 </dataset>

@@ -3,7 +3,12 @@ package com.realdolmen.redoair.entities;
 import javax.persistence.*;
 import java.io.Serializable;
 import java.math.BigDecimal;
+import java.time.LocalDate;
+import java.time.LocalDateTime;
+import java.time.ZoneId;
+import java.util.ArrayList;
 import java.util.Date;
+import java.util.List;
 
 @Entity
 public class Flight implements Serializable {
@@ -40,6 +45,16 @@ public class Flight implements Serializable {
     @Column(nullable = false)
     private double price;
 
+    private double lengthOfFlight;
+
+    private double endUserPrice;
+
+    @ElementCollection(fetch = FetchType.EAGER)
+    @Column(name = "discounts")
+    private List<Discount> discounts = new ArrayList<>();
+
+    @Transient
+    private String airlineCompany;
 
 
     /**
@@ -48,9 +63,10 @@ public class Flight implements Serializable {
 
     public Flight() {
         // required no-argument constructor
+        // used by Hibernate
     }
 
-    public Flight(String code, String departureCity, String destinationCity, Date departure, int availableSeats, double price) {
+    public Flight(String code, String departureCity, String destinationCity, LocalDateTime departure, int availableSeats, double price) {
         this.setCode(code);
         this.setDepartureCity(departureCity);
         this.setDestinationCity(destinationCity);
@@ -105,8 +121,13 @@ public class Flight implements Serializable {
         return departure;
     }
 
-    public void setDeparture(Date departure) {
-        this.departure = departure;
+    public void setDeparture(LocalDateTime departure) {
+        if(departure != null) {
+            this.departure = Date.from(departure.atZone(ZoneId.systemDefault()).toInstant());
+        }
+        else {
+            this.departure = null; //Will throw a persistence exception if trying to persist a flight with a null as departure value.
+        }
     }
 
     public int getAvailableSeats() {
@@ -127,8 +148,40 @@ public class Flight implements Serializable {
         if (price < 0.0)
             throw new IllegalArgumentException("A flight should have a price >= 0");
         this.price = BigDecimal.valueOf(price).setScale(2,BigDecimal.ROUND_HALF_UP).floatValue();
+        this.endUserPrice = this.price * 1.05;
     }
 
+    public double getLengthOfFlight() {
+        return lengthOfFlight;
+    }
+
+    public void setLengthOfFlight(double lengthOfFlight) {
+        this.lengthOfFlight = lengthOfFlight;
+    }
+
+    public double getEndUserPrice() {
+        return endUserPrice;
+    }
+
+    public void setEndUserPrice(double endUserPrice) {
+        this.endUserPrice = endUserPrice;
+    }
+
+    public List<Discount> getDiscounts() {
+        return discounts;
+    }
+
+    public void setDiscounts(List<Discount> discounts) {
+        this.discounts = discounts;
+    }
+
+    public String getAirlineCompany() {
+        return airlineCompany;
+    }
+
+    public void setAirlineCompany(String airlineCompany) {
+        this.airlineCompany = airlineCompany;
+    }
 
     /**
      * METHODS

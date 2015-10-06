@@ -9,7 +9,7 @@ import org.junit.Test;
 
 import javax.persistence.PersistenceException;
 
-public class UserRepositoryTest extends DataPersistenceTest{
+public class UserRepositoryTest extends DataPersistenceTest {
 
     private UserRepository repo;
 
