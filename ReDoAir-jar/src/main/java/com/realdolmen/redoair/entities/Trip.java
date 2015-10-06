@@ -2,6 +2,7 @@ package com.realdolmen.redoair.entities;
 
 import javax.persistence.*;
 import java.io.Serializable;
+import java.math.BigDecimal;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.ZoneId;
@@ -41,7 +42,7 @@ public class Trip implements Serializable{
     private Flight returnFlight;
 
     @Column(nullable = false)
-    private double tripPricePerDayIncludesHotelAndLocalTransportAndGuidedToursAndMuchMore;
+    private double tripDayPrice;
 
     private String travelAgency;
 
@@ -60,7 +61,7 @@ public class Trip implements Serializable{
         setReturnDate(returnDate);
         setOutFlight(outFlight);
         setReturnFlight(returnFlight);
-        setTripPricePerDayIncludesHotelAndLocalTransportAndGuidedToursAndMuchMore(price);
+        setTripDayPrice(price);
         setTravelAgency(travelAgency);
     }
 
@@ -128,12 +129,14 @@ public class Trip implements Serializable{
         }
     }
 
-    public double getTripPricePerDayIncludesHotelAndLocalTransportAndGuidedToursAndMuchMore() {
-        return tripPricePerDayIncludesHotelAndLocalTransportAndGuidedToursAndMuchMore;
+    public double getTripDayPrice() {
+        return tripDayPrice;
     }
 
-    public void setTripPricePerDayIncludesHotelAndLocalTransportAndGuidedToursAndMuchMore(double price) {
-        this.tripPricePerDayIncludesHotelAndLocalTransportAndGuidedToursAndMuchMore = price;
+    public void setTripDayPrice(double price) {
+        if (price < 0.0)
+            throw new IllegalArgumentException("A flight should have a price >= 0");
+        this.tripDayPrice = BigDecimal.valueOf(price).setScale(2,BigDecimal.ROUND_HALF_UP).floatValue();
     }
 
     public String getTravelAgency() {
