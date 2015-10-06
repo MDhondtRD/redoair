@@ -3,7 +3,6 @@ package com.realdolmen.redoair.ejb;
 
 import com.realdolmen.redoair.entities.User;
 import com.realdolmen.redoair.entities.UserType;
-import org.apache.commons.codec.binary.Base64;
 
 import javax.ejb.LocalBean;
 import javax.ejb.Stateless;

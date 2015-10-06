@@ -22,6 +22,27 @@
             <f:selectItems value="#{addFlightsController.getAllMyCurrentCodes('MsdfsdDsdf')}" />
         </p:selectOneMenu>
 
+        <h:outputLabel value="Departure City:" />
+        <p:selectOneMenu id="departureCity" value="#{addFlightsController.departureCity}" effect="fold" editable="true">
+            <f:selectItems value="#{addFlightsController.departureCities}" />
+        </p:selectOneMenu>
+
+        <h:outputLabel value="Destination City:" />
+        <p:selectOneMenu id="destinationCity" value="#{addFlightsController.destinationCity}" effect="fold" editable="true">
+            <f:selectItems value="#{addFlightsController.destinationCities}" />
+        </p:selectOneMenu>
+
+        <h:outputLabel value="Departure date and time:" />
+        <input id="departure" type="datetime-local" value="#{addFlightsController.departure}" />
+
+        <h:outputLabel value="Available seats:" />
+        <h:inputText id="seats" value="#{addFlightsController.availableSeats}" />
+
+        <h:outputLabel value="Price per flight:" />
+        <h:inputText id="price" value="#{addFlightsController.price}" />
+
+        <h:commandButton value="Sign Up" action = "#{signUpController.createUser()}"/>
+
     </h:form>
 
 </h:body>
