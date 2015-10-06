@@ -3,11 +3,15 @@ package com.realdolmen.redoair.ejb;
 
 import com.realdolmen.redoair.entities.User;
 import com.realdolmen.redoair.entities.UserType;
+import org.apache.commons.codec.binary.Base64;
 
 import javax.ejb.LocalBean;
 import javax.ejb.Stateless;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
+import java.io.UnsupportedEncodingException;
+import java.security.MessageDigest;
+import java.security.NoSuchAlgorithmException;
 import java.util.List;
 
 @Stateless
@@ -40,16 +44,18 @@ public class UserRepository implements UserRepositoryInterface {
     @Override
     public User getUserByEmail(String email) {
         List results = em.createQuery("SELECT u FROM User u WHERE u.email = :email", User.class).setParameter("email", email).getResultList();
-        if(!results.isEmpty()) {
-            return (User)results.get(0);
-        }
-        else {
+        if (!results.isEmpty()) {
+            return (User) results.get(0);
+        } else {
             return null;
         }
     }
 
     @Override
     public void createUser(User user) {
+        System.out.println(user.getPassword());
+        String hashedPassword = hashPassword(user.getPassword());
+        user.setPassword(hashedPassword);
         em.persist(user);
     }
 
@@ -62,25 +68,52 @@ public class UserRepository implements UserRepositoryInterface {
     public boolean validateUser(User userToCheck) {
         String emailOrUsername = userToCheck.getEmail();
         User user;
-        if(emailOrUsername.contains("@")) { //checks whether it's a username or email address
+        if (emailOrUsername.contains("@")) { //checks whether it's a username or email address
             user = getUserByEmail(emailOrUsername);
-        }
-        else {
+        } else {
             user = getUserByUsername(emailOrUsername);
         }
-        if(user == null) {//The email-address entered is invalid or the user does not exist in the database
+        if (user == null) {//The email-address entered is invalid or the user does not exist in the database
             return false;
-        }
-        else {
-            return userToCheck.getPassword().equals(user.getPassword());
+        } else {
+            return comparePasswords(userToCheck, user.getPassword());
         }
     }
 
-    public EntityManager getEntityManager(){
+    public boolean comparePasswords(User userToCheck, String hashedPassword ) {
+        String hashedPasswordFromUserToCheck = hashPassword(userToCheck.getPassword());
+        return hashedPassword.equals(hashedPasswordFromUserToCheck);
+    }
+
+    public String hashPassword(String unhashedPassword) {
+        String hashedPassword = null;
+        try {
+            MessageDigest md = MessageDigest.getInstance("SHA-256");
+            md.update(unhashedPassword.getBytes("UTF-8"));
+            byte[] digestedMessage = md.digest();
+            hashedPassword = String.format("%064x", new java.math.BigInteger(1, digestedMessage));
+            return hashedPassword;
+        }
+        catch (Exception e) {
+            if(e.equals(NoSuchAlgorithmException.class)) {
+                throw new NoSuchAlgorithmException("Please use a valid hashAlgorithm");
+                //PROPPER ERROR MESSAGE COMES HERE
+            }
+            else if(e.equals(UnsupportedEncodingException.class)) {
+                throw new UnsupportedEncodingException("Please use a proper encoding");
+                //PROPPER ERROR MESSAGE COMES HERE
+            }
+        }
+        finally {
+            return hashedPassword;
+        }
+    }
+
+    public EntityManager getEntityManager() {
         return em;
     }
 
-    public void setEntityManager(EntityManager em){
+    public void setEntityManager(EntityManager em) {
         this.em = em;
     }
 }

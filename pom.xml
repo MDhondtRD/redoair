@@ -84,6 +84,12 @@
 			<type>pom</type>
 			<scope>test</scope>
 		</dependency>
+		<!--Dependency needed for hashing and salting user credentials -->
+		<dependency>
+			<groupId>de.rtner</groupId>
+			<artifactId>PBKDF2</artifactId>
+			<version>1.1.0</version>
+		</dependency>
 	</dependencies>
 
 	<build>

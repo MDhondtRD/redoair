@@ -9,7 +9,7 @@ import org.junit.Test;
 
 import javax.persistence.PersistenceException;
 
-public class UserPersistenceTest extends DataPersistenceTest{
+public class UserRepositoryTest extends DataPersistenceTest{
 
     private UserRepository repo;
 
@@ -149,6 +149,24 @@ public class UserPersistenceTest extends DataPersistenceTest{
         assertEquals(u, repo.getUserByEmail(u.getEmail()));
     }
 
+
+    @Test
+    public void hashedPasswordsAreEqualWhenCompared() {
+        String unhashedPassword = "Blabla123";
+        String hashedPassword = repo.hashPassword(unhashedPassword);
+        User user = new User("MDhondt1", unhashedPassword, UserType.CUSTOMER, "maarten.dhondt@realdolmen.com");
+        String hashedPasswordCheck = repo.hashPassword(unhashedPassword);
+        assertTrue(repo.comparePasswords(user, hashedPasswordCheck));
+    }
+
+    @Test
+    public void hashedPasswordsAreNotEqualWhenComparedToADifferentPassword() {
+        String unhashedPassword = "Blabla123";
+        String hashedPassword = repo.hashPassword(unhashedPassword);
+        User user = new User("MDhondt1", "Blabla", UserType.CUSTOMER, "maarten.dhondt@realdolmen.com");
+        String hashedPasswordCheck = repo.hashPassword(unhashedPassword);
+        assertFalse(repo.comparePasswords(user, hashedPasswordCheck));
+    }
 
 
 }

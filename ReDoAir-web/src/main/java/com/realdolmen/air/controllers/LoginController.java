@@ -2,10 +2,15 @@ package com.realdolmen.air.controllers;
 
 import com.realdolmen.redoair.ejb.UserRepository;
 import com.realdolmen.redoair.entities.User;
+import de.rtner.misc.BinTools;
+import de.rtner.security.auth.spi.PBKDF2Engine;
+import de.rtner.security.auth.spi.PBKDF2Parameters;
+import de.rtner.security.auth.spi.SimplePBKDF2;
 
 import javax.enterprise.context.RequestScoped;
 import javax.inject.Inject;
 import javax.inject.Named;
+import java.security.SecureRandom;
 
 /**
  * Created by JDOAX80 on 5/10/2015.
@@ -18,6 +23,7 @@ public class LoginController {
     private UserRepository userRepository;
 
     private User user = new User();
+
 
     public String validateUser() {
         if(userRepository.validateUser(user)) {
