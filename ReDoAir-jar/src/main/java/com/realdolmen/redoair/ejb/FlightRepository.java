@@ -87,6 +87,7 @@ public class FlightRepository implements FlightRepositoryInterface {
         return em.createQuery("SELECT f FROM Flight f WHERE f.code = :code", Flight.class).setParameter("code", code).getResultList();
     }
 
+
     @Override
     public void createFlight(Flight flight) {
         em.persist(flight);

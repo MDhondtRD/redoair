@@ -91,8 +91,8 @@ public class AddFlightsController {
     }
 
     public String addNewFlight(){
-        Flight f = new Flight(code, departureCity, destinationCity, departure, availableSeats, price);
-        repo.createFlight(f);
+       // Flight f = new Flight(code, departureCity, destinationCity, departure, availableSeats, price);
+       // repo.createFlight(f);
         return "addFlight"; //TODO: redirect naar ??
     }
 

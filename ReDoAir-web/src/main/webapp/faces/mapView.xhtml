@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:f="http://xmlns.jcp.org/jsf/core">
+<h:head>
+    <script src="https://code.jquery.com/jquery-1.11.2.min.js"></script>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.4/css/bootstrap.min.css"></link>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.4/js/bootstrap.min.js"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/ol3/3.6.0/ol.css" type="text/css"></link>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/ol3/3.6.0/ol.js"></script>
+</h:head>
+<h:body>
+    <div class="container-fluid">
+
+        <div class="row-fluid">
+            <div class="span12">
+                <div id="map" class="map"></div>
+                <h:form id="hiddenForm" style="display: none;">
+                    <h:inputHidden id="countryCode" value="#{mapController.countryCode}"/>
+                    <h:inputHidden id="listOfDestinations" value="#{mapController.trips}"/>
+                    <h:commandButton id="invisibleClickTarget">
+                        <f:ajax execute="@form" listener="#{mapController.retrieveDestinationsForCountry()}"/>
+                    </h:commandButton>
+                </h:form>
+            </div>
+        </div>
+
+        <div class="row-fluid">
+            <div class="span4"></div>
+            <div class="span4 offset4">
+                <div id="info" class="alert alert-success">
+                    &#xA0;<!-- Hex notation for &nbsp -->
+                </div>
+            </div>
+        </div>
+
+    </div>
+    <script src="../scripts/mapScript.js"></script>
+</h:body>
+</html>

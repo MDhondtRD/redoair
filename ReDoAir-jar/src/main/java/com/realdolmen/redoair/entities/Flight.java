@@ -3,7 +3,6 @@ package com.realdolmen.redoair.entities;
 import javax.persistence.*;
 import java.io.Serializable;
 import java.math.BigDecimal;
-import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.ZoneId;
 import java.util.ArrayList;
@@ -45,6 +44,9 @@ public class Flight implements Serializable {
     @Column(nullable = false)
     private double price;
 
+    @Column(nullable = false)
+    private String countryCode;
+
     private double lengthOfFlight;
 
     private double endUserPrice;
@@ -66,13 +68,14 @@ public class Flight implements Serializable {
         // used by Hibernate
     }
 
-    public Flight(String code, String departureCity, String destinationCity, LocalDateTime departure, int availableSeats, double price) {
+    public Flight(String code, String departureCity, String destinationCity, LocalDateTime departure, int availableSeats, double price, String countryCode) {
         this.setCode(code);
         this.setDepartureCity(departureCity);
         this.setDestinationCity(destinationCity);
         this.setDeparture(departure);
         this.setAvailableSeats(availableSeats);
         this.setPrice(price);
+        this.setCountryCode(countryCode);
     }
 
 
@@ -147,8 +150,9 @@ public class Flight implements Serializable {
     public void setPrice(double price) {
         if (price < 0.0)
             throw new IllegalArgumentException("A flight should have a price >= 0");
-        this.price = BigDecimal.valueOf(price).setScale(2,BigDecimal.ROUND_HALF_UP).floatValue();
-        this.endUserPrice = this.price * 1.05;
+        this.price = BigDecimal.valueOf(price).setScale(2,BigDecimal.ROUND_HALF_UP).doubleValue();
+        System.out.println(this.price);
+        setEndUserPrice(this.price*1.05);
     }
 
     public double getLengthOfFlight() {
@@ -164,7 +168,8 @@ public class Flight implements Serializable {
     }
 
     public void setEndUserPrice(double endUserPrice) {
-        this.endUserPrice = endUserPrice;
+        this.endUserPrice = BigDecimal.valueOf(endUserPrice).setScale(2,BigDecimal.ROUND_HALF_UP).doubleValue();
+        System.out.println(this.endUserPrice);
     }
 
     public List<Discount> getDiscounts() {
@@ -181,6 +186,14 @@ public class Flight implements Serializable {
 
     public void setAirlineCompany(String airlineCompany) {
         this.airlineCompany = airlineCompany;
+    }
+
+    public String getCountryCode() {
+        return countryCode;
+    }
+
+    public void setCountryCode(String countryCode) {
+        this.countryCode = countryCode;
     }
 
     /**

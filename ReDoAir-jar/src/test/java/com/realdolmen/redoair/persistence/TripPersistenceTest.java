@@ -12,7 +12,7 @@ public class TripPersistenceTest extends DataPersistenceTest {
 
     @Test
     public void tripCanBePersisted() {
-        Flight f = new Flight("MD1991", "Brussels", "London", LocalDateTime.of(2015, 9, 1, 14, 30), 50, 123.45);
+        Flight f = new Flight("MD1991", "Brussels", "London", LocalDateTime.of(2015, 9, 1, 14, 30), 50, 123.45, "BE");
         entityManager().persist(f);
         Trip t = new Trip(LocalDate.of(2015, 10, 1), LocalDate.of(2015, 10, 31), f, null, 0.00, "RD Travel");
         entityManager().persist(t);
@@ -27,29 +27,29 @@ public class TripPersistenceTest extends DataPersistenceTest {
 
     @Test(expected = IllegalArgumentException.class)
     public void tripEndDateMustNotBeBeforeStartDate() {
-        Flight f = new Flight("MD1991", "Brussels", "London", LocalDateTime.of(2015, 9, 1, 14, 30), 50, 123.45);
+        Flight f = new Flight("MD1991", "Brussels", "London", LocalDateTime.of(2015, 9, 1, 14, 30), 50, 123.45, "BE");
         entityManager().persist(f);
         Trip t = new Trip(LocalDate.of(2015, 10, 2), LocalDate.of(2015, 10, 1), f, null, 0.00, "RD Travel");
     }
 
     @Test(expected = IllegalArgumentException.class)
     public void tripCanNotHaveAnOutFlightAfterTripHasAlreadyStarted() {
-        Flight f = new Flight("MD1991", "Brussels", "London", LocalDateTime.of(2015, 10, 2, 14, 30), 50, 123.45);
+        Flight f = new Flight("MD1991", "Brussels", "London", LocalDateTime.of(2015, 10, 2, 14, 30), 50, 123.45, "BE");
         entityManager().persist(f);
         Trip t = new Trip(LocalDate.of(2015, 10, 1), LocalDate.of(2015, 10, 3), f, null, 0.00, "RD Travel");
     }
 
     @Test(expected = IllegalArgumentException.class)
     public void tripCanNotHaveAnOutFlightAfterTripHasAlreadyEnded() {
-        Flight f = new Flight("MD1991", "Brussels", "London", LocalDateTime.of(2015, 10, 3, 14, 30), 50, 123.45);
+        Flight f = new Flight("MD1991", "Brussels", "London", LocalDateTime.of(2015, 10, 3, 14, 30), 50, 123.45, "BE");
         entityManager().persist(f);
         Trip t = new Trip(LocalDate.of(2015, 10, 1), LocalDate.of(2015, 10, 2), f, null, 0.00, "RD Travel");
     }
 
     @Test(expected = IllegalArgumentException.class)
     public void tripCanNotHaveAReturnFlightWhenTripHasNotYetBegan() {
-        Flight f1 = new Flight("MD1991", "Brussels", "London", LocalDateTime.of(2015, 10, 4, 14, 30), 50, 123.45);
-        Flight f2 = new Flight("MD1992", "London", "Brussels", LocalDateTime.of(2015, 10, 5, 14, 30), 50, 123.45);
+        Flight f1 = new Flight("MD1991", "Brussels", "London", LocalDateTime.of(2015, 10, 4, 14, 30), 50, 123.45, "BE");
+        Flight f2 = new Flight("MD1992", "London", "Brussels", LocalDateTime.of(2015, 10, 5, 14, 30), 50, 123.45, "BE");
         entityManager().persist(f1);
         entityManager().persist(f2);
         Trip t = new Trip(LocalDate.of(2015, 10, 6), LocalDate.of(2015, 10, 10), f1, f2, 0.00, "RD Travel");
@@ -57,8 +57,8 @@ public class TripPersistenceTest extends DataPersistenceTest {
 
     @Test(expected = IllegalArgumentException.class)
     public void tripCanNotHaveAReturnFlightWhenTripHasNotYetEnded() {
-        Flight f1 = new Flight("MD1991", "Brussels", "London", LocalDateTime.of(2015, 10, 5, 14, 30), 50, 123.45);
-        Flight f2 = new Flight("MD1992", "London", "Brussels", LocalDateTime.of(2015, 10, 8, 14, 30), 50, 123.45);
+        Flight f1 = new Flight("MD1991", "Brussels", "London", LocalDateTime.of(2015, 10, 5, 14, 30), 50, 123.45, "BE");
+        Flight f2 = new Flight("MD1992", "London", "Brussels", LocalDateTime.of(2015, 10, 8, 14, 30), 50, 123.45, "BE");
         entityManager().persist(f1);
         entityManager().persist(f2);
         Trip t = new Trip(LocalDate.of(2015, 10, 6), LocalDate.of(2015, 10, 10), f1, f2, 0.00, "RD Travel");

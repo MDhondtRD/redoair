@@ -56,9 +56,9 @@ public class TripRepositoryTest extends DataPersistenceTest{
         // Generate <numberOfCommonTrips> trips (and twice as much flights)
         for (int i = 0; i < numberOfCommonTrips*2; i+=2){
             LocalDateTime ldt1 = LocalDateTime.of(LocalDate.of(2015, 9 + (i/2 / 30), 1 + ((i/2) % 30)), LocalTime.now());
-            Flight f1 = new Flight("MD" + (1000 + i), locations[(i/2/factor1)%numberOfLocations], locations[(i/2/factor1+1)%numberOfLocations], ldt1, 15, 399.95);
+            Flight f1 = new Flight("MD" + (1000 + i), locations[(i/2/factor1)%numberOfLocations], locations[(i/2/factor1+1)%numberOfLocations], ldt1, 15, 399.95, "BEL");
             LocalDateTime ldt2 = LocalDateTime.of(LocalDate.of(2015, 9 + (((i/2)+1) / 30), 1 + (((i/2)+1) % 30)), LocalTime.now());
-            Flight f2 = new Flight("MD" + (1000 + i+1), locations[(i/2/factor1+1)%numberOfLocations], locations[(i/2/factor1)%numberOfLocations], ldt2, 15, 399.95);
+            Flight f2 = new Flight("MD" + (1000 + i+1), locations[(i/2/factor1+1)%numberOfLocations], locations[(i/2/factor1)%numberOfLocations], ldt2, 15, 399.95, "BEL");
             Trip t = new Trip(ldt1.toLocalDate(), ldt2.toLocalDate(), f1, f2, 49.95, "RD Travel");
             fRepo.createFlight(f1); fRepo.createFlight(f2); repo.createTrip(t);
             if (ldt1.isAfter(LocalDateTime.now()))
@@ -68,9 +68,9 @@ public class TripRepositoryTest extends DataPersistenceTest{
         // Generate <numberOfFlightOnlyTrips> trips (and twice as much flights)
         for (int i = 0; i < numberOfFlightOnlyTrips*2; i+=2){
             LocalDateTime ldt1 = LocalDateTime.of(LocalDate.of(2015, 9 + (i/2 / 30), 1 + ((i/2) % 30)), LocalTime.now());
-            Flight f1 = new Flight("MD" + (2000 + i), locations[(i/2/factor2)%numberOfLocations], locations[(i/2/factor2+1)%numberOfLocations], ldt1, 15, 399.95);
+            Flight f1 = new Flight("MD" + (2000 + i), locations[(i/2/factor2)%numberOfLocations], locations[(i/2/factor2+1)%numberOfLocations], ldt1, 15, 399.95, "BEL");
             LocalDateTime ldt2 = LocalDateTime.of(LocalDate.of(2015, 9 + (((i/2)+1) / 30), 1 + (((i/2)+1) % 30)), LocalTime.now());
-            Flight f2 = new Flight("MD" + (2000 + i+1), locations[(i/2/factor2+1)%numberOfLocations], locations[(i/2/factor2)%numberOfLocations], ldt2, 15, 399.95);
+            Flight f2 = new Flight("MD" + (2000 + i+1), locations[(i/2/factor2+1)%numberOfLocations], locations[(i/2/factor2)%numberOfLocations], ldt2, 15, 399.95, "BEL");
             Trip t = new Trip(ldt1.toLocalDate(), ldt1.toLocalDate(), f1, f2, 0.0, "RD Travel");
             fRepo.createFlight(f1); fRepo.createFlight(f2); repo.createTrip(t);
             if (ldt1.isAfter(LocalDateTime.now()))
@@ -80,7 +80,7 @@ public class TripRepositoryTest extends DataPersistenceTest{
         // Generate <numberOfCommonTripsWithoutReturnFlight> trips (and as much flights)
         for (int i = 0; i < numberOfCommonTripsWithoutReturnFlight; i++){
             LocalDateTime ldt1 = LocalDateTime.of(LocalDate.of(2015, 9 + (i / 30), 1 + (i % 30)), LocalTime.now());
-            Flight f = new Flight("MD" + (3000 + i), locations[(i/factor3)%numberOfLocations], locations[(i/factor3+1)%numberOfLocations], ldt1, 15, 399.95);
+            Flight f = new Flight("MD" + (3000 + i), locations[(i/factor3)%numberOfLocations], locations[(i/factor3+1)%numberOfLocations], ldt1, 15, 399.95, "BEL");
             LocalDateTime ldt2 = LocalDateTime.of(LocalDate.of(2015, 9 + ((i+5) / 30), 1 + ((i+5) % 30)), LocalTime.now());
             Trip t = new Trip(ldt1.toLocalDate(), ldt2.toLocalDate(), f, null, 49.95, "RD Travel");
             fRepo.createFlight(f); repo.createTrip(t);
@@ -93,7 +93,7 @@ public class TripRepositoryTest extends DataPersistenceTest{
         // Generate <numberOfFlightOnlyTripsWithoutReturnFlight> trips (and as much flights)
         for (int i = 0; i < numberOfFlightOnlyTripsWithoutReturnFlight; i++){
             LocalDateTime ldt1 = LocalDateTime.of(LocalDate.of(2015, 9 + (i / 30), 1 + (i % 30)), LocalTime.now());
-            Flight f = new Flight("MD" + (4000 + i), locations[(i/factor4)%numberOfLocations], locations[(i/factor4+1)%numberOfLocations], ldt1, 15, 399.95);
+            Flight f = new Flight("MD" + (4000 + i), locations[(i/factor4)%numberOfLocations], locations[(i/factor4+1)%numberOfLocations], ldt1, 15, 399.95, "BEL");
             Trip t = new Trip(ldt1.toLocalDate(), ldt1.toLocalDate(), f, null, 0.0, "RD Travel");
             fRepo.createFlight(f); repo.createTrip(t);
             if (ldt1.isAfter(LocalDateTime.now())){
@@ -225,6 +225,10 @@ public class TripRepositoryTest extends DataPersistenceTest{
     }
 
 
+    @Test
+    public void canFindAllFutureTripsByCountryCode() {
+        assertEquals(numberOfFutureTrips, repo.getAllFutureTripsByCountryCode("BEL").size());
+    }
 
 
     private int findTripsByDestination(Collection<Trip> trips, String destination){

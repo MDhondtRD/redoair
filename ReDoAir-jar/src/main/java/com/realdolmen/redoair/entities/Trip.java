@@ -21,8 +21,6 @@ public class Trip implements Serializable{
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Integer id;
 
-
-
     /**
      * ATTRIBUTES
      */
