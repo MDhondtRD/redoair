@@ -1,14 +1,19 @@
+<?xml version='1.0' encoding='UTF-8' ?>
 <!DOCTYPE html>
-
 <html xmlns="http://www.w3.org/1999/xhtml"
-      xmlns:h="http://xmlns.jcp.org/jsf/html"
-      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
-      xmlns:f="http://xmlns.jcp.org/jsf/core">
-<ui:composition template="template.xhtml">
-    <ui:define name="pageTitle">
-        Login
-    </ui:define>
-    <ui:define name="pageContent">
+      xmlns:b="http://bootsfaces.net/ui"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:h="http://java.sun.com/jsf/html">
+<h:head>
+    <title>BootsFaces Basic Page</title>
+</h:head>
+<h:body>
+    <b:container>
+        <b:jumbotron>
+            <h1>ReDo Travel</h1>
+            <p>This is a simple hero unit, a simple jumbotron-style component for calling extra attention to featured content or information.</p>
+            <p><a class="btn btn-primary btn-lg">Learn more</a></p>
+        </b:jumbotron>
         <h:form>
             <h:outputLabel value="Username/Email:" />
             <h:inputText value ="#{loginController.user.email}" id = "email"></h:inputText>
@@ -16,6 +21,7 @@
             <h:inputSecret value ="#{loginController.user.password}" id = "password"></h:inputSecret>
             <h:commandButton value ="Login" action = "#{loginController.validateUser()}"/>
         </h:form>
-    </ui:define>
-</ui:composition>
+    </b:container>
+</h:body>
 </html>
+

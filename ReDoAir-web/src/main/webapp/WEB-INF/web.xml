@@ -24,7 +24,7 @@
     </servlet-mapping>
 
     <welcome-file-list>
-        <welcome-file>/faces/mapView.faces</welcome-file>
+        <welcome-file>/faces/index.xhtml</welcome-file>
     </welcome-file-list>
 
     <login-config>
