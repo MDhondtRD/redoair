@@ -88,7 +88,7 @@ public class TripRepository implements TripRepositoryInterface{
     public List<Trip> getAllFlightOnlyTrips() {
         return em.createQuery("SELECT t FROM Trip t " +
                 "WHERE t.departureDate = t.returnDate " +
-                "AND t.tripPricePerDayIncludesHotelAndLocalTransportAndGuidedToursAndMuchMore = 0.0", Trip.class)
+                "AND t.tripDayPrice = 0.0", Trip.class)
                 .getResultList();
     }
 
@@ -96,7 +96,7 @@ public class TripRepository implements TripRepositoryInterface{
     public List<Trip> getAllFlightOnlyTripsByDestination(String destination) {
         return em.createQuery("SELECT t FROM Trip t " +
                 "WHERE t.departureDate = t.returnDate " +
-                "AND t.tripPricePerDayIncludesHotelAndLocalTransportAndGuidedToursAndMuchMore = 0.0" +
+                "AND t.tripDayPrice = 0.0" +
                 "AND t.outFlight.destinationCity = :dest", Trip.class)
                 .setParameter("dest", destination)
                 .getResultList();
@@ -106,7 +106,7 @@ public class TripRepository implements TripRepositoryInterface{
     public List<Trip> getAllFutureFlightOnlyTrips() {
         return em.createQuery("SELECT t FROM Trip t " +
                 "WHERE t.departureDate = t.returnDate " +
-                "AND t.tripPricePerDayIncludesHotelAndLocalTransportAndGuidedToursAndMuchMore = 0.0" +
+                "AND t.tripDayPrice = 0.0" +
                 "AND t.departureDate > current_date ", Trip.class)
                 .getResultList();
     }
@@ -115,7 +115,7 @@ public class TripRepository implements TripRepositoryInterface{
     public List<Trip> getAllFutureFlightOnlyTripsByDestination(String destination) {
         return em.createQuery("SELECT t FROM Trip t " +
                 "WHERE t.departureDate = t.returnDate " +
-                "AND t.tripPricePerDayIncludesHotelAndLocalTransportAndGuidedToursAndMuchMore = 0.0" +
+                "AND t.tripDayPrice = 0.0" +
                 "AND t.departureDate > current_date " +
                 "AND t.outFlight.destinationCity = :dest", Trip.class)
                 .setParameter("dest", destination)
@@ -126,7 +126,7 @@ public class TripRepository implements TripRepositoryInterface{
     public List<Trip> getAllFlightOnlyTripsWithoutReturnFlight() {
         return em.createQuery("SELECT t FROM Trip t " +
                 "WHERE t.departureDate = t.returnDate " +
-                "AND t.tripPricePerDayIncludesHotelAndLocalTransportAndGuidedToursAndMuchMore = 0.0" +
+                "AND t.tripDayPrice = 0.0" +
                 "AND t.returnFlight IS NULL", Trip.class)
                 .getResultList();
     }
@@ -135,7 +135,7 @@ public class TripRepository implements TripRepositoryInterface{
     public List<Trip> getAllFlightOnlyTripsWithoutReturnFlightByDestination(String destination) {
         return em.createQuery("SELECT t FROM Trip t " +
                 "WHERE t.departureDate = t.returnDate " +
-                "AND t.tripPricePerDayIncludesHotelAndLocalTransportAndGuidedToursAndMuchMore = 0.0" +
+                "AND t.tripDayPrice = 0.0" +
                 "AND t.returnFlight IS NULL " +
                 "AND t.outFlight.destinationCity = :dest", Trip.class)
                 .setParameter("dest", destination)
@@ -146,7 +146,7 @@ public class TripRepository implements TripRepositoryInterface{
     public List<Trip> getAllFutureFlightOnlyTripsWithoutReturnFlight() {
         return em.createQuery("SELECT t FROM Trip t " +
                 "WHERE t.departureDate = t.returnDate " +
-                "AND t.tripPricePerDayIncludesHotelAndLocalTransportAndGuidedToursAndMuchMore = 0.0" +
+                "AND t.tripDayPrice = 0.0" +
                 "AND t.departureDate > current_date " +
                 "AND t.returnFlight IS NULL", Trip.class)
                 .getResultList();
@@ -156,12 +156,22 @@ public class TripRepository implements TripRepositoryInterface{
     public List<Trip> getAllFutureFlightOnlyTripsWithoutReturnFlightByDestination(String destination) {
         return em.createQuery("SELECT t FROM Trip t " +
                 "WHERE t.departureDate = t.returnDate " +
-                "AND t.tripPricePerDayIncludesHotelAndLocalTransportAndGuidedToursAndMuchMore = 0.0" +
+                "AND t.tripDayPrice = 0.0" +
                 "AND t.departureDate > current_date " +
                 "AND t.returnFlight IS NULL " +
                 "AND t.outFlight.destinationCity = :dest", Trip.class)
                 .setParameter("dest", destination)
                 .getResultList();
+    }
+
+    @Override
+    public void createTrip(Trip trip){
+        em.persist(trip);
+    }
+
+    @Override
+    public void removeTrip(Trip trip){
+        em.remove(trip);
     }
 
     public EntityManager getEntityManager(){

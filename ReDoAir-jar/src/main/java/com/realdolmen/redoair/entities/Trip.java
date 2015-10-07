@@ -106,8 +106,13 @@ public class Trip implements Serializable{
 
     public void setOutFlight(Flight outFlight) {
         if (outFlight != null) {
-            if (outFlight.getDeparture().toInstant().truncatedTo(ChronoUnit.DAYS)
-                    .isAfter(departureDate.toInstant().truncatedTo(ChronoUnit.DAYS)))
+//            System.out.println("-----");
+//            System.out.println(outFlight.getDeparture().toInstant());
+//            System.out.println(departureDate.toInstant());
+//            System.out.println(outFlight.getDeparture().toInstant().truncatedTo(ChronoUnit.DAYS));
+//            System.out.println(departureDate.toInstant().atZone(ZoneId.systemDefault()).truncatedTo(ChronoUnit.DAYS));
+            if (outFlight.getDeparture().toInstant().atZone(ZoneId.systemDefault()).truncatedTo(ChronoUnit.DAYS)
+                    .isAfter(departureDate.toInstant().atZone(ZoneId.systemDefault()).truncatedTo(ChronoUnit.DAYS)))
                 throw new IllegalArgumentException("Outgoing flight should not be after start of the trip.");
             this.outFlight = outFlight;
         } else
@@ -123,6 +128,7 @@ public class Trip implements Serializable{
             if (returnFlight.getDeparture().toInstant().truncatedTo(ChronoUnit.DAYS)
                     .isBefore(returnDate.toInstant().truncatedTo(ChronoUnit.DAYS)))
                 throw new IllegalArgumentException("Return flight should not be before end of the trip.");
+            // TODO: departure van return flight moet destination van out flight zijn.
             this.returnFlight = returnFlight;
         } else {
             this.returnFlight = null;

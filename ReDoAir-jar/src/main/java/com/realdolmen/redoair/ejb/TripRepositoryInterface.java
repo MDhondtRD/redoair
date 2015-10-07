@@ -26,5 +26,7 @@ public interface TripRepositoryInterface {
     public List<Trip> getAllFlightOnlyTripsWithoutReturnFlightByDestination(String destination);
     public List<Trip> getAllFutureFlightOnlyTripsWithoutReturnFlight();
     public List<Trip> getAllFutureFlightOnlyTripsWithoutReturnFlightByDestination(String destination);
+    public void createTrip(Trip trip);
+    public void removeTrip(Trip trip);
 
 }
