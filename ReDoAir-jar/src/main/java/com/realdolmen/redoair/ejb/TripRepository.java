@@ -167,7 +167,7 @@ public class TripRepository implements TripRepositoryInterface{
     @Override
     public List<Trip> getAllFutureTripsByCountryCode(String countryCode) {
         return em.createQuery("SELECT t FROM Trip t " +
-                "WHERE t.outFlight.countryCode = :countryCode " +
+                "WHERE t.outFlight.destinationCountryCode = :countryCode " +
                 "AND t.departureDate > current_date", Trip.class)
                 .setParameter("countryCode", countryCode)
                 .getResultList();

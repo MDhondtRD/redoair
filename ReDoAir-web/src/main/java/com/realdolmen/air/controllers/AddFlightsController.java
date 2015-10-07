@@ -1,13 +1,11 @@
 package com.realdolmen.air.controllers;
 
 import com.realdolmen.redoair.ejb.FlightRepository;
-import com.realdolmen.redoair.entities.Flight;
 
 import javax.enterprise.context.RequestScoped;
 import javax.inject.Inject;
 import javax.inject.Named;
 import java.util.Date;
-import java.util.List;
 import java.util.Set;
 
 @Named
@@ -79,7 +77,7 @@ public class AddFlightsController {
 
     public Set<String> getAllMyCurrentCodes(String username){
         System.out.println("Running..................");
-        return repo.getAllCodesFromPartner(username);
+        return repo.getAllFlightCodesFromPartner(username);
     }
 
     public Set<String> getDepartureCities(){
