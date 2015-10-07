@@ -36,8 +36,13 @@ var vectorSource = new ol.source.Vector({
 var mapMarkers = [];
 
 function createMapMarker(longitude, latitude, destinationName) {
+    //var pixel = map.getPixelFromCoordinate([longitude, latitude]);
+    //console.log(pixel[0] + " " + pixel[1]);
+    var point = new ol.geom.Point([longitude, latitude]);
+    console.log(point.getCoordinates());
     var iconFeature = new ol.Feature({
-        geometry: new ol.geom.Point([longitude, latitude]),
+        geometry: point,
+        //geometry: new ol.geom.Point([pixel[0], pixel[1]]),
         id: 'COUNTRY',
         name: destinationName
     });
@@ -67,7 +72,7 @@ var vectorLayer = new ol.layer.Vector({
 var map = new ol.Map({
     layers: [
         new ol.layer.Tile({
-            source: new ol.source.MapQuest({layer: 'sat'})
+            source: new ol.source.OSM({layer: 'sat'})
         }),
         vectorLayer,
         markerLayer
@@ -116,7 +121,7 @@ var highlight;
 var displayFeatureInfo = function(pixel) {
     console.log(map.getCoordinateFromPixel(pixel));
     console.log(pixel);
-    mapPinOnZaventemAirport();
+    //mapPinOnZaventemAirport();
     var feature = map.forEachFeatureAtPixel(pixel, function(feature, layer) {
         return feature;
     });
@@ -154,16 +159,25 @@ map.on('click', function(evt) {
         return feature;
     });
     retrieveDestinationsForClickedCountry(feature.getId());
+    createMapMarker(499695.66300021304, 6603956.131996146);
+    addMapMarkersToMap();
     displayFeatureInfo(evt.pixel);
 });
 
 
 function mapPinOnZaventemAirport() {
     var coordinate =[500973.12345271517, 6605441.104038407];//Coordinate of Zaventem airport in the map's current metric
-    console.log(map.getPixelFromCoordinate(coordinate));
+    var pixel = map.getPixelFromCoordinate(coordinate);
+    console.log("MAP-PIN ON ZAVENTEM: " + pixel);
+    console.log("PIXEL COORDS: " + pixel[0] + " AND " + pixel[1]);
 }
 
 function retrieveDestinationsForClickedCountry(countryCode) {
     document.getElementById('hiddenForm:countryCode').setAttribute("value", countryCode);
     document.getElementById('hiddenForm:invisibleClickTarget').click();
+}
+
+function readDestinations() {
+    var listOfDestination = document.getElementById('otherHiddenForm:listOfDestinations');
+    console.log(listOfDestination);
 }

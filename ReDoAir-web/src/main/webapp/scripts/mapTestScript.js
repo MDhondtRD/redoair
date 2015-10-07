@@ -15,13 +15,15 @@ var mapMarkers = [];
 
 function createMapMarker(longitude, latitude, destinationName) {
     var iconFeature = new ol.Feature({
-        geometry: new ol.geom.Point([longitude, latitude]),
+        labelPoint: new ol.geom.Point([longitude, latitude]),
         id: 'COUNTRY',
         name: destinationName
     });
     iconFeature.setStyle(iconStyle);
     mapMarkers.push(iconFeature);
+    iconFeature.setGeometryName('labelPoint');
 }
+
 
 
 
@@ -41,11 +43,16 @@ var rasterLayer = new ol.layer.Tile({
 });
 
 var map = new ol.Map({
-    layers: [rasterLayer, vectorLayer],
+    layers: [
+        new ol.layer.Tile({
+            source: new ol.source.OSM({layer: 'sat'})
+        }),
+        vectorLayer,
+     ],
     target: document.getElementById('map'),
     view: new ol.View({
         center: [0, 0],
-        zoom: 15
+        zoom: 15,
     })
 });
 
@@ -62,7 +69,7 @@ map.addOverlay(popup);
 map.on('click', function(evt) {
     var pixel = map.getEventPixel(evt.originalEvent);
     createMapMarker(50,50,"Blabla");
-    createMapMarker(17800,14500,"Blibli");
+    createMapMarker(479413.0414046189, 6594375.304218726, "ZAVENTEM");
     addMapMarkersToMap();
     var feature = map.forEachFeatureAtPixel(evt.pixel,
         function(feature, layer) {

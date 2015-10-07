@@ -17,12 +17,23 @@ import java.util.List;
 public class MapController {
     private String countryCode;
     private List<Trip> trips = new ArrayList<>();
+    private String tripName = "";
 
     @Inject
     private TripRepository tripRepository;
 
-    public void retrieveDestinationsForCountry() {
+    public String retrieveDestinationsForCountry() {
         trips = tripRepository.getAllFutureTripsByCountryCode(countryCode);
+        for(Trip trip: trips) {
+            System.out.println("TRIP id: " + trip.getId());
+            tripName = trip.getTravelAgency();
+        }
+        if(trips.size() > 0) {
+            return "chooseTrip";
+        }
+        else {
+            return "mapView";
+        }
     }
 
     public String getCountryCode() {
@@ -39,5 +50,13 @@ public class MapController {
 
     public void setTrips(List<Trip> trips) {
         this.trips = trips;
+    }
+
+    public String getTripName() {
+        return tripName;
+    }
+
+    public void setTripName(String tripName) {
+        this.tripName = tripName;
     }
 }
