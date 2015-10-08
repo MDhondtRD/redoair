@@ -167,6 +167,10 @@ public class Flight implements Serializable {
     }
 
     public void setEndUserPrice(double endUserPrice) {
+        if (endUserPrice < 0.0)
+            throw new IllegalArgumentException("The user price should not be negative.");
+        // TODO: Mss op de een of andere manier een extra bevestiging vragen alvorens een endUserPrice
+        //       in te stellen die lager zou zijn dan de price zelf.
         this.endUserPrice = BigDecimal.valueOf(endUserPrice).setScale(2,BigDecimal.ROUND_HALF_UP).doubleValue();
     }
 

@@ -8,10 +8,11 @@ import java.time.LocalDateTime;
 import java.time.ZoneId;
 import java.time.ZoneOffset;
 import java.time.temporal.ChronoUnit;
+import java.util.Calendar;
 import java.util.Date;
 
 @Entity
-public class Trip implements Serializable{
+public class Trip implements Serializable {
 
     /**
      * ID
@@ -45,7 +46,6 @@ public class Trip implements Serializable{
     private String travelAgency;
 
 
-
     /**
      * CONSTRUCTORS
      */
@@ -64,7 +64,6 @@ public class Trip implements Serializable{
     }
 
 
-
     /**
      * GETTERS & SETTERS
      */
@@ -78,7 +77,7 @@ public class Trip implements Serializable{
     }
 
     public void setDepartureDate(LocalDate departureDate) {
-        if(departureDate != null)
+        if (departureDate != null)
             this.departureDate = Date.from(departureDate.atStartOfDay(ZoneId.systemDefault()).toInstant());
         else
             this.departureDate = null; //Will throw a persistence exception if trying to persist a flight with a null as departure value.
@@ -89,7 +88,7 @@ public class Trip implements Serializable{
     }
 
     public void setReturnDate(LocalDate returnDate) {
-        if(returnDate != null) {
+        if (returnDate != null) {
             if (Date.from(returnDate.atStartOfDay(ZoneId.systemDefault()).toInstant()).toInstant().truncatedTo(ChronoUnit.DAYS)
                     .isBefore(departureDate.toInstant().truncatedTo(ChronoUnit.DAYS)))
                 throw new IllegalArgumentException("Return date should not be before departure date.");
@@ -140,7 +139,7 @@ public class Trip implements Serializable{
     public void setTripDayPrice(double price) {
         if (price < 0.0)
             throw new IllegalArgumentException("A flight should have a price >= 0");
-        this.tripDayPrice = BigDecimal.valueOf(price).setScale(2,BigDecimal.ROUND_HALF_UP).floatValue();
+        this.tripDayPrice = BigDecimal.valueOf(price).setScale(2, BigDecimal.ROUND_HALF_UP).doubleValue();
     }
 
     public String getTravelAgency() {
@@ -152,10 +151,44 @@ public class Trip implements Serializable{
     }
 
 
-
     /**
      * METHODS
      */
 
+    public double getTripPrice() {
+        double price = 0.0;
+        price += getOutFlight().getPrice();
+        if (getReturnFlight() != null)
+            price += getReturnFlight().getPrice();
+        price += getTripDayPrice() * getDurationOfTripInDays();
+        return BigDecimal.valueOf(price).setScale(2, BigDecimal.ROUND_HALF_UP).doubleValue();
+    }
 
+    public int getDurationOfTripInDays() {
+        // http://stackoverflow.com/questions/20165564/calculating-days-between-two-dates-with-in-java
+        Calendar dayOne = Calendar.getInstance();
+        dayOne.setTime(getDepartureDate());
+        Calendar dayTwo = Calendar.getInstance();
+        dayTwo.setTime(getReturnDate());
+
+        if (dayOne.get(Calendar.YEAR) == dayTwo.get(Calendar.YEAR)) {
+            return Math.abs(dayOne.get(Calendar.DAY_OF_YEAR) - dayTwo.get(Calendar.DAY_OF_YEAR));
+        } else {
+            if (dayTwo.get(Calendar.YEAR) > dayOne.get(Calendar.YEAR)) {
+                //swap them
+                Calendar temp = dayOne;
+                dayOne = dayTwo;
+                dayTwo = temp;
+            }
+            int extraDays = 0;
+
+            while (dayOne.get(Calendar.YEAR) > dayTwo.get(Calendar.YEAR)) {
+                dayOne.add(Calendar.YEAR, -1);
+                // getActualMaximum() important for leap years
+                extraDays += dayOne.getActualMaximum(Calendar.DAY_OF_YEAR);
+            }
+
+            return extraDays - dayTwo.get(Calendar.DAY_OF_YEAR) + dayOne.get(Calendar.DAY_OF_YEAR);
+        }
+    }
 }
