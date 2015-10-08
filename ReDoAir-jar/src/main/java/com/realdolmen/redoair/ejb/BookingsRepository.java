@@ -42,11 +42,11 @@ public class BookingsRepository implements BookingsRepositoryInterface {
         em.remove(booking);
     }
 
-    public EntityManager getEm() {
+    public EntityManager getEntityManager() {
         return em;
     }
 
-    public void setEm(EntityManager em) {
+    public void setEntityManager(EntityManager em) {
         this.em = em;
     }
 }

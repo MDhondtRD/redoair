@@ -93,7 +93,7 @@ public class Booking implements Serializable{
 
     public void setUser(User user) {
         if (user == null)
-            throw new IllegalArgumentException("A should not be null.");
+            throw new IllegalArgumentException("A user should not be null.");
         if (user.getType() != UserType.CUSTOMER)
             throw new IllegalArgumentException("Only customers can book trips.");
         this.user = user;

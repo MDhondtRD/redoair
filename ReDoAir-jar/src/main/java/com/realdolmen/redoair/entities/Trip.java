@@ -125,7 +125,7 @@ public class Trip implements Serializable {
             if (returnFlight.getDeparture().toInstant().truncatedTo(ChronoUnit.DAYS)
                     .isBefore(returnDate.toInstant().truncatedTo(ChronoUnit.DAYS)))
                 throw new IllegalArgumentException("Return flight should not be before end of the trip.");
-            // TODO: departure van return flight moet destination van out flight zijn.
+            // TODO: departure van return flight moet destination van out flight zijn.?? Op zijn minst waarschuwing geven.
             this.returnFlight = returnFlight;
         } else {
             this.returnFlight = null;
