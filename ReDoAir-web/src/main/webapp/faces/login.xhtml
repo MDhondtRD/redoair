@@ -17,9 +17,9 @@
         <b:datepicker></b:datepicker>
         <h:form>
             <h:outputLabel value="Username/Email:" />
-            <h:inputText value ="#{loginController.user.email}" id = "email"></h:inputText>
+            <h:inputText value ="#{loginController.email}" id = "email"></h:inputText>
             <h:outputLabel value="Password:" />
-            <h:inputSecret value ="#{loginController.user.password}" id = "password"></h:inputSecret>
+            <h:inputSecret value ="#{loginController.password}" id = "password"></h:inputSecret>
             <h:commandButton value ="Login" action = "#{loginController.validateUser()}"/>
         </h:form>
     </b:container>

@@ -22,10 +22,16 @@ public class LoginController {
     @Inject
     private UserRepository userRepository;
 
+    private String email;
+
+    private String password;
+
     private User user = new User();
 
 
     public String validateUser() {
+        user.setPassword(password);
+        user.setEmail(email);
         if(userRepository.validateUser(user)) {
             return "success";//redirect to home page
         }
@@ -34,11 +40,29 @@ public class LoginController {
         }
     }
 
+
+
     public User getUser() {
         return user;
     }
 
     public void setUser(User user) {
         this.user = user;
+    }
+
+    public String getEmail() {
+        return email;
+    }
+
+    public void setEmail(String email) {
+        this.email = email;
+    }
+
+    public String getPassword() {
+        return password;
+    }
+
+    public void setPassword(String password) {
+        this.password = password;
     }
 }

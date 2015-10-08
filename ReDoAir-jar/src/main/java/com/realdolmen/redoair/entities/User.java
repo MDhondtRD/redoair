@@ -7,8 +7,12 @@ import java.time.ZoneId;
 import java.util.Date;
 
 @Entity
+@NamedQueries({
+        @NamedQuery(name = User.FIND_USER_BY_USERNAME, query = "SELECT u FROM User u WHERE u.username = :username")
+})
 public class User implements Serializable{
 
+    public static final String FIND_USER_BY_USERNAME = "User.findUserByUsername";
     /**
      * ID
      */
@@ -57,6 +61,12 @@ public class User implements Serializable{
         this.username = username;
         this.password = password;
         this.type = type;
+        this.email = email;
+    }
+
+    public User(String username, String password, String email) {
+        this.username = username;
+        this.password = password;
         this.email = email;
     }
 

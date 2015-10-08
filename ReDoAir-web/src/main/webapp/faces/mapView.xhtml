@@ -17,7 +17,6 @@
                 <div id="map" class="map"></div>
                 <h:form id="hiddenForm" style="display: none;">
                     <h:inputHidden id="countryCode" value="#{mapController.countryCode}"/>
-                    <h:inputHidden id="listOfDestinations" value="#{mapController.trips}"/>
                     <h:commandButton id="invisibleClickTarget">
                         <f:ajax execute="@form" listener="#{mapController.retrieveDestinationsForCountry()}"/>
                     </h:commandButton>
