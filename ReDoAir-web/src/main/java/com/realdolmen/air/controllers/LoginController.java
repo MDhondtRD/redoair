@@ -10,6 +10,7 @@ import de.rtner.security.auth.spi.SimplePBKDF2;
 import javax.enterprise.context.RequestScoped;
 import javax.inject.Inject;
 import javax.inject.Named;
+import javax.validation.constraints.NotNull;
 import java.security.SecureRandom;
 
 /**
@@ -22,6 +23,7 @@ public class LoginController {
     @Inject
     private UserRepository userRepository;
 
+    @NotNull(message = "Username or Email is required!")
     private String email;
 
     private String password;

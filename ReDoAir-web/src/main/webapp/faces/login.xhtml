@@ -11,16 +11,21 @@
     <b:container>
         <b:jumbotron>
             <h1>ReDo Travel</h1>
+
             <p>This is a simple hero unit, a simple jumbotron-style component for calling extra attention to featured content or information.</p>
+
             <p><a class="btn btn-primary btn-lg">Learn more</a></p>
         </b:jumbotron>
-        <b:datepicker></b:datepicker>
         <h:form>
-            <h:outputLabel value="Username/Email:" />
-            <h:inputText value ="#{loginController.email}" id = "email"></h:inputText>
-            <h:outputLabel value="Password:" />
-            <h:inputSecret value ="#{loginController.password}" id = "password"></h:inputSecret>
-            <h:commandButton value ="Login" action = "#{loginController.validateUser()}"/>
+            <h:outputLabel value="Email:"/>
+            <h:inputText id="email" value="#{loginController.email}" tabindex="1" required="true"
+                         size="20" requiredMessage="Username is required"><f:validator validatorId="emailValidator"/></h:inputText>
+            <h:message for="email" style="color:red"/>
+            <p></p>
+
+            <h:outputLabel value="Password:"/>
+            <h:inputSecret id="password" value="#{loginController.password}"></h:inputSecret>
+            <h:commandButton value="Login" action="#{loginController.validateUser()}"/>
         </h:form>
     </b:container>
 </h:body>

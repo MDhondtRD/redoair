@@ -20,9 +20,15 @@
             <h:outputLabel value="Username"/>
             <h:inputText value = "#{signUpController.user.username}" id="username"></h:inputText>
             <h:outputLabel value="Password:" />
-            <h:inputSecret value = "#{signUpController.password}" id="password"></h:inputSecret>
-            <h:outputLabel value="Re-enter Password:" />
-            <h:inputSecret></h:inputSecret>
+            <h:inputSecret id="password" value="#{signUpController.password}" required="true"
+                           requiredMessage="Please enter password">
+                <f:validator validatorId="passwordValidator" />
+                <f:attribute name="confirmPassword" value="#{confirmPassword}" />
+            </h:inputSecret>
+            <h:outputLabel value="Confirm Password:" />
+            <h:inputSecret id="confirmPassword" required="true"
+                           binding="#{confirmPassword}"
+                           requiredMessage="Please enter confirm password" />
 <!--            <h:outputLabel value="Date of Birth:" />
             <h:inputText value = "#{signUpController.user.dateOfBirth}"></h:inputText>-->
             <h:outputLabel value="Street1:" />
