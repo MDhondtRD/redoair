@@ -11,11 +11,7 @@ import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.LocalTime;
 import java.util.Collection;
-import java.util.List;
 
-/**
- * Created by MDNAX30 on 6/10/2015.
- */
 public class TripRepositoryTest extends DataPersistenceTest{
 
     private TripRepository repo;

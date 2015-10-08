@@ -15,9 +15,9 @@ public class FlightPersistenceTest extends DataPersistenceTest {
 
     @Test
     public void flightsCanBeCreated(){
-        Flight f2 = new Flight("AA0000", "London", "New York", LocalDateTime.of(LocalDate.of(1985, 11, 12), LocalTime.now()), 15, 399.95, "BE");;
-        entityManager().persist(f2);
-        assertNotNull(f2.getId());
+        Flight f = new Flight("AA0000", "London", "New York", LocalDateTime.of(LocalDate.of(1985, 11, 12), LocalTime.now()), 15, 399.95, "BE");;
+        entityManager().persist(f);
+        assertNotNull(f.getId());
     }
 
     @Test(expected = NullPointerException.class)
@@ -50,6 +50,24 @@ public class FlightPersistenceTest extends DataPersistenceTest {
     public void flightPricesShouldNotHaveMoreThanTwoDecimals(){
         Flight f = new Flight("AA0000", "London", "New York", LocalDateTime.of(LocalDate.of(1985,11,12),LocalTime.now()), 15, 399.999, "BE");
         assertEquals(400.00, f.getPrice(), 0.05);
+    }
+
+    @Test(expected = PersistenceException.class)
+    public void flightsShouldHaveANonNullDepartureCity(){
+        Flight f = new Flight("AA0000", null, "New York", LocalDateTime.of(LocalDate.of(1985,11,12), LocalTime.now()), 15, 399.95, "BE");
+        entityManager().persist(f);
+    }
+
+    @Test(expected = PersistenceException.class)
+    public void flightsShouldHaveANonNullDestinationCity(){
+        Flight f = new Flight("AA0000", "London", null, LocalDateTime.of(LocalDate.of(1985,11,12),LocalTime.now()), 15, 399.95, "BE");
+        entityManager().persist(f);
+    }
+
+    @Test(expected = PersistenceException.class)
+    public void flightsShouldHaveANonNullDepartureDateTime(){
+        Flight f = new Flight("AA0000", "London", "New York", null, 15, 399.95, "BE");
+        entityManager().persist(f);
     }
 
 }

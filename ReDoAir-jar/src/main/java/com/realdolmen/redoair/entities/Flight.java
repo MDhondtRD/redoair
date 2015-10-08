@@ -45,7 +45,7 @@ public class Flight implements Serializable {
     private double price;
 
     @Column(nullable = false)
-    private String countryCode;
+    private String destinationCountryCode;
 
     private double lengthOfFlight;
 
@@ -68,14 +68,14 @@ public class Flight implements Serializable {
         // used by Hibernate
     }
 
-    public Flight(String code, String departureCity, String destinationCity, LocalDateTime departure, int availableSeats, double price, String countryCode) {
+    public Flight(String code, String departureCity, String destinationCity, LocalDateTime departure, int availableSeats, double price, String destinationCountryCode) {
         this.setCode(code);
         this.setDepartureCity(departureCity);
         this.setDestinationCity(destinationCity);
         this.setDeparture(departure);
         this.setAvailableSeats(availableSeats);
         this.setPrice(price);
-        this.setCountryCode(countryCode);
+        this.setDestinationCountryCode(destinationCountryCode);
     }
 
 
@@ -151,7 +151,6 @@ public class Flight implements Serializable {
         if (price < 0.0)
             throw new IllegalArgumentException("A flight should have a price >= 0");
         this.price = BigDecimal.valueOf(price).setScale(2,BigDecimal.ROUND_HALF_UP).doubleValue();
-        System.out.println(this.price);
         setEndUserPrice(this.price*1.05);
     }
 
@@ -169,7 +168,6 @@ public class Flight implements Serializable {
 
     public void setEndUserPrice(double endUserPrice) {
         this.endUserPrice = BigDecimal.valueOf(endUserPrice).setScale(2,BigDecimal.ROUND_HALF_UP).doubleValue();
-        System.out.println(this.endUserPrice);
     }
 
     public List<Discount> getDiscounts() {
@@ -188,12 +186,12 @@ public class Flight implements Serializable {
         this.airlineCompany = airlineCompany;
     }
 
-    public String getCountryCode() {
-        return countryCode;
+    public String getDestinationCountryCode() {
+        return destinationCountryCode;
     }
 
-    public void setCountryCode(String countryCode) {
-        this.countryCode = countryCode;
+    public void setDestinationCountryCode(String destinationCountryCode) {
+        this.destinationCountryCode = destinationCountryCode;
     }
 
     /**

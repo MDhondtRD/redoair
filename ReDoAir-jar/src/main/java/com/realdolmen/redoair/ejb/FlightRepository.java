@@ -99,7 +99,7 @@ public class FlightRepository implements FlightRepositoryInterface {
     }
 
     @Override
-    public Set<String> getAllCodesFromPartner(String username){
+    public Set<String> getAllFlightCodesFromPartner(String username){
         List<String> list = em.createQuery("SELECT f.code FROM Flight f", String.class).getResultList();
         Set<String> codes =  new HashSet<String>(list);
         String airlineCode = getAirlineCodeFromUsername(username);
