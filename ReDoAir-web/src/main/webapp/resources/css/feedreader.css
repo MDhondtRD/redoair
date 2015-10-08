@@ -1,0 +1,296 @@
+body {
+    font-size: 13px;
+    font-family: Arial, sans-serif;
+    padding-bottom: 0px;
+
+}
+
+.background-image{
+    min-height:800px;
+    background-size: 100%;
+    background-size: cover;
+    -webkit-background-size: cover;
+    -moz-background-size: cover;
+    -o-background-size: cover;
+    background-position: center center;
+    background-image: url('../resources/images/background.jpg');
+    background-attachment: fixed;
+    opacity :0.90;
+}
+
+
+.navbar-default {
+    background: -webkit-linear-gradient(left, white, #AEDCAE); /* For Safari 5.1 to 6.0 */
+    background: -o-linear-gradient(right, white, #AEDCAE); /* For Opera 11.1 to 12.0 */
+    background: -moz-linear-gradient(right, white, #AEDCAE); /* For Firefox 3.6 to 15 */
+    background: linear-gradient(to right, white, #0099DA); /* Standard syntax (must be last) */
+    opacity :0.95;
+
+}
+
+.navbar-brand {
+    height: auto;
+}
+
+/*.navbar-nav button {*/
+    /*position: relative;*/
+    /*top: 50%;*/
+    /*-webkit-transform: translateY(-50%);*/
+    /*-ms-transform: translateY(-50%);*/
+    /*transform: translateY(-50%);*/
+/*}*/
+
+.navbar-default .navbar-brand {
+    color: #428bca;
+}
+
+.index {
+    min-height: 1024px;
+}
+
+.footer {
+    font-size: 11px;
+    text-align: center;
+    font-weight: bold;
+    color: #428bca;
+    margin-bottom: 0;
+    padding: 10px;
+
+
+}
+
+.feed_date {
+    font-size: 9px;
+    color: gray;
+    margin-top: 0px;
+    text-align: right;
+    font-family: Roboto;
+}
+
+.latest {
+    font-size: 9px;
+    color: gray;
+    margin-top: 5px;
+    text-align: right;
+}
+
+
+
+div.jumbotron {
+    border-radius: 24px !important;
+    font-size: 22px;
+    text-align: center;
+    border: 1px solid #CCCCCC;
+    background-color: white;
+    font-family: Roboto;
+
+
+}
+
+div.list-group div.list-group a {
+    height: 120px;
+    padding: 8px;
+    overflow: hidden;
+    border-top: 1px solid #E0E0E0;
+    border-radius: 0;
+
+}
+
+
+.empty {
+    height: 120px;
+    padding: 8px;
+    font-size: 11px;
+
+}
+
+a.list-group-item {
+    height: 120px;
+    padding: 8px;
+    overflow: hidden;
+    border: none;
+    border-top: 1px solid #E0E0E0;
+    border-radius: 0;
+
+}
+
+
+
+.front {
+    height: 150px;
+    text-overflow: ellipsis;
+    overflow: hidden;
+    padding: 8px;
+}
+
+
+.panel-success {
+    font-size: 13px;
+}
+
+.reader {
+    padding: 10px;}
+
+.page {
+    background-color: white;
+    padding: 15px;
+    border-radius: 15px;
+    border: 1px solid #C8C8C8;
+    font-size: 13px;
+    min-height: 600px;
+}
+
+.container-fluid {
+    margin-left: 3%;
+    margin-right: 3%;
+}
+
+
+.foot {
+    padding: 0;
+    margin-top: 20px;
+    width: 100%;
+    text-align: center;
+}
+
+.table tbody tr {
+    border-top: none;
+}
+
+.table tbody tr td {
+    border: none;
+}
+
+.video {
+    min-height: 300px;}
+
+.centered {
+    text-align: center;
+    margin-left: auto;
+    margin-right: auto;}
+
+
+
+
+h1.brand {
+    font-family: 'Shojumaru', serif;
+    font-size: 32px;
+    color: #428bca;
+    margin-top: 2px;
+}
+
+
+.help {
+    font-size: 14px;
+    text-align: justify;
+    min-height: 400px;
+}
+
+.label {
+    font-size: 13px;
+
+}
+
+#myModal {
+    margin-top: 150px;
+
+}
+
+.popover-title{
+    color: red;
+    font-weight: bold;
+}
+
+
+.popover-content{
+    color: red;
+    font-weight: bold;
+
+}
+
+.popover.in {
+    opacity: 0.75;
+    filter: alpha(opacity=75);
+    border: 1px solid red;
+    font-weight: bold;
+    text-align: center;
+    font-size: 12px;
+}
+
+
+.grey {
+    background-color: #E6E6E6;
+}
+
+
+.searchbox {
+    margin-top: 0px;
+    margin-bottom: 5px;
+}
+
+.fa-question-circle {
+
+}
+
+blockquote {
+    text-align: right;
+    border: none;
+    font-style: italic;
+    font-size: 10px;
+
+
+}
+
+.blockquote-left {
+    text-align: left;
+}
+
+p.blockquote {
+    font-size: 12px;
+}
+
+.fb-like-box {
+    margin: auto;
+    text-align: center;
+
+}
+
+ul.nav a {
+    color: #428bca !important;
+    font-weight: 900;
+    font-size: 13px;}
+
+ul.nav a:hover {
+    color: gray !important;
+}
+
+.btn-default {
+    background-color: white;
+    border-radius: 10px;
+    color: green;
+
+}
+
+.slogan {
+    font-family: Oswald;
+    font-size: 32px;
+}
+
+.screenshot {
+    background-color: white;
+    padding: 20px;
+    border-radius: 20px;
+}
+
+.bottom {
+    margin-bottom: 0px;
+}
+
+.aa {
+    opacity: 0.7;
+    padding: 5px;
+}
+
+div.jumbotron:hover {
+    opacity: 0.9
+}

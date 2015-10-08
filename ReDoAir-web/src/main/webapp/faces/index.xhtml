@@ -5,14 +5,15 @@
       xmlns:f="http://java.sun.com/jsf/core"
       xmlns:h="http://java.sun.com/jsf/html">
 <h:head>
-    <title>BootsFaces Basic Page</title>
+    <title>ReDo Travel</title>
+    <style>
+        .Bimage {background-image: url("data/bg.jpg");background-size: cover;}
+    </style>
 </h:head>
-<h:body>
+<h:body styleClass="Bimage">
     <b:container>
-        <b:jumbotron>
+        <b:jumbotron style="background:transparent !important">
             <h1>ReDo Travel</h1>
-            <p>This is a simple hero unit, a simple jumbotron-style component for calling extra attention to featured content or information.</p>
-            <p><a class="btn btn-primary btn-lg">Learn more</a></p>
         </b:jumbotron>
     </b:container>
 </h:body>

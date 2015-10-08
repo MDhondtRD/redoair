@@ -1,0 +1,33 @@
+<!DOCTYPE html >
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets">
+
+<h:head>
+    <h:outputStylesheet library="css" name="bootstrap.css"/>
+    <h:outputStylesheet library="css" name="feedreader.css"/>
+
+    <script src="../resources/js/jquery-2.1.4.min.js"></script>
+    <script src="../resources/js/datepicker.js"></script>
+
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+    <title>Redo Travel</title>
+</h:head>
+
+<h:body styleClass="background-image">
+    <div id="wrapper">
+        <ui:insert name="header" >
+            <ui:include src="/resources/template/header.xhtml" />
+        </ui:insert>
+
+        <ui:insert name="content" >
+            <ui:include src="/resources/template/content.xhtml" />
+        </ui:insert>
+
+        <ui:insert name="footer" >
+            <ui:include src="/resources/template/footer.xhtml" />
+        </ui:insert>
+    </div>
+</h:body>
+
+</html>

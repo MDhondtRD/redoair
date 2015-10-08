@@ -1,11 +1,53 @@
-<?xml version="1.0" encoding="UTF-8"?>
-<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
-        "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<!DOCTYPE html>
+
 <html xmlns="http://www.w3.org/1999/xhtml"
       xmlns:h="http://xmlns.jcp.org/jsf/html"
-      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
-      xmlns:f="http://xmlns.jcp.org/jsf/core">
-<f:view>
-    <h:outputLabel value="Hello, world"/>
-</f:view>
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:b="http://bootsfaces.net/ui">
+<h:head>
+    <meta charset="UTF-8"/>
+    <title>ReDo Travel</title>
+</h:head>
+<h:body>
+    <ui:composition template="/resources/template/template.xhtml">
+
+        <ui:define name="content">
+            <div class="row">
+                <div class="col-md-2" />
+                <div class="col-md-8">
+                    <div class="jumbotron">
+                        <h1 class="slogan">Want to travel the world?</h1>
+                    </div>
+                </div>
+                <div class="col-md-2" />
+            </div>
+
+            <div class="row">
+                <div class="col-md-2" />
+                <div class="col-md-8">
+                    <div class="jumbotron">
+                        <div class="row">
+                            <div class="col-lg-2" />
+                            <div class="col-lg-3">
+                                <a href="../faces/mapView.xhtml" class="btn btn-success" style="width: 200px; height: 75px;">
+                                    <h3>Pick a destination</h3>
+                                </a>
+                            </div>
+                            <div class="col-lg-2" />
+                            <div class="col-lg-3">
+                                <a href="../faces/mapView.xhtml" class="btn btn-success" style="width: 200px; height: 75px;">
+                                    <h3>Find a trip</h3>
+                                </a>
+                            </div>
+                            <div class="col-lg-2" />
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-2" />
+            </div>
+        </ui:define>
+
+    </ui:composition>
+
+</h:body>
 </html>
