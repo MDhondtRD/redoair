@@ -35,14 +35,13 @@ var vectorSource = new ol.source.Vector({
 
 var mapMarkers = [];
 
-function createMapMarker(longitude, latitude, destinationName) {
-    //var pixel = map.getPixelFromCoordinate([longitude, latitude]);
-    //console.log(pixel[0] + " " + pixel[1]);
-    var point = new ol.geom.Point([longitude, latitude]);
-    console.log(point.getCoordinates());
+function createMapMarker(latitude, longitude, destinationName) {;
+    var coordinate = [latitude, longitude];
+    var convertedCoordinates = ol.proj.transform(coordinate, 'EPSG:4326', 'EPSG:3857');
+    coordinate = [convertedCoordinates[0], convertedCoordinates[1]];//array holding long, lat values : 50.970319, 4.515209
+    var point = new ol.geom.Point([coordinate[0], coordinate[1]]);//array holding those very same values.
     var iconFeature = new ol.Feature({
         geometry: point,
-        //geometry: new ol.geom.Point([pixel[0], pixel[1]]),
         id: 'COUNTRY',
         name: destinationName
     });
@@ -61,7 +60,8 @@ var markerLayer = new ol.layer.Vector({
 var vectorLayer = new ol.layer.Vector({
     source: new ol.source.Vector({
         url:'../scripts/countries.geojson',
-        format: new ol.format.GeoJSON()
+        format: new ol.format.GeoJSON(),
+        wrapX: false
     }),
     style: function(feature, resolution) {
         style.getText().setText(resolution < 5000 ? feature.get('name') : '');
@@ -72,7 +72,8 @@ var vectorLayer = new ol.layer.Vector({
 var map = new ol.Map({
     layers: [
         new ol.layer.Tile({
-            source: new ol.source.OSM({layer: 'sat'})
+            source: new ol.source.OSM({layer: 'sat', wrapX: false
+            })
         }),
         vectorLayer,
         markerLayer
@@ -80,7 +81,8 @@ var map = new ol.Map({
     target: 'map',
     view: new ol.View({
         center: [0, 0],
-        zoom: 1
+        zoom: 1,
+        maxZoom: 16
     })
 });
 
@@ -119,9 +121,6 @@ var featureOverlay = new ol.FeatureOverlay({
 
 var highlight;
 var displayFeatureInfo = function(pixel) {
-    console.log(map.getCoordinateFromPixel(pixel));
-    console.log(pixel);
-    //mapPinOnZaventemAirport();
     var feature = map.forEachFeatureAtPixel(pixel, function(feature, layer) {
         return feature;
     });
@@ -159,7 +158,7 @@ map.on('click', function(evt) {
         return feature;
     });
     retrieveDestinationsForClickedCountry(feature.getId());
-    createMapMarker(499695.66300021304, 6603956.131996146);
+    createMapMarker(4.486885983517447,50.90131747057211);//first latitude then longitude
     addMapMarkersToMap();
     displayFeatureInfo(evt.pixel);
 });

@@ -8,6 +8,7 @@ import javax.ejb.LocalBean;
 import javax.ejb.Stateless;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
+import javax.persistence.TypedQuery;
 import java.io.UnsupportedEncodingException;
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
@@ -22,12 +23,14 @@ public class UserRepository implements UserRepositoryInterface {
 
     @Override
     public List<User> getAllUsers() {
-        return em.createQuery("SELECT u FROM User u", User.class).getResultList();
+        List results = em.createQuery("SELECT u FROM User u", User.class).getResultList();
+        return results;
     }
 
     @Override
     public List<User> getAllUsersOfType(UserType type) {
-        return em.createQuery("SELECT u FROM User u WHERE u.type = :type", User.class).setParameter("type", type).getResultList();
+        List results =  em.createQuery("SELECT u FROM User u WHERE u.type = :type", User.class).setParameter("type", type).getResultList();
+        return results;
     }
 
     @Override
@@ -37,7 +40,12 @@ public class UserRepository implements UserRepositoryInterface {
 
     @Override
     public User getUserByUsername(String username) {
-        return em.createQuery("SELECT u FROM User u WHERE u.username = :un", User.class).setParameter("un", username).getSingleResult();
+        List results = em.createQuery("SELECT u FROM User u WHERE u.username = :un", User.class).setParameter("un", username).getResultList();
+        if (!results.isEmpty()) {
+            return (User) results.get(0);
+        } else {
+            return null;
+        }
     }
 
     @Override
@@ -52,7 +60,6 @@ public class UserRepository implements UserRepositoryInterface {
 
     @Override
     public void createUser(User user) {
-        System.out.println(user.getPassword());
         String hashedPassword = hashPassword(user.getPassword());
         user.setPassword(hashedPassword);
         em.persist(user);
@@ -72,14 +79,14 @@ public class UserRepository implements UserRepositoryInterface {
         } else {
             user = getUserByUsername(emailOrUsername);
         }
-        if (user == null) {//The email-address entered is invalid or the user does not exist in the database
+        if (user == null) {//The email-address/username entered is invalid or the user does not exist in the database
             return false;
         } else {
             return comparePasswords(userToCheck, user.getPassword());
         }
     }
 
-    public boolean comparePasswords(User userToCheck, String hashedPassword ) {
+    public boolean comparePasswords(User userToCheck, String hashedPassword) {
         String hashedPasswordFromUserToCheck = hashPassword(userToCheck.getPassword());
         return hashedPassword.equals(hashedPasswordFromUserToCheck);
     }
@@ -92,18 +99,15 @@ public class UserRepository implements UserRepositoryInterface {
             byte[] digestedMessage = md.digest();
             hashedPassword = String.format("%064x", new java.math.BigInteger(1, digestedMessage));
             return hashedPassword;
-        }
-        catch (Exception e) {
-            if(e.equals(NoSuchAlgorithmException.class)) {
+        } catch (Exception e) {
+            if (e.equals(NoSuchAlgorithmException.class)) {
                 throw new NoSuchAlgorithmException("Please use a valid hashAlgorithm");
                 //PROPPER ERROR MESSAGE COMES HERE
-            }
-            else if(e.equals(UnsupportedEncodingException.class)) {
+            } else if (e.equals(UnsupportedEncodingException.class)) {
                 throw new UnsupportedEncodingException("Please use a proper encoding");
                 //PROPPER ERROR MESSAGE COMES HERE
             }
-        }
-        finally {
+        } finally {
             return hashedPassword;
         }
     }
