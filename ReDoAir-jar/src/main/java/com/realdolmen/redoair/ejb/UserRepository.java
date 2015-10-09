@@ -9,14 +9,16 @@ import javax.ejb.Stateless;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 import javax.persistence.TypedQuery;
+import java.io.Serializable;
 import java.io.UnsupportedEncodingException;
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
 import java.util.List;
+import java.util.Base64;
 
 @Stateless
 @LocalBean
-public class UserRepository implements UserRepositoryInterface {
+public class UserRepository implements UserRepositoryInterface, Serializable {
 
     @PersistenceContext
     private EntityManager em;
@@ -29,7 +31,7 @@ public class UserRepository implements UserRepositoryInterface {
 
     @Override
     public List<User> getAllUsersOfType(UserType type) {
-        List results =  em.createQuery("SELECT u FROM User u WHERE u.type = :type", User.class).setParameter("type", type).getResultList();
+        List results = em.createQuery("SELECT u FROM User u WHERE u.type = :type", User.class).setParameter("type", type).getResultList();
         return results;
     }
 
@@ -74,11 +76,7 @@ public class UserRepository implements UserRepositoryInterface {
     public boolean validateUser(User userToCheck) {
         String emailOrUsername = userToCheck.getEmail();
         User user;
-        if (emailOrUsername.contains("@")) { //checks whether it's a username or email address
-            user = getUserByEmail(emailOrUsername);
-        } else {
-            user = getUserByUsername(emailOrUsername);
-        }
+        user = getUserByEmail(emailOrUsername);
         if (user == null) {//The email-address/username entered is invalid or the user does not exist in the database
             return false;
         } else {
@@ -92,24 +90,14 @@ public class UserRepository implements UserRepositoryInterface {
     }
 
     public String hashPassword(String unhashedPassword) {
-        String hashedPassword = null;
+        MessageDigest md;
         try {
-            MessageDigest md = MessageDigest.getInstance("SHA-256");
-            md.update(unhashedPassword.getBytes("UTF-8"));
-            byte[] digestedMessage = md.digest();
-            hashedPassword = String.format("%064x", new java.math.BigInteger(1, digestedMessage));
-            return hashedPassword;
-        } catch (Exception e) {
-            if (e.equals(NoSuchAlgorithmException.class)) {
-                throw new NoSuchAlgorithmException("Please use a valid hashAlgorithm");
-                //PROPPER ERROR MESSAGE COMES HERE
-            } else if (e.equals(UnsupportedEncodingException.class)) {
-                throw new UnsupportedEncodingException("Please use a proper encoding");
-                //PROPPER ERROR MESSAGE COMES HERE
-            }
-        } finally {
-            return hashedPassword;
+            md = MessageDigest.getInstance("SHA-256");
+        } catch (NoSuchAlgorithmException e) {
+            throw new RuntimeException("SHA-256 algorithm not available for password hashing", e);
         }
+        md.update(unhashedPassword.getBytes());
+        return Base64.getEncoder().encodeToString(md.digest());
     }
 
     public EntityManager getEntityManager() {

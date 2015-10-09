@@ -8,9 +8,15 @@ import de.rtner.security.auth.spi.PBKDF2Parameters;
 import de.rtner.security.auth.spi.SimplePBKDF2;
 
 import javax.enterprise.context.RequestScoped;
+import javax.faces.application.FacesMessage;
+
+import javax.enterprise.context.SessionScoped;
+import javax.faces.context.FacesContext;
 import javax.inject.Inject;
 import javax.inject.Named;
+import javax.servlet.http.HttpSession;
 import javax.validation.constraints.NotNull;
+import java.io.Serializable;
 import java.security.SecureRandom;
 
 /**
@@ -18,31 +24,30 @@ import java.security.SecureRandom;
  */
 @Named
 @RequestScoped
-public class LoginController {
+public class LoginController implements Serializable {
 
     @Inject
     private UserRepository userRepository;
 
-    @NotNull(message = "Username or Email is required!")
-    private String email;
-
-    private String password;
+    @Inject
+    LoggedInUserController loggedInUserController;
 
     private User user = new User();
 
-
-    public String validateUser() {
-        user.setPassword(password);
-        user.setEmail(email);
+    public String validateUserAndLogIn() {
         if(userRepository.validateUser(user)) {
+            /*loggedInUserController.login(user.getEmail());*/
             return "success";//redirect to home page
         }
         else {
+            FacesContext.getCurrentInstance().addMessage(
+                    null,
+                    new FacesMessage(FacesMessage.SEVERITY_WARN,
+                            "Incorrect Username and Password",
+                            "Please enter correct username and Password"));
             return "login";//redirect to login page + error message
         }
     }
-
-
 
     public User getUser() {
         return user;
@@ -52,19 +57,4 @@ public class LoginController {
         this.user = user;
     }
 
-    public String getEmail() {
-        return email;
-    }
-
-    public void setEmail(String email) {
-        this.email = email;
-    }
-
-    public String getPassword() {
-        return password;
-    }
-
-    public void setPassword(String password) {
-        this.password = password;
-    }
 }
