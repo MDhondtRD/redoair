@@ -48,6 +48,7 @@
         <class>com.realdolmen.redoair.entities.Trip</class>
         <class>com.realdolmen.redoair.entities.Flight</class>
         <class>com.realdolmen.redoair.entities.User</class>
+        <class>com.realdolmen.redoair.entities.Booking</class>
 
 
         <properties>
