@@ -21,7 +21,7 @@ public class Booking implements Serializable{
      * ATTRIBUTES
      */
 
-    @OneToMany
+    @ManyToMany
     private List<Trip> trips;
 
     @ManyToOne
@@ -106,6 +106,7 @@ public class Booking implements Serializable{
     public void setPricePaid(double pricePaid) {
         if (pricePaid < 0.0)
             throw new IllegalArgumentException("A booking should have a price >= 0");
+        this.pricePaid = pricePaid;
     }
 
     public int getSeatsBooked() {

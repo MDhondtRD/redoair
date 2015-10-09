@@ -10,22 +10,24 @@
     <script src="../resources/js/jquery-2.1.4.min.js"></script>
     <script src="../resources/js/datepicker.js"></script>
 
-    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
     <title>Redo Travel</title>
 </h:head>
 
 <h:body styleClass="background-image">
     <div id="wrapper">
-        <ui:insert name="header" >
-            <ui:include src="/resources/template/header.xhtml" />
+        <ui:insert name="header">
+            <ui:include src="/resources/template/header.xhtml"/>
         </ui:insert>
 
-        <ui:insert name="content" >
-            <ui:include src="/resources/template/content.xhtml" />
-        </ui:insert>
+        <div class="container index">
+            <ui:insert name="content">
+                <ui:include src="/resources/template/content.xhtml"/>
+            </ui:insert>
+        </div>
 
-        <ui:insert name="footer" >
-            <ui:include src="/resources/template/footer.xhtml" />
+        <ui:insert name="footer">
+            <ui:include src="/resources/template/footer.xhtml"/>
         </ui:insert>
     </div>
 </h:body>

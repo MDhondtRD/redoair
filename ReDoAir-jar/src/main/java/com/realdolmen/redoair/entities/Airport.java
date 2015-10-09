@@ -9,22 +9,30 @@ import java.io.Serializable;
 @Entity
 public class Airport implements Serializable {
 
+    /**
+     * ID
+     */
+
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
     private Integer id;
+
 
     /**
      * ATTRIBUTES
      */
 
-    private String destinationCity;
-    private String nameOfAirport;
+    private String city;
+
+    private String name;
+
+    private String country;
 
     @Column(nullable=false)
     private double longitude;
 
     @Column(nullable=false)
     private double latitude;
+
 
     /**
      * CONSTRUCTORS
@@ -35,45 +43,41 @@ public class Airport implements Serializable {
         // used by Hibernate
     }
 
-    public Airport(String destinationCity, double longitude, double latitude) {
-        this.destinationCity = destinationCity;
+    public Airport(Integer id, String city, String name, String country, double longitude, double latitude) {
+        this.id = id;
+        this.city = city;
+        this.name = name;
+        this.country = country;
         this.longitude = longitude;
         this.latitude = latitude;
     }
+
+
+    /**
+     * GETTERS
+     */
 
     public Integer getId() {
         return id;
     }
 
-    public String getDestinationCity() {
-        return destinationCity;
+    public String getCity() {
+        return city;
     }
 
-    public void setDestinationCity(String destinationCity) {
-        this.destinationCity = destinationCity;
+    public String getName() {
+        return name;
     }
 
-    public String getNameOfAirport() {
-        return nameOfAirport;
-    }
-
-    public void setNameOfAirport(String nameOfAirport) {
-        this.nameOfAirport = nameOfAirport;
+    public String getCountry() {
+        return country;
     }
 
     public double getLongitude() {
         return longitude;
     }
 
-    public void setLongitude(double longitude) {
-        this.longitude = longitude;
-    }
-
     public double getLatitude() {
         return latitude;
-    }
-
-    public void setLatitude(double latitude) {
-        this.latitude = latitude;
     }
 }

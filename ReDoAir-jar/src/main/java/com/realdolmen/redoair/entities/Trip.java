@@ -157,9 +157,9 @@ public class Trip implements Serializable {
 
     public double getTripPrice() {
         double price = 0.0;
-        price += getOutFlight().getPrice();
+        price += getOutFlight().getEndUserPrice();
         if (getReturnFlight() != null)
-            price += getReturnFlight().getPrice();
+            price += getReturnFlight().getEndUserPrice();
         price += getTripDayPrice() * getDurationOfTripInDays();
         return BigDecimal.valueOf(price).setScale(2, BigDecimal.ROUND_HALF_UP).doubleValue();
     }

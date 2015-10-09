@@ -132,4 +132,10 @@
         <role-name>PARTNER</role-name>
     </security-role>
 
+    <listener>
+        <listener-class>
+            com.realdolmen.redoair.PopulateDatabase
+        </listener-class>
+    </listener>
+
 </web-app>

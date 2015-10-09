@@ -4,6 +4,7 @@ import com.realdolmen.redoair.ejb.UserRepository;
 import com.realdolmen.redoair.entities.Address;
 import com.realdolmen.redoair.entities.User;
 import com.realdolmen.redoair.entities.UserType;
+import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
 
@@ -13,139 +14,115 @@ import java.util.List;
 public class UserRepositoryTest extends DataPersistenceTest {
 
     private UserRepository repo;
+    private static boolean populated;
+    private int numberOfCustomers = 50;
+    private int numberOfEmployees = 5;
+    private int numberOfPartners = 20;
+    private int numberOfUsers = numberOfCustomers + numberOfEmployees + numberOfPartners;
 
     @Before
-    public void before(){
+    public void before() {
+        initialiseRepositories();
+        if (!populated) {
+            populateDatabase();
+            populated = true;
+        }
+    }
+
+    @After
+    public void after(){
+        for (User u : repo.getAllUsers())
+            repo.removeUser(u);
+        repo.getEntityManager().flush();
+        populated = false;
+    }
+
+    public void initialiseRepositories() {
         repo = new UserRepository();
         repo.setEntityManager(entityManager());
     }
 
-    @Test
-    public void userCanBePersisted(){
-        User u1 = new User("MDhondt1", "123", UserType.CUSTOMER, "maarten.dhondt1@realdolmen.com");
-        User u2 = new User("MDhondt2", "123", UserType.EMPLOYEE, "maarten.dhondt2@realdolmen.com");
-        User u3 = new User("MDhondt3", "123", UserType.PARTNER, "maarten.dhondt3@realdolmen.com");
-        repo.createUser(u1);
-        repo.createUser(u2);
-        repo.createUser(u3);
+    public void populateDatabase() {
+        for (int i = 1; i <= numberOfCustomers; i++)
+            repo.createUser(new User("Customer " + (1000 + i), "123", UserType.CUSTOMER, "maarten.customer" + i + "@skynet.be"));
+        for (int i = 1; i <= numberOfEmployees; i++)
+            repo.createUser(new User("Employee " + (1000 + i), "123", UserType.EMPLOYEE, "maarten.employee" + i + "@skynet.be"));
+        for (int i = 1; i <= numberOfPartners; i++)
+            repo.createUser(new User("Partner " + (1000 + i), "123", UserType.PARTNER, "maarten.partner" + i + "@skynet.be"));
         repo.getEntityManager().flush();
-        assertNotNull(u1.getId());
-        assertNotNull(u2.getId());
-        assertNotNull(u3.getId());
     }
-    
+
     @Test
-    public void usersCanBeRetrieved(){
-        assertEquals(1, repo.getAllUsers().size());//The user set by DBunit
-        User u1 = new User("MDhondt1", "123", UserType.CUSTOMER, "maarten.dhondt1@realdolmen.com");
-        User u2 = new User("MDhondt2", "123", UserType.CUSTOMER, "maarten.dhondt2@realdolmen.com");
-        repo.createUser(u1);
-        repo.createUser(u2);
+    public void allUsersCanBeRetrieved() {
+        assertEquals(numberOfUsers, repo.getAllUsers().size());
+    }
+
+    @Test
+    public void allUsersCanBeRetrievedByType() {
+        assertEquals(numberOfCustomers, repo.getAllUsersOfType(UserType.CUSTOMER).size());
+        assertEquals(numberOfPartners, repo.getAllUsersOfType(UserType.PARTNER).size());
+        assertEquals(numberOfEmployees, repo.getAllUsersOfType(UserType.EMPLOYEE).size());
+    }
+
+    @Test
+    public void usersCanBeRetrievedById() {
+        int startIndex = repo.getEntityManager().createQuery("SELECT MIN(u.id) FROM User u", Integer.class).getSingleResult();
+        for (int i = startIndex; i <= numberOfUsers; i++)
+            assertNotNull(repo.getUserById(i));
+        assertNull(repo.getUserById(numberOfUsers + 1));
+    }
+
+    @Test
+    public void usersCanBeRetrievedByUsername() {
+        for (int i = 1; i <= numberOfCustomers; i++)
+            assertNotNull(repo.getUserByUsername("Customer " + (1000 + i)));
+        assertNull(repo.getUserByUsername("Customer " + (1000 + numberOfCustomers + 1)));
+        for (int i = 1; i <= numberOfEmployees; i++)
+            assertNotNull(repo.getUserByUsername("Employee " + (1000 + i)));
+        assertNull(repo.getUserByUsername("EMployee " + (1000 + numberOfEmployees + 1)));
+        for (int i = 1; i <= numberOfPartners; i++)
+            assertNotNull(repo.getUserByUsername("Partner " + (1000 + i)));
+        assertNull(repo.getUserByUsername("Partner " + (1000 + numberOfPartners + 1)));
+    }
+
+    @Test
+    public void usersCanBeRetrievedByEmail() {
+        for (int i = 1; i <= numberOfCustomers; i++)
+            assertNotNull(repo.getUserByEmail("maarten.customer" + i + "@skynet.be"));
+        assertNull(repo.getUserByEmail("maarten.customer" + (numberOfCustomers + 1) + "@skynet.be"));
+        for (int i = 1; i <= numberOfEmployees; i++)
+            assertNotNull(repo.getUserByEmail("maarten.employee" + i + "@skynet.be"));
+        assertNull(repo.getUserByEmail("maarten.employee" + (numberOfEmployees + 1) + "@skynet.be"));
+        for (int i = 1; i <= numberOfPartners; i++)
+            assertNotNull(repo.getUserByEmail("maarten.partner" + i + "@skynet.be"));
+        assertNull(repo.getUserByEmail("maarten.partner" + (numberOfPartners + 1) + "@skynet.be"));
+    }
+
+    @Test
+    public void usersCanBeCreatedAndRemoved() {
+        assertEquals(numberOfUsers, repo.getAllUsers().size());
+        assertEquals(numberOfCustomers, repo.getAllUsersOfType(UserType.CUSTOMER).size());
+        assertEquals(numberOfEmployees, repo.getAllUsersOfType(UserType.EMPLOYEE).size());
+        assertEquals(numberOfPartners, repo.getAllUsersOfType(UserType.PARTNER).size());
+        User customer = new User("Customer", "123", UserType.CUSTOMER, "maarten.customer@skynet.be");
+        User employee = new User("Employee", "123", UserType.EMPLOYEE, "maarten.employee@skynet.be");
+        User partner = new User("Partner", "123", UserType.PARTNER, "maarten.partner@skynet.be");
+        repo.createUser(customer);
+        repo.createUser(employee);
+        repo.createUser(partner);
         repo.getEntityManager().flush();
-        assertEquals(3, repo.getAllUsers().size());
-    }
-
-    @Test
-    public void usersCanBeRemoved(){
-        assertEquals(1, repo.getAllUsers().size());
-        User u1 = new User("MDhondt1", "123", UserType.CUSTOMER, "maarten.dhondt1@realdolmen.com");
-        User u2 = new User("MDhondt2", "123", UserType.EMPLOYEE, "maarten.dhondt2@realdolmen.com");
-        User u3 = new User("MDhondt3", "123", UserType.PARTNER, "maarten.dhondt3@realdolmen.com");
-        repo.createUser(u1); repo.createUser(u2); repo.createUser(u3); repo.getEntityManager().flush();
-        assertEquals(4, repo.getAllUsers().size());
-        repo.deleteUser(u1);
-        repo.deleteUser(u2);
+        assertEquals(numberOfUsers + 3, repo.getAllUsers().size());
+        assertEquals(numberOfCustomers + 1, repo.getAllUsersOfType(UserType.CUSTOMER).size());
+        assertEquals(numberOfEmployees + 1, repo.getAllUsersOfType(UserType.EMPLOYEE).size());
+        assertEquals(numberOfPartners + 1, repo.getAllUsersOfType(UserType.PARTNER).size());
+        repo.removeUser(customer);
+        repo.removeUser(employee);
+        repo.removeUser(partner);
         repo.getEntityManager().flush();
-        assertEquals(2, repo.getAllUsers().size());
-        repo.deleteUser(u3);
-        repo.deleteUser(repo.getUserByUsername("MDhondt"));
-        repo.getEntityManager().flush();
-        System.out.println(repo.getAllUsers().size());
-        assertEquals(0, repo.getAllUsers().size());
-    }
-
-    @Test
-    public void usersCanBeRetrievedByType(){
-        assertEquals(1, repo.getAllUsersOfType(UserType.CUSTOMER).size());
-        assertEquals(0, repo.getAllUsersOfType(UserType.EMPLOYEE).size());
-        assertEquals(0, repo.getAllUsersOfType(UserType.PARTNER).size());
-
-        User u1 = new User("MDhondt1", "123", UserType.CUSTOMER, "maarten.dhondt1@realdolmen.com");
-        User u2 = new User("MDhondt2", "123", UserType.EMPLOYEE, "maarten.dhondt2@realdolmen.com");
-        User u3 = new User("MDhondt3", "123", UserType.PARTNER, "maarten.dhondt3@realdolmen.com");
-        User u4 = new User("MDhondt4", "123", UserType.CUSTOMER, "maarten.dhondt4@realdolmen.com");
-        User u5 = new User("MDhondt5", "123", UserType.EMPLOYEE, "maarten.dhondt5@realdolmen.com");
-        repo.createUser(u1); repo.createUser(u2); repo.createUser(u3); repo.createUser(u4); repo.createUser(u5);
-        repo.getEntityManager().flush();
-
-        assertEquals(3, repo.getAllUsersOfType(UserType.CUSTOMER).size());
-        assertEquals(2, repo.getAllUsersOfType(UserType.EMPLOYEE).size());
-        assertEquals(1, repo.getAllUsersOfType(UserType.PARTNER).size());
-    }
-
-    @Test
-    public void usersCanBeRetrievedById(){
-        assertNotNull(repo.getUserById(1));
-        User u = new User("MDhondt1", "123", UserType.CUSTOMER, "maarten.dhondt@realdolmen.com");
-        repo.createUser(u); repo.getEntityManager().flush();
-        assertEquals(u, repo.getUserById(u.getId()));
-    }
-
-    @Test
-    public void usersCanBeRetrievedByUsername(){
-        assertNotNull(repo.getUserByUsername("MDhondt"));
-        User u = new User("MDhondt1", "123", UserType.CUSTOMER, "maarten.dhondt@realdolmen.com");
-        repo.createUser(u); repo.getEntityManager().flush();
-        assertEquals(u, repo.getUserByUsername(u.getUsername()));
-    }
-
-    @Test
-    public void whenTryingToRetrieveUserByInvalidUsernameReturnNull() {
-        assertNull(repo.getUserByUsername("aefzefzerf"));
-    }
-
-    @Test
-    public void usersCanBeRetrievedByEmail(){
-        assertNotNull(repo.getUserByEmail("maarten.dhondt@skynet.be"));
-        User u = new User("MDhondt1", "123", UserType.CUSTOMER, "maarten.dhondt@realdolmen.com");
-        repo.createUser(u); repo.getEntityManager().flush();
-        assertEquals(u, repo.getUserByEmail(u.getEmail()));
-    }
-
-    @Test
-    public void whenTryingToRetrieveUserByInvalidEmailReturnNull() {
-        assertNull(repo.getUserByEmail("aefzefzerf@zfzefzef"));
-    }
-
-    @Test
-    public void userValidationSucceedsWithCorrectArguments() {
-        User u = new User("MDhondt", "123", UserType.CUSTOMER, "maarten.dhondt@skynet.be");
-        boolean bool = repo.validateUser(u);
-        assertTrue(bool);
-    }
-
-    @Test
-    public void userValidationFailsWithIncorrectArguments() {
-        User u = new User("MDhondt", "1452", UserType.CUSTOMER, "maarten.dhondt@skynet.be");
-        boolean bool = repo.validateUser(u);
-        assertFalse(bool);
-    }
-
-
-    @Test
-    public void hashedPasswordsAreEqualWhenCompared() {
-        String unhashedPassword = "Blabla123";
-        User user = new User("MDhondt1", unhashedPassword, UserType.CUSTOMER, "maarten.dhondt@realdolmen.com");//user that logs in
-        String hashedPasswordCheck = repo.hashPassword(unhashedPassword);//Hashed password retrieved from the DB
-        assertTrue(repo.comparePasswords(user, hashedPasswordCheck));
-    }
-
-    @Test
-    public void hashedPasswordsAreNotEqualWhenComparedToADifferentPassword() {
-        String unhashedPassword = "Blabla123";
-        User user = new User("MDhondt1", unhashedPassword.concat("blabla"), UserType.CUSTOMER, "maarten.dhondt@realdolmen.com");
-        String hashedPasswordCheck = repo.hashPassword(unhashedPassword);
-        assertFalse(repo.comparePasswords(user, hashedPasswordCheck));
+        assertEquals(numberOfUsers, repo.getAllUsers().size());
+        assertEquals(numberOfCustomers, repo.getAllUsersOfType(UserType.CUSTOMER).size());
+        assertEquals(numberOfEmployees, repo.getAllUsersOfType(UserType.EMPLOYEE).size());
+        assertEquals(numberOfPartners, repo.getAllUsersOfType(UserType.PARTNER).size());
     }
 
 

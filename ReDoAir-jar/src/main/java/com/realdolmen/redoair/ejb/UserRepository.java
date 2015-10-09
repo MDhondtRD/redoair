@@ -66,7 +66,7 @@ public class UserRepository implements UserRepositoryInterface {
     }
 
     @Override
-    public void deleteUser(User user) {
+    public void removeUser(User user) {
         em.remove(user);
     }
 

@@ -94,7 +94,7 @@ public class FlightRepository implements FlightRepositoryInterface {
     }
 
     @Override
-    public void deleteFlight(Flight flight) {
+    public void removeFlight(Flight flight) {
         em.remove(flight);
     }
 

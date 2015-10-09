@@ -22,7 +22,7 @@ public interface FlightRepositoryInterface {
     public Flight getFlightById(Integer id);
     public List<Flight> getAllFlightsByCode(String code);
     public void createFlight(Flight flight);
-    public void deleteFlight(Flight flight);
+    public void removeFlight(Flight flight);
     public Set<String> getAllFlightCodesFromPartner(String username);
 
 }

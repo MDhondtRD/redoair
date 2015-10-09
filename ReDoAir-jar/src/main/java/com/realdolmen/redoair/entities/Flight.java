@@ -28,11 +28,11 @@ public class Flight implements Serializable {
     @Column(nullable = false)
     private String code;
 
-    @Column(nullable = false)
-    private String departureCity;
+    @ManyToOne
+    private Airport departureAirport;
 
-    @Column(nullable = false)
-    private String destinationCity;
+    @ManyToOne
+    private Airport destinationAirport;
 
     @Column(nullable = false)
     @Temporal(TemporalType.TIMESTAMP)
@@ -44,9 +44,6 @@ public class Flight implements Serializable {
     @Column(nullable = false)
     private double price;
 
-    @Column(nullable = false)
-    private String destinationCountryCode;
-
     private double lengthOfFlight;
 
     private double endUserPrice;
@@ -54,9 +51,6 @@ public class Flight implements Serializable {
     @ElementCollection(fetch = FetchType.EAGER)
     @Column(name = "discounts")
     private List<Discount> discounts = new ArrayList<>();
-
-    @Transient
-    private String airlineCompany;
 
 
     /**
@@ -68,14 +62,23 @@ public class Flight implements Serializable {
         // used by Hibernate
     }
 
-    public Flight(String code, String departureCity, String destinationCity, LocalDateTime departure, int availableSeats, double price, String destinationCountryCode) {
-        this.setCode(code);
-        this.setDepartureCity(departureCity);
-        this.setDestinationCity(destinationCity);
-        this.setDeparture(departure);
-        this.setAvailableSeats(availableSeats);
-        this.setPrice(price);
-        this.setDestinationCountryCode(destinationCountryCode);
+    public Flight(String code, Airport departureAirport, Airport destinationAirport, LocalDateTime departure, int availableSeats, double price) {
+        setCode(code);
+        setDepartureAirport(departureAirport);
+        setDestinationAirport(destinationAirport);
+        setDeparture(departure);
+        setAvailableSeats(availableSeats);
+        setPrice(price);
+    }
+
+    public Flight(String code, Airport departureAirport, Airport destinationAirport, LocalDateTime departure, int availableSeats, double price, List<Discount> discounts) {
+        setCode(code);
+        setDepartureAirport(departureAirport);
+        setDestinationAirport(destinationAirport);
+        setDeparture(departure);
+        setAvailableSeats(availableSeats);
+        setPrice(price);
+        setDiscounts(discounts);
     }
 
 
@@ -105,19 +108,37 @@ public class Flight implements Serializable {
     }
 
     public String getDepartureCity() {
-        return departureCity;
+        return departureAirport.getCity();
     }
 
-    public void setDepartureCity(String departureCity) {
-        this.departureCity = departureCity;
+    public String getDepartureCountry() {
+        return departureAirport.getCountry();
     }
 
     public String getDestinationCity() {
-        return destinationCity;
+        return destinationAirport.getCity();
     }
 
-    public void setDestinationCity(String destinationCity) {
-        this.destinationCity = destinationCity;
+    public String getDestinationCountry() {
+        return destinationAirport.getCountry();
+    }
+
+    public Airport getDepartureAirport(){
+        return departureAirport;
+    }
+
+    public void setDepartureAirport(Airport departureAirport){
+        this.departureAirport = departureAirport;
+    }
+
+    public Airport getDestinationAirport(){
+        return destinationAirport;
+    }
+
+    public void setDestinationAirport(Airport destinationAirport){
+        if (destinationAirport == departureAirport)
+            throw new IllegalArgumentException("Destination airport should not be the same as the departure airport.");
+        this.destinationAirport = destinationAirport;
     }
 
     public Date getDeparture() {
@@ -180,22 +201,6 @@ public class Flight implements Serializable {
 
     public void setDiscounts(List<Discount> discounts) {
         this.discounts = discounts;
-    }
-
-    public String getAirlineCompany() {
-        return airlineCompany;
-    }
-
-    public void setAirlineCompany(String airlineCompany) {
-        this.airlineCompany = airlineCompany;
-    }
-
-    public String getDestinationCountryCode() {
-        return destinationCountryCode;
-    }
-
-    public void setDestinationCountryCode(String destinationCountryCode) {
-        this.destinationCountryCode = destinationCountryCode;
     }
 
     /**
