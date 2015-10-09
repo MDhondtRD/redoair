@@ -32,7 +32,7 @@ public class MapController {
             return "chooseTrip";
         }
         else {
-            return "mapView";
+            return "chooseDestination";
         }
     }
 

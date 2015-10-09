@@ -9,6 +9,8 @@ import javax.faces.validator.FacesValidator;
 import javax.faces.validator.Validator;
 import javax.faces.validator.ValidatorException;
 import javax.inject.Inject;
+import javax.persistence.PersistenceContext;
+import javax.persistence.PersistenceException;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
@@ -21,6 +23,7 @@ public class EmailValidator implements Validator {
     @Inject
     private UserRepository userRepository;
 
+    private static final String EMAIL_ALREADY_EXISTS = "This email address is already used.";
     private static final String EMAIL_PATTERN = "^[_A-Za-z0-9-]+(\\." +
             "[_A-Za-z0-9-]+)*@[A-Za-z0-9]+(\\.[A-Za-z0-9]+)*" +
             "(\\.[A-Za-z]{2,})$";
@@ -35,17 +38,16 @@ public class EmailValidator implements Validator {
     @Override
     public void validate(FacesContext context, UIComponent component,
                          Object value) throws ValidatorException {
-
-        matcher = pattern.matcher(value.toString());
-        if(!matcher.matches()){
-
-            FacesMessage msg =
-                    new FacesMessage("E-mail validation failed.",
-                            "Invalid E-mail format.");
-            msg.setSeverity(FacesMessage.SEVERITY_ERROR);
-            throw new ValidatorException(msg);
-
-        }
+        String email = value.toString();
+        matcher = pattern.matcher(email);
+            if(!matcher.matches()){
+                FacesMessage msg =
+                        new FacesMessage("E-mail validation failed.",
+                                "Invalid E-mail format.");
+                msg.setSeverity(FacesMessage.SEVERITY_ERROR);
+                throw new ValidatorException(msg);
+            }
 
     }
+
 }

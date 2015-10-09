@@ -10,6 +10,7 @@ import java.util.Date;
 @NamedQueries({
         @NamedQuery(name = User.FIND_USER_BY_USERNAME, query = "SELECT u FROM User u WHERE u.username = :username")
 })
+@Table(name = "users")
 public class User implements Serializable{
 
     public static final String FIND_USER_BY_USERNAME = "User.findUserByUsername";

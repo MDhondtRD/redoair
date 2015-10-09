@@ -5,8 +5,10 @@ import com.realdolmen.redoair.entities.Address;
 import com.realdolmen.redoair.entities.User;
 
 import javax.enterprise.context.RequestScoped;
+import javax.faces.bean.ManagedProperty;
 import javax.inject.Inject;
 import javax.inject.Named;
+import javax.validation.constraints.NotNull;
 import java.io.UnsupportedEncodingException;
 import java.security.NoSuchAlgorithmException;
 
@@ -21,14 +23,21 @@ public class SignUpController {
     private UserRepository userRepository;
 
     private User user = new User();
+
     private Address address = new Address();
-    private String password;
+
+    @ManagedProperty("#{param.name}")
+    private String name;
 
     public String createUser() {
-        user.setPassword(userRepository.hashPassword(password));
+        setName(user.getName());
         user.setAddress(address);
         userRepository.createUser(user);
-        return "login";//redirects to the loginPage
+        return "succesfullRegistration";
+    }
+
+    public String cancel() {
+        return "home";
     }
 
     public User getUser() {
@@ -47,11 +56,11 @@ public class SignUpController {
         this.address = address;
     }
 
-    public String getPassword() {
-        return password;
+    public String getName() {
+        return name;
     }
 
-    public void setPassword(String password) {
-        this.password = password;
+    public void setName(String name) {
+        this.name = name;
     }
 }

@@ -18,14 +18,14 @@
         </b:jumbotron>
         <h:form>
             <h:outputLabel value="Email:"/>
-            <h:inputText id="email" value="#{loginController.email}" tabindex="1" required="true"
-                         size="20" requiredMessage="Username is required"><f:validator validatorId="emailValidator"/></h:inputText>
+            <h:inputText id="email" value="#{loginController.user.email}" tabindex="1" required="true"
+                         size="20" requiredMessage="Email is required"><f:validator validatorId="emailValidator"/></h:inputText>
             <h:message for="email" style="color:red"/>
             <p></p>
 
             <h:outputLabel value="Password:"/>
-            <h:inputSecret id="password" value="#{loginController.password}"></h:inputSecret>
-            <h:commandButton value="Login" action="#{loginController.validateUser()}"/>
+            <h:inputSecret id="password" value="#{loginController.user.password}"></h:inputSecret>
+            <h:commandButton value="Login" action="#{loginController.validateUserAndLogIn()}"/>
         </h:form>
     </b:container>
 </h:body>

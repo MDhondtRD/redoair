@@ -26,7 +26,7 @@ var iconStyle = new ol.style.Style({
         anchorXUnits: 'fraction',
         anchorYUnits: 'pixels',
         opacity: 0.75,
-        src: '../data/map_icon.png'
+        src: '../resources/images/map_icon.png'
     }))
 });
 
@@ -59,7 +59,7 @@ var markerLayer = new ol.layer.Vector({
 //-----------------------------------------------------------------------------END OF MARKER-------------------------------------------------------
 var vectorLayer = new ol.layer.Vector({
     source: new ol.source.Vector({
-        url:'../scripts/countries.geojson',
+        url:'../resources/data/countries.geojson',
         format: new ol.format.GeoJSON(),
         wrapX: false
     }),
