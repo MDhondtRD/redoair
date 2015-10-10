@@ -15,7 +15,8 @@ import java.util.List;
 @Named
 @RequestScoped
 public class MapController {
-    private String countryCode;
+
+    private String country;
     private List<Trip> trips = new ArrayList<>();
     private String tripName = "";
 
@@ -23,7 +24,7 @@ public class MapController {
     private TripRepository tripRepository;
 
     public String retrieveDestinationsForCountry() {
-        trips = tripRepository.getAllFutureTripsByCountryCode(countryCode);
+        trips = tripRepository.getAllFutureTripsByCountry(country);
         for(Trip trip: trips) {
             System.out.println("TRIP id: " + trip.getId());
             tripName = trip.getTravelAgency();
@@ -36,12 +37,12 @@ public class MapController {
         }
     }
 
-    public String getCountryCode() {
-        return countryCode;
+    public String getCountry() {
+        return country;
     }
 
-    public void setCountryCode(String countryCode) {
-        this.countryCode = countryCode;
+    public void setCountry(String country) {
+        this.country = country;
     }
 
     public List<Trip> getTrips() {

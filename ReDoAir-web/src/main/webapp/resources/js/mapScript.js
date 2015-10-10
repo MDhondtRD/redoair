@@ -18,7 +18,41 @@ var style = new ol.style.Style({
     })
 });
 var styles = [style];
+var maxExtent = [-18680000,-2670000,19120000,10190000];
+var viewExtent = [-20013216.422474474, -20044220.06907162, 20002981.712778978, 20039791.065600768];
 
+var view = new ol.View({
+    center: [0, 0],
+    maxResolution: 19500,
+    minResolution: 100,
+    zoom: 1
+});
+
+var constrainPan = function() {
+    var visible = view.calculateExtent(map.getSize());
+    var centre = view.getCenter();
+    var delta;
+    var adjust = false;
+    if ((delta = viewExtent[0] - visible[0]) > 0) {
+        adjust = true;
+        centre[0] += delta;
+    } else if ((delta = viewExtent[2] - visible[2]) < 0) {
+        adjust = true;
+        centre[0] += delta;
+    }
+    if ((delta = viewExtent[1] - visible[1]) > 0) {
+        adjust = true;
+        centre[1] += delta;
+    } else if ((delta = viewExtent[3] - visible[3]) < 0) {
+        adjust = true;
+        centre[1] += delta;
+    }
+    if (adjust) {
+        view.setCenter(centre);
+    }
+};
+view.on('change:resolution', constrainPan);
+view.on('change:center', constrainPan);
 //-----------------------------------------------------------------------------START OF MARKER-------------------------------------------------------
 var iconStyle = new ol.style.Style({
     image: new ol.style.Icon(/** @type {olx.style.IconOptions} */ ({
@@ -30,7 +64,7 @@ var iconStyle = new ol.style.Style({
     }))
 });
 
-var vectorSource = new ol.source.Vector({
+var vectorSource = new ol.source.Vector({wrapX:false
 });
 
 var mapMarkers = [];
@@ -45,6 +79,7 @@ function createMapMarker(latitude, longitude, destinationName) {;
         id: 'COUNTRY',
         name: destinationName
     });
+    iconFeature.setId("MAPMARKER");
     iconFeature.setStyle(iconStyle);
     mapMarkers.push(iconFeature);
 }
@@ -54,7 +89,8 @@ function addMapMarkersToMap() {
 }
 
 var markerLayer = new ol.layer.Vector({
-    source: vectorSource
+    source: vectorSource,
+    extent: maxExtent
 });
 //-----------------------------------------------------------------------------END OF MARKER-------------------------------------------------------
 var vectorLayer = new ol.layer.Vector({
@@ -66,24 +102,26 @@ var vectorLayer = new ol.layer.Vector({
     style: function(feature, resolution) {
         style.getText().setText(resolution < 5000 ? feature.get('name') : '');
         return styles;
-    }
+    },
+    extent: maxExtent
 });
 
+var mapSourceLayer = new ol.layer.Tile({
+    source: new ol.source.OSM({layer: 'sat', wrapX:false
+    }),
+});
+
+
 var map = new ol.Map({
-    layers: [
-        new ol.layer.Tile({
-            source: new ol.source.OSM({layer: 'sat', wrapX: false
-            })
-        }),
+    controls : ol.control.defaults({attribution: false, rotate:false})
+        .extend([ new ol.control.FullScreen() ]),
+    interactions : ol.interaction.defaults({doubleClickZoom :false, altShiftDragRotate: false}),
+    layers: [mapSourceLayer,
         vectorLayer,
         markerLayer
     ],
     target: 'map',
-    view: new ol.View({
-        center: [0, 0],
-        zoom: 1,
-        maxZoom: 16
-    })
+    view: view
 });
 
 
@@ -125,14 +163,17 @@ var displayFeatureInfo = function(pixel) {
         return feature;
     });
 
-    var info = document.getElementById('info');
-    if (feature) {
-        info.innerHTML = feature.getId() + ': ' + feature.get('name');
-        console.log("ID: " + feature.getId() + " , COUNTRYCODE: " + feature.get('name'));
-    } else {
-        info.innerHTML = '&nbsp;';
-    }
+    //var info = document.getElementById('info');
+    //if (feature) {
+    //    info.innerHTML = feature.getId() + ': ' + feature.get('name');
+    //    console.log("ID: " + feature.getId() + " , COUNTRY: " + feature.get('name'));
+    //} else {
+    //    info.innerHTML = '&nbsp;';
+    //}
 
+    if(feature) {
+        console.log("ID: " + feature.getId() + " , COUNTRY: " + feature.get('name'));
+    }
     if (feature !== highlight) {
         if (highlight) {
             featureOverlay.removeFeature(highlight);
@@ -154,29 +195,63 @@ map.on('pointermove', function(evt) {
 
 map.on('click', function(evt) {
     var pixel = map.getEventPixel(evt.originalEvent);
+    console.log(pixel);
+    console.log(map.getCoordinateFromPixel(pixel));
     var feature = map.forEachFeatureAtPixel(pixel, function(feature, layer) {
         return feature;
     });
-    retrieveDestinationsForClickedCountry(feature.getId());
-    createMapMarker(4.486885983517447,50.90131747057211);//first latitude then longitude
+    if (feature) {
+        var geometry = feature.getGeometry();
+        var coord = geometry.getCoordinates();
+        popup.setPosition(coord);
+        $(element).popover({
+            'placement': 'top',
+            'html': true,
+            'content': feature.get('name')
+        });
+        $(element).popover('show');
+    } else {
+        $(element).popover('destroy');
+    }
+    retrieveDestinationsForClickedCountry(feature.get('name'));
+    createMapMarker(50,50, null);
+    console.log("RESOLUTION: " + map.getView().getResolution());
+    console.log("ZOOM: " + map.getView().getZoom());
+    console.log("CALCULATED VIEW EXTENT: " + map.getView().calculateExtent(map.getSize()));
     addMapMarkersToMap();
     displayFeatureInfo(evt.pixel);
 });
 
 
-function mapPinOnZaventemAirport() {
-    var coordinate =[500973.12345271517, 6605441.104038407];//Coordinate of Zaventem airport in the map's current metric
-    var pixel = map.getPixelFromCoordinate(coordinate);
-    console.log("MAP-PIN ON ZAVENTEM: " + pixel);
-    console.log("PIXEL COORDS: " + pixel[0] + " AND " + pixel[1]);
-}
-
-function retrieveDestinationsForClickedCountry(countryCode) {
-    document.getElementById('hiddenForm:countryCode').setAttribute("value", countryCode);
+function retrieveDestinationsForClickedCountry(country) {
+    document.getElementById('hiddenForm:country').setAttribute("value", country);
     document.getElementById('hiddenForm:invisibleClickTarget').click();
 }
 
 function readDestinations() {
     var listOfDestination = document.getElementById('otherHiddenForm:listOfDestinations');
+    var index;
+    var destination
+    for(index = 0; index < listOfDestination.length; index++) {
+        destination = listOfDestination[index];
+        createMapMarker(destination[0], destination[1], destination[2]);
+    }
+    addMapMarkersToMap()
     console.log(listOfDestination);
 }
+
+function retrieveTripsForClickedDestination(destination) {
+    //TO DO: Element names have to be changed and added to the view
+    document.getElementById('hiddenForm:destination').setAttribute("value", destination);
+    document.getElementById('hiddenForm:invisibleClickTarget').click();
+}
+
+//----------------------------START OF POP UP ON MARKER CLICK-----------------------------------------------------------------
+var element = document.getElementById('popup');
+var popup = new ol.Overlay({
+    element: element,
+    positioning: 'bottom-center',
+    stopEvent: false
+});
+map.addOverlay(popup);
+//----------------------------END OF POP UP ON MARKER CLICK-----------------------------------------------------------------
