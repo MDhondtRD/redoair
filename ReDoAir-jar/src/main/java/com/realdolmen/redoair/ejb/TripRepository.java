@@ -36,7 +36,7 @@ public class TripRepository implements TripRepositoryInterface{
     @Override
     public List<Trip> getAllTripsByDestination(String destination) {
         return em.createQuery("SELECT t FROM Trip t " +
-                "WHERE t.outFlight.destinationCity = :dest", Trip.class)
+                "WHERE t.outFlight.destinationAirport.city = :dest", Trip.class)
                 .setParameter("dest", destination)
                 .getResultList();
     }
@@ -44,7 +44,7 @@ public class TripRepository implements TripRepositoryInterface{
     @Override
     public List<Trip> getAllFutureTripsByDestination(String destination) {
         return em.createQuery("SELECT t FROM Trip t " +
-                "WHERE t.outFlight.destinationCity = :dest " +
+                "WHERE t.outFlight.destinationAirport.city = :dest " +
                 "AND t.departureDate > current_date", Trip.class)
                 .setParameter("dest", destination)
                 .getResultList();
@@ -61,7 +61,7 @@ public class TripRepository implements TripRepositoryInterface{
     public List<Trip> getAllTripsWithoutReturnFlightByDestination(String destination) {
         return em.createQuery("SELECT t FROM Trip t " +
                 "WHERE t.returnFlight IS NULL " +
-                "AND t.outFlight.destinationCity = :dest", Trip.class)
+                "AND t.outFlight.destinationAirport.city = :dest", Trip.class)
                 .setParameter("dest", destination)
                 .getResultList();
     }
@@ -79,7 +79,7 @@ public class TripRepository implements TripRepositoryInterface{
         return em.createQuery("SELECT t FROM Trip t " +
                 "WHERE t.departureDate > current_date " +
                 "AND t.returnFlight IS NULL " +
-                "AND t.outFlight.destinationCity = :dest", Trip.class)
+                "AND t.outFlight.destinationAirport.city = :dest", Trip.class)
                 .setParameter("dest", destination)
                 .getResultList();
     }
@@ -97,7 +97,7 @@ public class TripRepository implements TripRepositoryInterface{
         return em.createQuery("SELECT t FROM Trip t " +
                 "WHERE t.departureDate = t.returnDate " +
                 "AND t.tripDayPrice = 0.0" +
-                "AND t.outFlight.destinationCity = :dest", Trip.class)
+                "AND t.outFlight.destinationAirport.city = :dest", Trip.class)
                 .setParameter("dest", destination)
                 .getResultList();
     }
@@ -117,7 +117,7 @@ public class TripRepository implements TripRepositoryInterface{
                 "WHERE t.departureDate = t.returnDate " +
                 "AND t.tripDayPrice = 0.0" +
                 "AND t.departureDate > current_date " +
-                "AND t.outFlight.destinationCity = :dest", Trip.class)
+                "AND t.outFlight.destinationAirport.city = :dest", Trip.class)
                 .setParameter("dest", destination)
                 .getResultList();
     }
@@ -137,7 +137,7 @@ public class TripRepository implements TripRepositoryInterface{
                 "WHERE t.departureDate = t.returnDate " +
                 "AND t.tripDayPrice = 0.0" +
                 "AND t.returnFlight IS NULL " +
-                "AND t.outFlight.destinationCity = :dest", Trip.class)
+                "AND t.outFlight.destinationAirport.city = :dest", Trip.class)
                 .setParameter("dest", destination)
                 .getResultList();
     }
@@ -159,17 +159,17 @@ public class TripRepository implements TripRepositoryInterface{
                 "AND t.tripDayPrice = 0.0" +
                 "AND t.departureDate > current_date " +
                 "AND t.returnFlight IS NULL " +
-                "AND t.outFlight.destinationCity = :dest", Trip.class)
+                "AND t.outFlight.destinationAirport.city = :dest", Trip.class)
                 .setParameter("dest", destination)
                 .getResultList();
     }
 
     @Override
-    public List<Trip> getAllFutureTripsByCountryCode(String countryCode) {
+    public List<Trip> getAllFutureTripsByCountry(String country) {
         return em.createQuery("SELECT t FROM Trip t " +
-                "WHERE t.outFlight.destinationCountryCode = :countryCode " +
+                "WHERE t.outFlight.destinationAirport.country = :country " +
                 "AND t.departureDate > current_date", Trip.class)
-                .setParameter("countryCode", countryCode)
+                .setParameter("country", country)
                 .getResultList();
     }
 
