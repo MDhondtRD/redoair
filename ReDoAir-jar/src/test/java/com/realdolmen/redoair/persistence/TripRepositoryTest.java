@@ -15,7 +15,7 @@ import java.util.Collection;
 
 public class TripRepositoryTest extends DataPersistenceTest{
 
-//    private TripRepository repo;
+    private TripRepository repo;
 //    private FlightRepository fRepo;
 //    private static boolean populated = false;
 //    private static int numberOfFutureTrips = 0;
@@ -61,7 +61,7 @@ public class TripRepositoryTest extends DataPersistenceTest{
 //        fRepo = new FlightRepository();
 //        fRepo.setEntityManager(entityManager());
 //    }
-//
+
 //    public void populateDatabase(){
 //        // Generate <numberOfCommonTrips> trips (and twice as much flights)
 //        for (int i = 0; i < numberOfCommonTrips*2; i+=2){
@@ -234,11 +234,11 @@ public class TripRepositoryTest extends DataPersistenceTest{
 //                    findTripsByDestination(repo.getAllFutureFlightOnlyTripsWithoutReturnFlight(), locations[i]),
 //                    repo.getAllFutureFlightOnlyTripsWithoutReturnFlightByDestination(locations[i]).size());
 //    }
-//
-//
+
+
 //    @Test
 //    public void canFindAllFutureTripsByCountryCode() {
-//        assertEquals(numberOfFutureTrips, repo.getAllFutureTripsByCountryCode("BEL").size());
+//        assertEquals(numberOfFutureTrips, repo.getAllFutureTripsByCountry("Belgium").size());
 //    }
 //
 //
