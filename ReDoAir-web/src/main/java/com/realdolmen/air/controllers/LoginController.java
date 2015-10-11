@@ -11,9 +11,12 @@ import javax.enterprise.context.RequestScoped;
 import javax.faces.application.FacesMessage;
 
 import javax.enterprise.context.SessionScoped;
+import javax.faces.context.ExternalContext;
 import javax.faces.context.FacesContext;
 import javax.inject.Inject;
 import javax.inject.Named;
+import javax.servlet.ServletException;
+import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 import javax.validation.constraints.NotNull;
 import java.io.Serializable;
@@ -29,32 +32,41 @@ public class LoginController implements Serializable {
     @Inject
     private UserRepository userRepository;
 
-    @Inject
-    LoggedInUserController loggedInUserController;
+/*    @Inject
+    LoggedInUserController loggedInUserController;*/
 
     private User user = new User();
 
-    public String validateUserAndLogIn() {
-        if(userRepository.validateUser(user)) {
-            /*loggedInUserController.login(user.getEmail());*/
-            return "success";//redirect to home page
+
+    public void login() {
+        try {
+            HttpServletRequest request = (HttpServletRequest) getContext().getRequest();
+            request.login(user.getEmail(), user.getPassword());
+            //redirect to home page
+            System.out.println("SUCCESS");
+        } catch (ServletException e) {
+            //Login failed
+            System.out.println("FAAAAIL");
         }
-        else {
-            FacesContext.getCurrentInstance().addMessage(
-                    null,
-                    new FacesMessage(FacesMessage.SEVERITY_WARN,
-                            "Incorrect Username and Password",
-                            "Please enter correct username and Password"));
-            return "login";//redirect to login page + error message
+        finally {
+            user.setPassword(null);
         }
     }
 
+    public ExternalContext getContext() {
+        return FacesContext.getCurrentInstance().getExternalContext();
+    }
     public User getUser() {
         return user;
     }
 
     public void setUser(User user) {
         this.user = user;
+    }
+
+    public String logout() {
+        FacesContext.getCurrentInstance().getExternalContext().invalidateSession();
+        return "/login";
     }
 
 }

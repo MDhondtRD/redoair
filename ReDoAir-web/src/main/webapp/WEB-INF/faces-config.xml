@@ -7,9 +7,12 @@
     <application>
         <locale-config>
             <default-locale>en</default-locale>
+            <supported-locale>nl</supported-locale>
+            <supported-locale>es</supported-locale>
+            <supported-locale>en_US</supported-locale>
         </locale-config>
         <resource-bundle>
-            <base-name>internatiolization.welcome</base-name>
+            <base-name>com.realdolmen.air.internationalization.message</base-name>
             <var>msg</var>
         </resource-bundle>
     </application>

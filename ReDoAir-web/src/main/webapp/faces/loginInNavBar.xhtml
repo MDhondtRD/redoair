@@ -16,16 +16,20 @@
 
             <p><a class="btn btn-primary btn-lg">Learn more</a></p>
         </b:jumbotron>
-        <h:form>
+        <h:form id ="form">
             <h:outputLabel value="Email:"/>
             <h:inputText id="email" value="#{loginController.user.email}" tabindex="1" required="true"
-                         size="20" requiredMessage="Email is required"><f:validator validatorId="emailValidator"/></h:inputText>
+                         size="20" requiredMessage="Email is required" validator="#{emailValidator.validate}"/>
             <h:message for="email" style="color:red"/>
             <p></p>
-
             <h:outputLabel value="Password:"/>
             <h:inputSecret id="password" value="#{loginController.user.password}"></h:inputSecret>
-            <h:commandButton value="Login" action="#{loginController.validateUserAndLogIn()}"/>
+            <h:commandButton value="Login" action="#{loginController.login()}"/>
+            <h:inputHidden id="validatePassword" validator="#{passwordOnLoginValidator.validate}"/>
+            <h:message for="validatePassword" style="color:red"/>
+            <p></p>
+            <h:link id="register" outcome="/signup.faces" rendered="false">Register</h:link><br/>
+            <h:inputHidden id="checkForEmail" value = "loginInNavbar"/>
         </h:form>
     </b:container>
 </h:body>

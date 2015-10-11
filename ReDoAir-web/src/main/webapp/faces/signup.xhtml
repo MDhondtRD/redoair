@@ -7,7 +7,7 @@
 </head>
 <ui:composition template="/resources/template/template.xhtml">
     <ui:define name="content">
-        <h:form>
+        <h:form id = "form">
             <h:outputLabel value="First name:"/>
             <h:inputText id="name" value="#{signUpController.user.name}" required="true"
                          requiredMessage="name is required!"></h:inputText>
@@ -21,7 +21,7 @@
             <p></p>
             <h:outputLabel value="Email:"/>
             <h:inputText id="email" value="#{signUpController.user.email}" required="true"
-                         size="20" requiredMessage="email is required"><f:validator validatorId="emailValidator"/></h:inputText>
+                         size="20" requiredMessage="email is required" validator="#{emailValidator.validate}"/>
             <h:message for="email" style="color:red"/>
             <p></p>
             <h:outputLabel value="Username"/>

@@ -30,17 +30,10 @@ public class PasswordValidator implements Validator {
             Pattern.compile(PASSWORD_MUST_HAVE_SPECIAL_CHARACTER),//checks for a special character
             Pattern.compile(PASSWORD_MUSNT_HAVE_A_SPACE_CHARACTER)//checks for spaces
     };
-    int matchCount = 0;
 
-    private Pattern pattern;
-    private Pattern capitalPattern;
-    private Pattern numberPattern;
-    private Pattern specialCharacterPattern;
-    private Pattern spaceCharPattern;
     private Matcher matcher;
 
     public PasswordValidator(){
-        pattern = Pattern.compile(PASSWORD_REGEX);
     }
 
     @Override

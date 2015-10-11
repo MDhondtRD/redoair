@@ -60,6 +60,10 @@ public class UserRepository implements UserRepositoryInterface, Serializable {
         }
     }
 
+    public void setUserRole(String email, String userrole) {
+        //FUNCTION THAT SET
+    }
+
     @Override
     public void createUser(User user) {
         String hashedPassword = hashPassword(user.getPassword());
