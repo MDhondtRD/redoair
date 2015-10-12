@@ -2,8 +2,7 @@ package com.realdolmen.air;
 
 import com.google.gson.*;
 import com.google.gson.reflect.TypeToken;
-import com.realdolmen.redoair.entities.Airport;
-import com.realdolmen.redoair.entities.Flight;
+import com.realdolmen.redoair.entities.*;
 
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
@@ -17,6 +16,7 @@ import java.lang.reflect.Type;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.Collection;
+import java.util.Date;
 import java.util.Scanner;
 
 @WebListener
@@ -54,6 +54,9 @@ public class PopulateDatabase implements ServletContextListener {
             em.persist(f1); em.persist(f2); em.persist(f3); em.persist(f4); em.persist(f5);
             em.flush();
 
+            User u = new User("JetAir", "Maarten", "Dhondt","1EwbrW7te4JQjPjk/JbuzD5H3T5g6CRNrjz7qtnEB1Y=", new Address("Croix ou Pile 1","","Saint-Sauveur","7912","Belgium"), UserType.PARTNER, "info@jetair.com", new Date());
+            em.persist(u);
+            em.flush();
 
 
         } catch (Exception e) {
