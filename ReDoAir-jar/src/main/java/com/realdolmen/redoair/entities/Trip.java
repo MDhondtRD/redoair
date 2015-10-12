@@ -34,7 +34,7 @@ public class Trip implements Serializable {
     @Temporal(TemporalType.DATE)
     private Date returnDate;
 
-    @ManyToOne(optional = false)
+    @ManyToOne(optional = false, cascade = CascadeType.PERSIST)
     private Flight outFlight;
 
     @ManyToOne
@@ -63,6 +63,15 @@ public class Trip implements Serializable {
         setTravelAgency(travelAgency);
     }
 
+    //Used by unmarshaller
+    public Trip(Date departureDate, Date returnDate, Flight outFlight, Flight returnFlight, double tripDayPrice, String travelAgency) {
+        this.departureDate = departureDate;
+        this.returnDate = returnDate;
+        this.outFlight = outFlight;
+        this.returnFlight = returnFlight;
+        this.tripDayPrice = tripDayPrice;
+        this.travelAgency = travelAgency;
+    }
 
     /**
      * GETTERS & SETTERS

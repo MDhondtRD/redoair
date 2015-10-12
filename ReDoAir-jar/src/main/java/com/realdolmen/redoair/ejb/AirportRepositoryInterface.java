@@ -8,8 +8,13 @@ import java.util.List;
 @Remote
 public interface AirportRepositoryInterface {
 
-    public List<Airport> getAllAirports();
-    public List<Airport> getAllAirportsByCountry(String country);
-    public Airport getAirportById(Integer id);
+    List<Airport> getAllAirports();
 
+    List<Airport> getAllAirportsByCountry(String country);
+
+    Airport getAirportById(Integer id);
+
+    List<Airport> getAirportByCity(String city);
+
+    Airport getAirportByName(String airportName);
 }

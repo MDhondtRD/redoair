@@ -2,26 +2,17 @@ package com.realdolmen.air.controllers;
 
 import com.realdolmen.redoair.ejb.UserRepository;
 import com.realdolmen.redoair.entities.User;
-import de.rtner.misc.BinTools;
-import de.rtner.security.auth.spi.PBKDF2Engine;
-import de.rtner.security.auth.spi.PBKDF2Parameters;
-import de.rtner.security.auth.spi.SimplePBKDF2;
 
 import javax.enterprise.context.RequestScoped;
-import javax.faces.application.FacesMessage;
 
-import javax.enterprise.context.SessionScoped;
 import javax.faces.context.ExternalContext;
 import javax.faces.context.FacesContext;
 import javax.inject.Inject;
 import javax.inject.Named;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpSession;
-import javax.validation.constraints.NotNull;
 import java.io.Serializable;
 import java.security.Principal;
-import java.security.SecureRandom;
 
 /**
  * Created by JDOAX80 on 5/10/2015.

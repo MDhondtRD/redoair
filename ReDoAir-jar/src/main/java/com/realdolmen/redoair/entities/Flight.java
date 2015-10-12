@@ -81,6 +81,16 @@ public class Flight implements Serializable {
         setDiscounts(discounts);
     }
 
+    //Used by unmarshaller
+    public Flight(String code, Airport departureAirport, Airport destinationAirport, Date departure, int availableSeats, double price, double lengthOfFlight) {
+        this.code = code;
+        this.departureAirport = departureAirport;
+        this.destinationAirport = destinationAirport;
+        this.departure = departure;
+        this.availableSeats = availableSeats;
+        this.price = price;
+        this.lengthOfFlight = lengthOfFlight;
+    }
 
     /**
      * GETTERS & SETTERS

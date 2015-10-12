@@ -31,6 +31,30 @@ public class AirportRepository implements AirportRepositoryInterface {
         return em.find(Airport.class, id);
     }
 
+    @Override
+    public List<Airport> getAirportByCity(String city) {
+        List<Airport> results = em.createQuery("SELECT a FROM Airport a WHERE a.city = :city", Airport.class)
+                .setParameter("city", city).getResultList();
+        if(!results.isEmpty()) {
+            return results;
+        }
+        else {
+            return null;
+        }
+    }
+
+    @Override
+    public Airport getAirportByName(String name) {
+        List results = em.createQuery("SELECT a FROM Airport a WHERE a.name = :name", Airport.class)
+                .setParameter("name", name).getResultList();
+        if(!results.isEmpty()) {
+            return (Airport) results.get(0);
+        }
+        else {
+            return null;
+        }
+    }
+
     public EntityManager getEntityManager() {
         return em;
     }

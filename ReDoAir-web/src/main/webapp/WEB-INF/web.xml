@@ -96,9 +96,14 @@
         </form-login-config>
     </login-config>
 
-    <listener>
-        <listener-class>
-            com.realdolmen.air.PopulateDatabase
-        </listener-class>
-    </listener>
+    <error-page>
+        <error-code>404</error-code>
+        <location>/WEB-INF/pageNotFound</location>
+    </error-page>
+    <error-page>
+        <error-code>403</error-code>
+        <location>/WEB-INF/forbidden</location>
+    </error-page>
+
+
 </web-app>
