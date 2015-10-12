@@ -15,44 +15,79 @@
     <ui:composition template="/resources/template/template.xhtml">
         <ui:define name="content">
             <div class="row">
-                <div class="col-md-2" />
+                <div class="col-md-2"/>
                 <div class="col-md-8">
                     <div class="jumbotron">
                         <h:form>
-
-                            <!-- TODO: get username of airlinecompany from session; -->
-                            <!--       all airlinecompany usernames must contain exactly 2 capital letters. -->
-
-                            <h:outputLabel value="Flight Code:" />
-                            <p:selectOneMenu id="code" value="#{addFlightsController.code}" effect="fold" editable="true">
-                                <f:selectItems value="#{addFlightsController.allMyCurrentCodes}" />
+                            <h:outputLabel value="Flight Code:"/>
+                            <p:selectOneMenu id="code" value="#{addFlightsController.code}" effect="fold"
+                                             editable="true">
+                                <f:selectItems value="#{addFlightsController.allMyCurrentCodes}"/>
                             </p:selectOneMenu>
 
-                            <h:outputLabel value="Departure City:" />
-                            <p:selectOneMenu id="departureCity" value="#{addFlightsController.departureCity}" effect="fold" editable="true">
-                                <f:selectItems value="#{addFlightsController.departureCities}" />
+                            <h:outputLabel value="Departure Country:"/>
+                                <p:selectOneMenu id="depCountry" value="#{addFlightsController.departureCountry}"
+                                                 effect="fold" editable="true">
+                                    <f:selectItems value="#{addFlightsController.allCountries}"/>
+                                    <p:ajax update="depCity" event="change" />
+                                </p:selectOneMenu>
+
+
+                            <h:outputLabel value="Departure City:"/>
+                            <p:selectOneMenu id="depCity" value="#{addFlightsController.departureCity}" effect="fold"
+                                             editable="true">
+                                <f:selectItems value="#{addFlightsController.allDepartureCities}"/>
+                                <p:ajax update="depAirport" event="change" />
                             </p:selectOneMenu>
 
-                            <h:outputLabel value="Destination City:" />
-                            <p:selectOneMenu id="destinationCity" value="#{addFlightsController.destinationCity}" effect="fold" editable="true">
-                                <f:selectItems value="#{addFlightsController.destinationCities}" />
+
+                            <h:outputLabel value="Departure Airport:"/>
+                            <p:selectOneMenu id="depAirport" value="#{addFlightsController.departureAirport}"
+                                             effect="fold" editable="true">
+                                <f:selectItems value="#{addFlightsController.allDepartureAirports}" var="airportOut" itemLabel="#{airportOut.name}" itemValue="#{airportOut}"/>
+                                <f:converter binding="#{airportConverter}" />
                             </p:selectOneMenu>
 
-                            <h:outputLabel value="Departure date and time:" />
-                            <input id="departure" type="datetime-local" value="#{addFlightsController.departure}" />
+                            <h:outputLabel value="Destination Country:"/>
+                            <p:selectOneMenu id="destCountry" value="#{addFlightsController.destinationCountry}"
+                                             effect="fold" editable="true">
+                                <f:selectItems value="#{addFlightsController.allCountries}"/>
+                                <p:ajax update="destCity" event="change" />
+                            </p:selectOneMenu>
 
-                            <h:outputLabel value="Available seats:" />
-                            <h:inputText id="seats" value="#{addFlightsController.availableSeats}" />
+                            <h:outputLabel value="Destination City:"/>
+                            <p:selectOneMenu id="destCity" value="#{addFlightsController.destinationCity}" effect="fold"
+                                             editable="true">
+                                <f:selectItems value="#{addFlightsController.allDestinationCities}"/>
+                                <p:ajax update="destAirport" event="change" />
+                            </p:selectOneMenu>
 
-                            <h:outputLabel value="Price per flight:" />
-                            <h:inputText id="price" value="#{addFlightsController.price}" />
+                            <h:outputLabel value="Destination Airport:"/>
+                            <p:selectOneMenu id="destAirport" value="#{addFlightsController.destinationAirport}"
+                                             effect="fold" editable="true">
+                                <f:selectItems value="#{addFlightsController.allDestinationAirports}" var="airportReturn" itemLabel="#{airportReturn.name}" itemValue="#{airportReturn}"/>
+                                <f:converter binding="#{airportConverter}" />
+                            </p:selectOneMenu>
 
-                            <h:commandButton value="Sign Up" action = "#{signUpController.createUser()}"/>
+
+
+                            <h:outputLabel value="Departure date and time:"/>
+                            <h:inputText id="departure"  value="#{addFlightsController.departure}">
+                                <f:convertDateTime pattern="dd-MM-yyyy HH:mm" />
+                            </h:inputText>
+
+                            <h:outputLabel value="Available seats:"/>
+                            <h:inputText id="seats" value="#{addFlightsController.availableSeats}"/>
+
+                            <h:outputLabel value="Price per flight:"/>
+                            <h:inputText id="price" value="#{addFlightsController.price}"/>
+
+                            <h:commandButton value="Add flight" action="#{addFlightsController.addNewFlight}"/>
 
                         </h:form>
                     </div>
                 </div>
-                <div class="col-md-2" />
+                <div class="col-md-2"/>
             </div>
 
 

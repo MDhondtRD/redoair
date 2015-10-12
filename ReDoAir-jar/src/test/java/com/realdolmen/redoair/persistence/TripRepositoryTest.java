@@ -163,7 +163,7 @@ public class TripRepositoryTest extends DataPersistenceTest{
         int startIndex = repo.getEntityManager().createQuery("SELECT MIN(t.id) FROM Trip t", Integer.class).getSingleResult();
         for (int i = startIndex; i <= numberOfTrips; i++)
             assertNotNull(repo.getTripById(i));
-        assertNull(repo.getTripById(numberOfTrips + 1));
+        assertNull(repo.getTripById(startIndex + numberOfTrips));
     }
 
     @Test

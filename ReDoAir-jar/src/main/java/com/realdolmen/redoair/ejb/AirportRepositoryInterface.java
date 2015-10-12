@@ -4,6 +4,7 @@ import com.realdolmen.redoair.entities.Airport;
 
 import javax.ejb.Remote;
 import java.util.List;
+import java.util.Set;
 
 @Remote
 public interface AirportRepositoryInterface {

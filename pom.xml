@@ -95,7 +95,13 @@
 			<artifactId>gson</artifactId>
 			<version>2.4</version>
 		</dependency>
-	</dependencies>
+        <dependency>
+            <groupId>javax.faces</groupId>
+            <artifactId>jsf-api</artifactId>
+            <version>2.1</version>
+        </dependency>
+
+    </dependencies>
 
 	<build>
 		<plugins>

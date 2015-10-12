@@ -17,8 +17,11 @@ public class TripPersistenceTest extends DataPersistenceTest {
 
     @Before
     public void init() {
-        from = entityManager().find(Airport.class, 492); // London
-        to = entityManager().find(Airport.class, 3797); // New York
+        from = new Airport("London", "Gatwick", "United Kingdom", 0.0, 0.0);
+        to = new Airport("New York", "JFK", "United States", 0.0, 0.0);
+        entityManager().persist(from);
+        entityManager().persist(to);
+        entityManager().flush();
     }
 
     @Test

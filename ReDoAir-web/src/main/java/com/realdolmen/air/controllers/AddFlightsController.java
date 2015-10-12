@@ -1,19 +1,26 @@
 package com.realdolmen.air.controllers;
 
+import com.realdolmen.redoair.ejb.AirportRepository;
 import com.realdolmen.redoair.ejb.FlightRepository;
 import com.realdolmen.redoair.ejb.UserRepository;
+import com.realdolmen.redoair.entities.Airport;
+import com.realdolmen.redoair.entities.Flight;
 import com.realdolmen.redoair.entities.User;
 
 import javax.enterprise.context.RequestScoped;
 import javax.inject.Inject;
 import javax.inject.Named;
 import java.security.Principal;
-import java.util.Date;
-import java.util.Set;
+import java.time.LocalDateTime;
+import java.time.ZoneId;
+import java.util.*;
 
 @Named
 @RequestScoped
 public class AddFlightsController {
+
+    @Inject
+    private AirportRepository aRepo;
 
     @Inject
     private UserRepository uRepo;
@@ -26,9 +33,17 @@ public class AddFlightsController {
 
     private String code;
 
+    private String departureCountry;
+
     private String departureCity;
 
+    private String destinationCountry;
+
     private String destinationCity;
+
+    private Airport departureAirport;
+
+    private Airport destinationAirport;
 
     private Date departure;
 
@@ -38,6 +53,38 @@ public class AddFlightsController {
 
     public int getAvailableSeats() {
         return availableSeats;
+    }
+
+    public String getDepartureCountry() {
+        return departureCountry;
+    }
+
+    public void setDepartureCountry(String departureCountry) {
+        this.departureCountry = departureCountry;
+    }
+
+    public Airport getDepartureAirport() {
+        return departureAirport;
+    }
+
+    public String getDestinationCountry() {
+        return destinationCountry;
+    }
+
+    public void setDestinationCountry(String destinationCountry) {
+        this.destinationCountry = destinationCountry;
+    }
+
+    public void setDepartureAirport(Airport departureAirport) {
+        this.departureAirport = departureAirport;
+    }
+
+    public Airport getDestinationAirport() {
+        return destinationAirport;
+    }
+
+    public void setDestinationAirport(Airport destinationAirport) {
+        this.destinationAirport = destinationAirport;
     }
 
     public void setAvailableSeats(int availableSeats) {
@@ -85,7 +132,7 @@ public class AddFlightsController {
     }
 
     public Set<String> getAllMyCurrentCodes(){
-        return repo.getAllFlightCodesFromPartner(uRepo.getUserByEmail(principal.getName()).getUsername());
+        return new TreeSet<String>(repo.getAllFlightCodesFromPartner(uRepo.getUserByEmail(principal.getName()).getUsername()));
     }
 
     public Set<String> getDepartureCities(){
@@ -97,9 +144,29 @@ public class AddFlightsController {
     }
 
     public String addNewFlight(){
-       // Flight f = new Flight(code, departureCity, destinationCity, departure, availableSeats, price);
-       // repo.createFlight(f);
+        System.out.println("  ------------ Adding flight ------------");
+       repo.createFlight(new Flight(code, departureAirport, destinationAirport, departure.toInstant().atZone(ZoneId.systemDefault()).toLocalDateTime(), availableSeats, price));
         return "addFlight"; //TODO: redirect naar ??
+    }
+
+    public Set<String> getAllDepartureCities(){
+        return aRepo.getAllCitiesByCountry(departureCountry);
+    }
+
+    public Set<String> getAllDestinationCities(){
+        return aRepo.getAllCitiesByCountry(destinationCountry);
+    }
+
+    public List<Airport> getAllDepartureAirports(){
+        return aRepo.getAllAirportsByCity(departureCity);
+    }
+
+    public List<Airport> getAllDestinationAirports(){
+        return aRepo.getAllAirportsByCity(destinationCity);
+    }
+
+    public Set<String> getAllCountries(){
+        return aRepo.getAllCountries();
     }
 
 }
