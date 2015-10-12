@@ -14,6 +14,7 @@ public class Airport implements Serializable {
      */
 
     @Id
+    @GeneratedValue(strategy = GenerationType.AUTO)
     private Integer id;
 
 
@@ -43,8 +44,7 @@ public class Airport implements Serializable {
         // used by Hibernate
     }
 
-    public Airport(Integer id, String city, String name, String country, double longitude, double latitude) {
-        this.id = id;
+    public Airport(String city, String name, String country, double longitude, double latitude) {
         this.city = city;
         this.name = name;
         this.country = country;

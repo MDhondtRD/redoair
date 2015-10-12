@@ -14,5 +14,6 @@ public interface BookingsRepositoryInterface {
     public List<Booking> getAllBookingsOfUser(User user);
     public void createBooking(Booking booking);
     public void removeBooking(Booking booking);
+    public boolean isValidCreditCardNumber(String creditCardNumber);
 
 }
