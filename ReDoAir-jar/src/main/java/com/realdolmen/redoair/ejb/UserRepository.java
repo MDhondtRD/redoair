@@ -2,6 +2,7 @@ package com.realdolmen.redoair.ejb;
 
 
 import com.realdolmen.redoair.entities.User;
+import com.realdolmen.redoair.entities.UserRoles;
 import com.realdolmen.redoair.entities.UserType;
 
 import javax.ejb.LocalBean;
@@ -60,13 +61,10 @@ public class UserRepository implements UserRepositoryInterface, Serializable {
         }
     }
 
-    public void setUserRole(String email, String userrole) {
-        //FUNCTION THAT SET
-    }
-
     @Override
     public void createUser(User user) {
         String hashedPassword = hashPassword(user.getPassword());
+        setUserRole(user.getEmail(), user.getType().toString().toLowerCase());
         user.setPassword(hashedPassword);
         em.persist(user);
     }
@@ -102,6 +100,11 @@ public class UserRepository implements UserRepositoryInterface, Serializable {
         }
         md.update(unhashedPassword.getBytes());
         return Base64.getEncoder().encodeToString(md.digest());
+    }
+
+    public void setUserRole(String email, String role) {
+        UserRoles userRole = new UserRoles(email, role);
+        em.persist(userRole);
     }
 
     public EntityManager getEntityManager() {

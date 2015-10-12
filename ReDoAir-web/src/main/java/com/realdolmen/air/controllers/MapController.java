@@ -4,6 +4,7 @@ import com.realdolmen.redoair.ejb.TripRepository;
 import com.realdolmen.redoair.entities.Trip;
 
 import javax.enterprise.context.RequestScoped;
+import javax.faces.view.ViewScoped;
 import javax.inject.Inject;
 import javax.inject.Named;
 import java.util.ArrayList;
@@ -24,17 +25,19 @@ public class MapController {
     private TripRepository tripRepository;
 
     public String retrieveDestinationsForCountry() {
+        System.out.println("Calling retrieveDestinationsForCountry");
         trips = tripRepository.getAllFutureTripsByCountry(country);
         for(Trip trip: trips) {
             System.out.println("TRIP id: " + trip.getId());
             tripName = trip.getTravelAgency();
         }
-        if(trips.size() > 0) {
+        return "chooseTrip";
+/*        if(trips.size() > 0) {
             return "chooseTrip";
         }
         else {
-            return "chooseDestination";
-        }
+            return "chooseTrip";
+        }*/
     }
 
     public String getCountry() {

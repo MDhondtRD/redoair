@@ -50,7 +50,7 @@
         <class>com.realdolmen.redoair.entities.User</class>
         <class>com.realdolmen.redoair.entities.Booking</class>
         <class>com.realdolmen.redoair.entities.Airport</class>
-
+        <class>com.realdolmen.redoair.entities.UserRoles</class>
 
         <properties>
             <property name="hibernate.dialect" value="org.hibernate.dialect.MySQL5InnoDBDialect" />

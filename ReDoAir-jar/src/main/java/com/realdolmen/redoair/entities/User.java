@@ -26,7 +26,7 @@ public class User implements Serializable{
     /**
      * ATTRIBUTES
      */
-    @Column(nullable = false, unique = true)
+    @Column(nullable = false)
     private String username;
 
     private String name;
@@ -48,7 +48,6 @@ public class User implements Serializable{
 
     @Temporal(TemporalType.DATE)
     private Date dateOfBirth;
-
 
     /**
      * CONSTRUCTORS

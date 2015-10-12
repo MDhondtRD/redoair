@@ -20,6 +20,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 import javax.validation.constraints.NotNull;
 import java.io.Serializable;
+import java.security.Principal;
 import java.security.SecureRandom;
 
 /**
@@ -31,6 +32,9 @@ public class LoginController implements Serializable {
 
     @Inject
     private UserRepository userRepository;
+
+    @Inject
+    private Principal principal;
 
     private User user = new User();
 
@@ -62,6 +66,18 @@ public class LoginController implements Serializable {
     public String logout() {
         FacesContext.getCurrentInstance().getExternalContext().invalidateSession();
         return "/login";
+    }
+
+    public boolean userIsACustomer(HttpServletRequest request) {
+        return request.isUserInRole("customer");
+    }
+
+    public boolean userIsAPartner(HttpServletRequest request) {
+        return request.isUserInRole("partner");
+    }
+
+    public boolean userIsAnEmployee(HttpServletRequest request) {
+        return request.isUserInRole("employee");
     }
 
 }

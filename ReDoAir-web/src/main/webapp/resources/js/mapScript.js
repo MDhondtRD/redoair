@@ -18,7 +18,7 @@ var style = new ol.style.Style({
     })
 });
 var styles = [style];
-var maxExtent = [-18680000,-2670000,19120000,10190000];
+var maxExtent = [-18680000, -2670000, 19120000, 10190000];
 var viewExtent = [-20013216.422474474, -20044220.06907162, 20002981.712778978, 20039791.065600768];
 
 var view = new ol.View({
@@ -28,7 +28,7 @@ var view = new ol.View({
     zoom: 1
 });
 
-var constrainPan = function() {
+var constrainPan = function () {
     var visible = view.calculateExtent(map.getSize());
     var centre = view.getCenter();
     var delta;
@@ -64,12 +64,14 @@ var iconStyle = new ol.style.Style({
     }))
 });
 
-var vectorSource = new ol.source.Vector({wrapX:false
+var vectorSource = new ol.source.Vector({
+    wrapX: false
 });
 
 var mapMarkers = [];
 
-function createMapMarker(latitude, longitude, destinationName) {;
+function createMapMarker(latitude, longitude, destinationName) {
+    ;
     var coordinate = [latitude, longitude];
     var convertedCoordinates = ol.proj.transform(coordinate, 'EPSG:4326', 'EPSG:3857');
     coordinate = [convertedCoordinates[0], convertedCoordinates[1]];//array holding long, lat values : 50.970319, 4.515209
@@ -95,11 +97,11 @@ var markerLayer = new ol.layer.Vector({
 //-----------------------------------------------------------------------------END OF MARKER-------------------------------------------------------
 var vectorLayer = new ol.layer.Vector({
     source: new ol.source.Vector({
-        url:'../resources/data/countries.geojson',
+        url: '../resources/data/countries.geojson',
         format: new ol.format.GeoJSON(),
         wrapX: false
     }),
-    style: function(feature, resolution) {
+    style: function (feature, resolution) {
         style.getText().setText(resolution < 5000 ? feature.get('name') : '');
         return styles;
     },
@@ -107,15 +109,16 @@ var vectorLayer = new ol.layer.Vector({
 });
 
 var mapSourceLayer = new ol.layer.Tile({
-    source: new ol.source.OSM({layer: 'sat', wrapX:false
+    source: new ol.source.OSM({
+        layer: 'sat', wrapX: false
     }),
 });
 
 
 var map = new ol.Map({
-    controls : ol.control.defaults({attribution: false, rotate:false})
-        .extend([ new ol.control.FullScreen() ]),
-    interactions : ol.interaction.defaults({doubleClickZoom :false, altShiftDragRotate: false}),
+    controls: ol.control.defaults({attribution: false, rotate: false})
+        .extend([new ol.control.FullScreen()]),
+    interactions: ol.interaction.defaults({doubleClickZoom: false, altShiftDragRotate: false}),
     layers: [mapSourceLayer,
         vectorLayer,
         markerLayer
@@ -129,7 +132,7 @@ var highlightStyleCache = {};
 
 var featureOverlay = new ol.FeatureOverlay({
     map: map,
-    style: function(feature, resolution) {
+    style: function (feature, resolution) {
         var text = resolution < 5000 ? feature.get('name') : '';
         if (!highlightStyleCache[text]) {
             highlightStyleCache[text] = [new ol.style.Style({
@@ -158,8 +161,8 @@ var featureOverlay = new ol.FeatureOverlay({
 });
 
 var highlight;
-var displayFeatureInfo = function(pixel) {
-    var feature = map.forEachFeatureAtPixel(pixel, function(feature, layer) {
+var displayFeatureInfo = function (pixel) {
+    var feature = map.forEachFeatureAtPixel(pixel, function (feature, layer) {
         return feature;
     });
 
@@ -171,7 +174,7 @@ var displayFeatureInfo = function(pixel) {
     //    info.innerHTML = '&nbsp;';
     //}
 
-    if(feature) {
+    if (feature) {
         console.log("ID: " + feature.getId() + " , COUNTRY: " + feature.get('name'));
     }
     if (feature !== highlight) {
@@ -186,21 +189,22 @@ var displayFeatureInfo = function(pixel) {
 };
 
 
-map.on('pointermove', function(evt) {
+map.on('pointermove', function (evt) {
     if (evt.dragging) {
+        $(element).popover('destroy');
         return;
     }
     var pixel = map.getEventPixel(evt.originalEvent);
 });
 
-map.on('click', function(evt) {
+map.on('click', function (evt) {
     var pixel = map.getEventPixel(evt.originalEvent);
     console.log(pixel);
     console.log(map.getCoordinateFromPixel(pixel));
-    var feature = map.forEachFeatureAtPixel(pixel, function(feature, layer) {
+    var feature = map.forEachFeatureAtPixel(pixel, function (feature, layer) {
         return feature;
     });
-    if (feature) {
+    if (feature.getId() === "MAPMARKER") {
         var geometry = feature.getGeometry();
         var coord = geometry.getCoordinates();
         popup.setPosition(coord);
@@ -210,15 +214,15 @@ map.on('click', function(evt) {
             'content': feature.get('name')
         });
         $(element).popover('show');
+    }
+    else if(feature.getId() !== "MAPMARKER" && feature.getId() !== undefined) {
+        retrieveDestinationsForClickedCountry(feature.get('name'));
+        createMapMarker(50, 50, "BORAT");
+        addMapMarkersToMap();
+        $(element).popover('destroy');
     } else {
         $(element).popover('destroy');
     }
-    retrieveDestinationsForClickedCountry(feature.get('name'));
-    createMapMarker(50,50, null);
-    console.log("RESOLUTION: " + map.getView().getResolution());
-    console.log("ZOOM: " + map.getView().getZoom());
-    console.log("CALCULATED VIEW EXTENT: " + map.getView().calculateExtent(map.getSize()));
-    addMapMarkersToMap();
     displayFeatureInfo(evt.pixel);
 });
 
@@ -232,7 +236,7 @@ function readDestinations() {
     var listOfDestination = document.getElementById('otherHiddenForm:listOfDestinations');
     var index;
     var destination
-    for(index = 0; index < listOfDestination.length; index++) {
+    for (index = 0; index < listOfDestination.length; index++) {
         destination = listOfDestination[index];
         createMapMarker(destination[0], destination[1], destination[2]);
     }
