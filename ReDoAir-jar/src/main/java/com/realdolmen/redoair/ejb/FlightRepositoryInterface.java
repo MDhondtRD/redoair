@@ -24,5 +24,6 @@ public interface FlightRepositoryInterface {
     public void createFlight(Flight flight);
     public void removeFlight(Flight flight);
     public Set<String> getAllFlightCodesFromPartner(String username);
+    public void overrideEndUserPrice(Flight flight, double newPrice);
 
 }

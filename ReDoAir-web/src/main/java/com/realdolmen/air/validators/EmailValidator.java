@@ -47,7 +47,10 @@ public class EmailValidator implements Validator {
         UIInput emailInput = (UIInput) context.getViewRoot().findComponent("form:email");
         String email = value.toString();
         UIInput viewInput = (UIInput) context.getViewRoot().findComponent("form:checkForEmail");
-        String view = (String)viewInput.getValue();
+        String view = null;
+        if(viewInput != null) {
+            view = (String) viewInput.getValue();
+        }
         matcher = pattern.matcher(email);
         if (!matcher.matches()) {
             FacesMessage msg =

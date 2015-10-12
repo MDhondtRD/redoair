@@ -98,7 +98,7 @@
 
     <listener>
         <listener-class>
-            com.realdolmen.redoair.PopulateDatabase
+            com.realdolmen.air.PopulateDatabase
         </listener-class>
     </listener>
 </web-app>

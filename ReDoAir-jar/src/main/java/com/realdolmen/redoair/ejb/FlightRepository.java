@@ -110,6 +110,13 @@ public class FlightRepository implements FlightRepositoryInterface {
         return partnerCodes;
     }
 
+    @Override
+    public void overrideEndUserPrice(Flight flight, double newPrice) {
+        // TODO: Mss op de een of andere manier een extra bevestiging vragen alvorens een endUserPrice
+        //       in te stellen die lager zou zijn dan de price zelf.
+        flight.setEndUserPrice(newPrice);
+    }
+
     public EntityManager getEntityManager(){
         return em;
     }

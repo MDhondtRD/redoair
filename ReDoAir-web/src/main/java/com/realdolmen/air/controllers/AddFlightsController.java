@@ -1,10 +1,13 @@
 package com.realdolmen.air.controllers;
 
 import com.realdolmen.redoair.ejb.FlightRepository;
+import com.realdolmen.redoair.ejb.UserRepository;
+import com.realdolmen.redoair.entities.User;
 
 import javax.enterprise.context.RequestScoped;
 import javax.inject.Inject;
 import javax.inject.Named;
+import java.security.Principal;
 import java.util.Date;
 import java.util.Set;
 
@@ -13,7 +16,13 @@ import java.util.Set;
 public class AddFlightsController {
 
     @Inject
+    private UserRepository uRepo;
+
+    @Inject
     private FlightRepository repo;
+
+    @Inject
+    private Principal principal;
 
     private String code;
 
@@ -76,6 +85,9 @@ public class AddFlightsController {
     }
 
     public Set<String> getAllMyCurrentCodes(String username){
+        String name = principal.getName();
+        User usr = uRepo.getUserByEmail(name);
+        System.out.println(usr.getUsername());
         System.out.println("Running..................");
         return repo.getAllFlightCodesFromPartner(username);
     }
