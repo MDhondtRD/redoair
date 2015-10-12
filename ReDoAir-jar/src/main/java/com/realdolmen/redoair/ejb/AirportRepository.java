@@ -46,10 +46,6 @@ public class AirportRepository implements AirportRepositoryInterface {
                 .setParameter("country", country).getResultList());
     }
 
-    @Override
-    public Airport getAirportByName(String name) {
-        return em.createQuery("SELECT a FROM Airport a WHERE a.name = :name", Airport.class).setParameter("name", name).getResultList().get(0);
-    }
 
     @Override
     public Airport getAirportById(Integer id) {
