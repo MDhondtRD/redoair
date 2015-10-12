@@ -15,7 +15,7 @@ import java.util.List;
  */
 @Named
 @RequestScoped
-public class MapController {
+public class ChooseDestinationController {
 
     private String country;
     private List<Trip> trips = new ArrayList<>();
