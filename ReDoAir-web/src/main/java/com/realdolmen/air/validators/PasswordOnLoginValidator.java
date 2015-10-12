@@ -30,7 +30,6 @@ public class PasswordOnLoginValidator implements Validator {
         UIInput passwordInput = (UIInput) facesContext.getViewRoot().findComponent("form:password");
         String email = (String) emailInput.getValue();
         String password = (String) passwordInput.getValue();
-        System.out.println("EMAIL: " + email + " AND PASSWORD: " + password);
         User userToCheck = new User();
         userToCheck.setEmail(email);
         userToCheck.setPassword(password);

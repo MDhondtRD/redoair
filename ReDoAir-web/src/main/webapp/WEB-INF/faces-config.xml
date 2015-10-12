@@ -12,7 +12,7 @@
             <supported-locale>en_US</supported-locale>
         </locale-config>
         <resource-bundle>
-            <base-name>com.realdolmen.air.internationalization.message</base-name>
+            <base-name>internationalization.Text</base-name>
             <var>msg</var>
         </resource-bundle>
     </application>

@@ -32,18 +32,12 @@ public class LoginController implements Serializable {
     @Inject
     private UserRepository userRepository;
 
-/*    @Inject
-    LoggedInUserController loggedInUserController;*/
-
     private User user = new User();
-
 
     public void login() {
         try {
             HttpServletRequest request = (HttpServletRequest) getContext().getRequest();
             request.login(user.getEmail(), user.getPassword());
-            //redirect to home page
-            System.out.println("SUCCESS");
         } catch (ServletException e) {
             //Login failed
             System.out.println("FAAAAIL");
@@ -56,6 +50,7 @@ public class LoginController implements Serializable {
     public ExternalContext getContext() {
         return FacesContext.getCurrentInstance().getExternalContext();
     }
+
     public User getUser() {
         return user;
     }
