@@ -31,7 +31,7 @@ public class AirportRepository implements AirportRepositoryInterface {
         return em.find(Airport.class, id);
     }
 
-    public EntityManager getEntitiyManager() {
+    public EntityManager getEntityManager() {
         return em;
     }
 

@@ -31,49 +31,49 @@ public class FlightRepository implements FlightRepositoryInterface {
 
     @Override
     public List<Flight> getAllFlightsByDestinationCity(String city) {
-        return em.createQuery("SELECT f FROM Flight f WHERE f.destinationCity = :city", Flight.class)
+        return em.createQuery("SELECT f FROM Flight f WHERE f.destinationAirport.city = :city", Flight.class)
                 .setParameter("city", city).getResultList();
     }
 
     @Override
     public List<Flight> getAllFlightsByDepartureCity(String city) {
-        return em.createQuery("SELECT f FROM Flight f WHERE f.departureCity = :city", Flight.class)
+        return em.createQuery("SELECT f FROM Flight f WHERE f.departureAirport.city = :city", Flight.class)
                 .setParameter("city", city).getResultList();
     }
 
     @Override
     public List<Flight> getAllFutureFlightsByDestinationCity(String city) {
-        return em.createQuery("SELECT f FROM Flight f WHERE f.destinationCity = :city AND f.departure > CURRENT_TIMESTAMP", Flight.class)
+        return em.createQuery("SELECT f FROM Flight f WHERE f.destinationAirport.city = :city AND f.departure > CURRENT_TIMESTAMP", Flight.class)
                 .setParameter("city", city).getResultList();
     }
 
     @Override
     public List<Flight> getAllFutureFlightsByDepartureCity(String city) {
-        return em.createQuery("SELECT f FROM Flight f WHERE f.departureCity = :city AND f.departure > CURRENT_TIMESTAMP", Flight.class)
+        return em.createQuery("SELECT f FROM Flight f WHERE f.departureAirport.city = :city AND f.departure > CURRENT_TIMESTAMP", Flight.class)
                 .setParameter("city", city).getResultList();
     }
 
     @Override
     public Set<String> getAllDestinationCities() {
-        List<String> list = em.createQuery("SELECT f.destinationCity FROM Flight f", String.class).getResultList();
+        List<String> list = em.createQuery("SELECT f.destinationAirport.city FROM Flight f", String.class).getResultList();
         return new HashSet<String>(list);
     }
 
     @Override
     public Set<String> getAllDepartureCities() {
-        List<String> list = em.createQuery("SELECT f.departureCity FROM Flight f", String.class).getResultList();
+        List<String> list = em.createQuery("SELECT f.departureAirport.city FROM Flight f", String.class).getResultList();
         return new HashSet<String>(list);
     }
 
     @Override
     public Set<String> getAllDestinationCitiesServedByFutureFlights() {
-        List<String> list = em.createQuery("SELECT f.destinationCity FROM Flight f WHERE f.departure > CURRENT_TIMESTAMP", String.class).getResultList();
+        List<String> list = em.createQuery("SELECT f.destinationAirport.city FROM Flight f WHERE f.departure > CURRENT_TIMESTAMP", String.class).getResultList();
         return new HashSet<String>(list);
     }
 
     @Override
     public Set<String> getAllDepartureCitiesServedByFutureFlights() {
-        List<String> list = em.createQuery("SELECT f.departureCity FROM Flight f WHERE f.departure > CURRENT_TIMESTAMP", String.class).getResultList();
+        List<String> list = em.createQuery("SELECT f.departureAirport.city FROM Flight f WHERE f.departure > CURRENT_TIMESTAMP", String.class).getResultList();
         return new HashSet<String>(list);
     }
 

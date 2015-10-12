@@ -95,4 +95,10 @@
             <form-error-page>/WEB-INF/login.xhtml?loginFailed=true</form-error-page>
         </form-login-config>
     </login-config>
+
+    <listener>
+        <listener-class>
+            com.realdolmen.redoair.PopulateDatabase
+        </listener-class>
+    </listener>
 </web-app>

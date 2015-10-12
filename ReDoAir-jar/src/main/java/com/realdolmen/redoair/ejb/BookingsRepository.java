@@ -42,6 +42,30 @@ public class BookingsRepository implements BookingsRepositoryInterface {
         em.remove(booking);
     }
 
+    /**
+     * https://code.google.com/p/gnuc-credit-card-checker/source/browse/trunk/CCCheckerPro/src/com/gnuc/java/ccc/Luhn.java
+     */
+    @Override
+    public boolean isValidCreditCardNumber(String creditCardNumber) {
+        int sum = 0;
+        boolean alternate = false;
+        for (int i = creditCardNumber.length() - 1; i >= 0; i--)
+        {
+            int n = Integer.parseInt(creditCardNumber.substring(i, i + 1));
+            if (alternate)
+            {
+                n *= 2;
+                if (n > 9)
+                {
+                    n = (n % 10) + 1;
+                }
+            }
+            sum += n;
+            alternate = !alternate;
+        }
+        return (sum % 10 == 0);
+    }
+
     public EntityManager getEntityManager() {
         return em;
     }
