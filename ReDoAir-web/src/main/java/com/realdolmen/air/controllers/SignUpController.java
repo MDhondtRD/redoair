@@ -37,7 +37,7 @@ public class SignUpController {
         setName(user.getName());
         user.setAddress(address);
         userRepository.createUser(user);
-        return "succesfullRegistration";
+        return "/WEB-INF/successfulRegistration";
     }
 
     public String cancel() {
