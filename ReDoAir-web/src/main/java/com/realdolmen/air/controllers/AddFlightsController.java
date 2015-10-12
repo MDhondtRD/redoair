@@ -84,12 +84,8 @@ public class AddFlightsController {
         this.code = code;
     }
 
-    public Set<String> getAllMyCurrentCodes(String username){
-        String name = principal.getName();
-        User usr = uRepo.getUserByEmail(name);
-        System.out.println(usr.getUsername());
-        System.out.println("Running..................");
-        return repo.getAllFlightCodesFromPartner(username);
+    public Set<String> getAllMyCurrentCodes(){
+        return repo.getAllFlightCodesFromPartner(uRepo.getUserByEmail(principal.getName()).getUsername());
     }
 
     public Set<String> getDepartureCities(){

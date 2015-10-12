@@ -7,6 +7,12 @@
 
     <persistence-unit name="MyPersistenceUnit" transaction-type="JTA">
         <jta-data-source>java:/MyDataSource</jta-data-source>
+        <properties>
+            <property name="hibernate.dialect" value="org.hibernate.dialect.MySQL5InnoDBDialect"/>
+            <property name="hibernate.hbm2ddl.auto" value="create"/>
+            <property name="hibernate.default_schema" value="production" />
+        </properties>
     </persistence-unit>
+
 
 </persistence>
