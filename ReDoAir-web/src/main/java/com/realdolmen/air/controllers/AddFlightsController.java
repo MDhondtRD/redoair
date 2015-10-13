@@ -19,6 +19,10 @@ import java.util.*;
 @RequestScoped
 public class AddFlightsController {
 
+    /**
+     * Repositories
+     */
+
     @Inject
     private AirportRepository aRepo;
 
@@ -31,18 +35,19 @@ public class AddFlightsController {
     @Inject
     private Principal principal;
 
+
+    /**
+     * ATTRIBUTES
+     */
+
     private String code;
 
     private String departureCountry;
-
     private String departureCity;
-
-    private String destinationCountry;
-
-    private String destinationCity;
-
     private Airport departureAirport;
 
+    private String destinationCountry;
+    private String destinationCity;
     private Airport destinationAirport;
 
     private Date departure;
@@ -51,16 +56,21 @@ public class AddFlightsController {
 
     private double price;
 
-    public int getAvailableSeats() {
-        return availableSeats;
+
+    /**
+     * GETTERS
+     */
+
+    public String getCode() {
+        return code;
     }
 
     public String getDepartureCountry() {
         return departureCountry;
     }
 
-    public void setDepartureCountry(String departureCountry) {
-        this.departureCountry = departureCountry;
+    public String getDepartureCity() {
+        return departureCity;
     }
 
     public Airport getDepartureAirport() {
@@ -71,102 +81,108 @@ public class AddFlightsController {
         return destinationCountry;
     }
 
-    public void setDestinationCountry(String destinationCountry) {
-        this.destinationCountry = destinationCountry;
-    }
-
-    public void setDepartureAirport(Airport departureAirport) {
-        this.departureAirport = departureAirport;
+    public String getDestinationCity() {
+        return destinationCity;
     }
 
     public Airport getDestinationAirport() {
         return destinationAirport;
     }
 
-    public void setDestinationAirport(Airport destinationAirport) {
-        this.destinationAirport = destinationAirport;
+    public Date getDeparture() {
+        return departure;
     }
 
-    public void setAvailableSeats(int availableSeats) {
-        this.availableSeats = availableSeats;
+    public int getAvailableSeats() {
+        return availableSeats;
     }
 
     public double getPrice() {
         return price;
     }
 
-    public void setPrice(double price) {
-        this.price = price;
+
+    /**
+     * SETTERS
+     */
+
+    public void setCode(String code) {
+        this.code = code;
     }
 
-    public Date getDeparture() {
-        return departure;
-    }
-
-    public void setDeparture(Date departure) {
-        this.departure = departure;
-    }
-
-    public String getDepartureCity() {
-        return departureCity;
+    public void setDepartureCountry(String departureCountry) {
+        this.departureCountry = departureCountry;
     }
 
     public void setDepartureCity(String departureCity) {
         this.departureCity = departureCity;
     }
 
-    public String getDestinationCity() {
-        return destinationCity;
+    public void setDepartureAirport(Airport departureAirport) {
+        this.departureAirport = departureAirport;
+    }
+
+    public void setDestinationCountry(String destinationCountry) {
+        this.destinationCountry = destinationCountry;
     }
 
     public void setDestinationCity(String destinationCity) {
         this.destinationCity = destinationCity;
     }
 
-    public String getCode() {
-        return code;
+    public void setDestinationAirport(Airport destinationAirport) {
+        this.destinationAirport = destinationAirport;
     }
 
-    public void setCode(String code) {
-        this.code = code;
+    public void setDeparture(Date departure) {
+        this.departure = departure;
     }
 
-    public Set<String> getAllMyCurrentCodes(){
+    public void setAvailableSeats(int availableSeats) {
+        this.availableSeats = availableSeats;
+    }
+
+    public void setPrice(double price) {
+        this.price = price;
+    }
+
+
+    /**
+     * METHODS
+     */
+
+    public Set<String> getAllMyCurrentCodes() {
         return new TreeSet<String>(repo.getAllFlightCodesFromPartner(uRepo.getUserByEmail(principal.getName()).getUsername()));
     }
 
-    public Set<String> getDepartureCities(){
-        return repo.getAllDepartureCities();
+    public Set<String> getAllCountries() {
+        return new TreeSet<String>(aRepo.getAllCountries());
     }
 
-    public Set<String> getDestinationCities(){
-        return repo.getAllDestinationCities();
+    public Set<String> getAllDepartureCities() {
+        return new TreeSet<String>(aRepo.getAllCitiesByCountry(departureCountry));
     }
 
-    public String addNewFlight(){
-        System.out.println("  ------------ Adding flight ------------");
-       repo.createFlight(new Flight(code, departureAirport, destinationAirport, departure.toInstant().atZone(ZoneId.systemDefault()).toLocalDateTime(), availableSeats, price));
-        return "addFlight"; //TODO: redirect naar ??
+    public Set<String> getAllDestinationCities() {
+        return new TreeSet<String>(aRepo.getAllCitiesByCountry(destinationCountry));
     }
 
-    public Set<String> getAllDepartureCities(){
-        return aRepo.getAllCitiesByCountry(departureCountry);
-    }
-
-    public Set<String> getAllDestinationCities(){
-        return aRepo.getAllCitiesByCountry(destinationCountry);
-    }
-
-    public List<Airport> getAllDepartureAirports(){
+    public List<Airport> getAllDepartureAirports() {
         return aRepo.getAllAirportsByCity(departureCity);
     }
 
-    public List<Airport> getAllDestinationAirports(){
+    public List<Airport> getAllDestinationAirports() {
         return aRepo.getAllAirportsByCity(destinationCity);
     }
 
-    public Set<String> getAllCountries(){
-        return aRepo.getAllCountries();
+
+    /**
+     * PERSIST & REDIRECT
+     */
+
+    public String addNewFlight() {
+        repo.createFlight(new Flight(code, departureAirport, destinationAirport, departure.toInstant().atZone(ZoneId.systemDefault()).toLocalDateTime(), availableSeats, price));
+        return "addFlight"; //TODO: redirect naar ??
     }
 
 }

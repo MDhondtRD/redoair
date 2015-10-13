@@ -1,37 +1,37 @@
 <!DOCTYPE html >
-<html lang="#{localeBean.language}"
-      xmlns="http://www.w3.org/1999/xhtml"
+<html xmlns="http://www.w3.org/1999/xhtml"
       xmlns:h="http://xmlns.jcp.org/jsf/html"
-      xmlns:f="http://java.sun.com/jsf/core"
       xmlns:ui="http://xmlns.jcp.org/jsf/facelets">
-<f:view locale="#{localeBean.locale}">
-    <h:head>
-        <h:outputStylesheet library="css" name="bootstrap.css"/>
-        <h:outputStylesheet library="css" name="feedreader.css"/>
 
-        <script src="../resources/js/jquery-2.1.4.min.js"></script>
-        <script src="../resources/js/datepicker.js"></script>
+<h:head>
+    <h:outputStylesheet library="css" name="bootstrap.css"/>
+    <h:outputStylesheet library="css" name="feedreader.css"/>
 
-        <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
-        <title>Redo Travel</title>
-    </h:head>
+    <script src="../../resources/js/jquery-2.1.4.min.js"></script>
+    <script src="../../resources/js/bootstrap.js"></script>
+    <script src="../../resources/js/mapScript.js"></script>
+    <script src="../../resources/js/npm.js"></script>
 
-    <h:body styleClass="background-image">
-        <div id="wrapper">
-            <ui:insert name="header">
-                <ui:include src="/resources/template/header.xhtml"/>
-            </ui:insert>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+    <title>Redo Travel</title>
+</h:head>
 
-            <div class="container index">
-                <ui:insert name="content">
-                    <ui:include src="/resources/template/content.xhtml"/>
-                </ui:insert>
-            </div>
+<h:body styleClass="background-image">
+    <div id="wrapper">
+        <ui:insert name="header">
+            <ui:include src="/resources/template/header.xhtml"/>
+        </ui:insert>
 
-            <ui:insert name="footer">
-                <ui:include src="/resources/template/footer.xhtml"/>
+        <div class="container">
+            <ui:insert name="content">
+                <ui:include src="/resources/template/content.xhtml"/>
             </ui:insert>
         </div>
-    </h:body>
-</f:view>
+
+        <ui:insert name="footer">
+            <ui:include src="/resources/template/footer.xhtml"/>
+        </ui:insert>
+    </div>
+</h:body>
+
 </html>
