@@ -1,6 +1,9 @@
 package com.realdolmen.redoair.persistence;
 
+import com.realdolmen.redoair.ejb.AirportRepository;
 import com.realdolmen.redoair.entities.*;
+import org.junit.After;
+import org.junit.Before;
 import org.junit.Test;
 
 import java.time.LocalDate;

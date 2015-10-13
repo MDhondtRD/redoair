@@ -1,3 +1,4 @@
 **/target/
 .idea/
 **/*.iml
+ReDoAir-jar/src/main/resources/META-INF/persistence.xml
