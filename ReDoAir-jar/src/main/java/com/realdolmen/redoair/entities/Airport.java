@@ -80,4 +80,16 @@ public class Airport implements Serializable {
     public double getLatitude() {
         return latitude;
     }
+
+
+    /**
+     * METHODS
+     */
+
+    @Override
+    public boolean equals(Object obj) {
+        return (obj instanceof Airport) && (id != null)
+                ? id.equals(((Airport) obj).id)
+                : (obj == this);
+    }
 }

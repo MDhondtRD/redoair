@@ -54,10 +54,12 @@ public class PopulateDatabase implements ServletContextListener {
             em.persist(f1); em.persist(f2); em.persist(f3); em.persist(f4); em.persist(f5);
             em.flush();
 
-            User u = new User("JetAir", "Maarten", "Dhondt","1EwbrW7te4JQjPjk/JbuzD5H3T5g6CRNrjz7qtnEB1Y=", new Address("Croix ou Pile 1","","Saint-Sauveur","7912","Belgium"), UserType.PARTNER, "info@jetair.com", new Date());
-            UserRoles ur = new UserRoles("info@jetair.com", "partner");
-            em.persist(u);
-            em.persist(ur);
+            User u1 = new User("JetAir", "Maarten", "Dhondt","1EwbrW7te4JQjPjk/JbuzD5H3T5g6CRNrjz7qtnEB1Y=", new Address("Croix ou Pile 1","","Saint-Sauveur","7912","Belgium"), UserType.PARTNER, "info@jetair.com", new Date());
+            User u2 = new User("Jan", "Jan", "Peeters", "1EwbrW7te4JQjPjk/JbuzD5H3T5g6CRNrjz7qtnEB1Y=", new Address("Croix ou Pile 1", "", "Saint-Sauveur", "7912", "Belgium"), UserType.EMPLOYEE, "emp@redoair.com", new Date());
+            UserRoles ur1 = new UserRoles("info@jetair.com", "partner");
+            UserRoles ur2 = new UserRoles("emp@redoair.com", "employee");
+            em.persist(u1); em.persist(u2);
+            em.persist(ur1); em.persist(ur2);
             em.flush();
 
 

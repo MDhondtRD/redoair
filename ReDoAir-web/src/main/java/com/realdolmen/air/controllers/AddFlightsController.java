@@ -7,17 +7,19 @@ import com.realdolmen.redoair.entities.Airport;
 import com.realdolmen.redoair.entities.Flight;
 import com.realdolmen.redoair.entities.User;
 
-import javax.enterprise.context.RequestScoped;
+import javax.faces.bean.ManagedBean;
+import javax.faces.bean.SessionScoped;
 import javax.inject.Inject;
 import javax.inject.Named;
+import java.io.Serializable;
 import java.security.Principal;
 import java.time.LocalDateTime;
 import java.time.ZoneId;
 import java.util.*;
 
-@Named
-@RequestScoped
-public class AddFlightsController {
+@ManagedBean
+@SessionScoped
+public class AddFlightsController implements Serializable {
 
     /**
      * Repositories
@@ -181,7 +183,7 @@ public class AddFlightsController {
      */
 
     public String addNewFlight() {
-        repo.createFlight(new Flight(code, departureAirport, destinationAirport, departure.toInstant().atZone(ZoneId.systemDefault()).toLocalDateTime(), availableSeats, price));
+        repo.createFlight(new Flight("JA0018", departureAirport, destinationAirport, departure.toInstant().atZone(ZoneId.systemDefault()).toLocalDateTime(), availableSeats, price));
         return "addFlight"; //TODO: redirect naar ??
     }
 
