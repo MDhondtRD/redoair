@@ -37,7 +37,7 @@ public class Trip implements Serializable {
     @ManyToOne(optional = false, cascade = CascadeType.PERSIST)
     private Flight outFlight;
 
-    @ManyToOne
+    @ManyToOne(cascade = CascadeType.PERSIST)
     private Flight returnFlight;
 
     @Column(nullable = false)

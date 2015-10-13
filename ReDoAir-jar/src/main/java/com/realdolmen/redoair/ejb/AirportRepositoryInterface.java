@@ -9,19 +9,17 @@ import java.util.Set;
 @Remote
 public interface AirportRepositoryInterface {
 
-    public List<Airport> getAllAirports();
+    List<Airport> getAllAirports();
 
-    public List<Airport> getAllAirportsByCountry(String country);
+    List<Airport> getAllAirportsByCountry(String country);
 
-    public Airport getAirportById(Integer id);
+    Airport getAirportById(Integer id);
 
-    public List<Airport> getAirportByCity(String city);
+    List<Airport> getAllAirportsByCity(String city);
 
-    public Airport getAirportByName(String airportName);
+    Airport getAirportByName(String airportName);
 
-    public List<Airport> getAllAirportsByCity(String city);
+    Set<String> getAllCitiesByCountry(String country);
 
-    public Set<String> getAllCountries();
-
-    public Set<String> getAllCitiesByCountry(String country);
+    Set<String> getAllCountries();
 }

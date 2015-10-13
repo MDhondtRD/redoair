@@ -28,10 +28,10 @@ public class Flight implements Serializable {
     @Column(nullable = false)
     private String code;
 
-    @ManyToOne(optional = false)
+    @ManyToOne
     private Airport departureAirport;
 
-    @ManyToOne(optional = false)
+    @ManyToOne
     private Airport destinationAirport;
 
     @Column(nullable = false)

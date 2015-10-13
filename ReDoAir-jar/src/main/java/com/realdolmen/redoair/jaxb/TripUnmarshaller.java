@@ -13,6 +13,7 @@ import javax.xml.bind.JAXBContext;
 import javax.xml.bind.JAXBException;
 import javax.xml.bind.Unmarshaller;
 import java.io.File;
+import java.util.List;
 
 /**
  * Created by JDOAX80 on 11/10/2015.
@@ -26,11 +27,12 @@ public class TripUnmarshaller {
     @EJB
     private AirportRepository airportRepository;
 
-    public void unmarshal(File file) {
+    public int unmarshal(File file) {
         try {
             JAXBContext jaxbContext = JAXBContext.newInstance(TripsFormat.class);
             Unmarshaller jaxbUnmarshaller = jaxbContext.createUnmarshaller();
             TripsFormat tripsFormat = (TripsFormat) jaxbUnmarshaller.unmarshal(file);
+            int amountOfTrips = 0;
             for (TripFormat tripFormat : tripsFormat.getTrips()) {
                 Airport departureAirportForOutFlight = airportRepository.getAirportByName(tripFormat.getOutFlight().getDepartureAirport());
                 Airport destinationAirportForOutFlight = airportRepository.getAirportByName(tripFormat.getOutFlight().getDestinationAirport());
@@ -47,9 +49,12 @@ public class TripUnmarshaller {
                 }
                 Trip trip = new Trip(tripFormat.getDepartureDate(), tripFormat.getReturnDate(), outFlight, returnFlight, tripFormat.getTripDayPrice(), tripFormat.getTravelAgency());
                 tripRepository.createTrip(trip);
+                amountOfTrips++;
             }
+            return amountOfTrips;
         } catch (JAXBException e) {
             e.printStackTrace();
+            return 0;
         }
     }
 }

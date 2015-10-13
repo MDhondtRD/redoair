@@ -6,6 +6,7 @@ import org.junit.Before;
 import org.junit.Test;
 
 import java.util.List;
+import java.util.Set;
 
 /**
  * Created by JDOAX80 on 12/10/2015.
@@ -43,7 +44,7 @@ public class AirportRepositoryTest extends DataPersistenceTest {
 
     @Test
     public void canRetrieveAirportByCity() {
-        List<Airport> airports = airportRepository.getAirportByCity("London");
+        List<Airport> airports = airportRepository.getAllAirportsByCity("London");
         assertEquals(6, airports.size());
     }
 
@@ -51,5 +52,17 @@ public class AirportRepositoryTest extends DataPersistenceTest {
     public void canRetrieveAirportByName() {
         Airport airport = airportRepository.getAirportByName("Gatwick");
         assertNotNull(airport.getId());
+    }
+
+    @Test
+    public void canRetrieveAllCitiesByCountry() {
+        Set<String> citiesByCountry = airportRepository.getAllCitiesByCountry("Belgium");
+        assertEquals(18, citiesByCountry.size());
+    }
+
+    @Test
+    public void canRetrieveAllCountries() {
+        Set<String> countries = airportRepository.getAllCountries();
+        assertEquals(50, countries.size());
     }
 }

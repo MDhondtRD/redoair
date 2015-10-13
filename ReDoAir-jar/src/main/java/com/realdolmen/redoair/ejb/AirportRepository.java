@@ -25,14 +25,14 @@ public class AirportRepository implements AirportRepositoryInterface {
 
     @Override
     public List<Airport> getAllAirportsByCountry(String country) {
-        return em.createQuery("SELECT a FROM Airport a WHERE a.country = :country", Airport.class)
+        List<Airport> results = em.createQuery("SELECT a FROM Airport a WHERE a.country = :country", Airport.class)
                 .setParameter("country", country).getResultList();
-    }
-
-    @Override
-    public List<Airport> getAllAirportsByCity(String city) {
-        return em.createQuery("SELECT a FROM Airport a WHERE a.city = :city", Airport.class)
-                .setParameter("city", city).getResultList();
+        if(!results.isEmpty()) {
+            return results;
+        }
+        else {
+            return null;
+        }
     }
 
     @Override
@@ -46,14 +46,13 @@ public class AirportRepository implements AirportRepositoryInterface {
                 .setParameter("country", country).getResultList());
     }
 
-
     @Override
     public Airport getAirportById(Integer id) {
         return em.find(Airport.class, id);
     }
 
     @Override
-    public List<Airport> getAirportByCity(String city) {
+    public List<Airport> getAllAirportsByCity(String city) {
         List<Airport> results = em.createQuery("SELECT a FROM Airport a WHERE a.city = :city", Airport.class)
                 .setParameter("city", city).getResultList();
         if(!results.isEmpty()) {
