@@ -13,6 +13,7 @@ import javax.transaction.Transactional;
 import java.io.InputStreamReader;
 import java.io.Reader;
 import java.lang.reflect.Type;
+import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.Collection;
@@ -47,10 +48,10 @@ public class PopulateDatabase implements ServletContextListener {
             em.flush();
 
             Flight f1 = new Flight("JA0001", em.find(Airport.class, 1), em.find(Airport.class, 2), LocalDateTime.now(), 20, 32.01);
-            Flight f2 = new Flight("JA0002", em.find(Airport.class, 3), em.find(Airport.class, 4), LocalDateTime.now(), 20, 32.01);
-            Flight f3 = new Flight("JA0003", em.find(Airport.class, 5), em.find(Airport.class, 6), LocalDateTime.now(), 20, 32.01);
-            Flight f4 = new Flight("JA0004", em.find(Airport.class, 7), em.find(Airport.class, 8), LocalDateTime.now(), 20, 32.01);
-            Flight f5 = new Flight("JA0005", em.find(Airport.class, 9), em.find(Airport.class, 10), LocalDateTime.now(), 20, 32.01);
+            Flight f2 = new Flight("JA0002", em.find(Airport.class, 3), em.find(Airport.class, 4), LocalDateTime.now().plusDays(2), 20, 32.01);
+            Flight f3 = new Flight("JA0003", em.find(Airport.class, 5), em.find(Airport.class, 6), LocalDateTime.now().plusDays(4), 20, 32.01);
+            Flight f4 = new Flight("JA0004", em.find(Airport.class, 2), em.find(Airport.class, 7), LocalDateTime.now().plusDays(6), 20, 32.01);
+            Flight f5 = new Flight("JA0005", em.find(Airport.class, 4), em.find(Airport.class, 8), LocalDateTime.now().plusDays(8), 20, 32.01);
             em.persist(f1); em.persist(f2); em.persist(f3); em.persist(f4); em.persist(f5);
             em.flush();
 
@@ -60,6 +61,11 @@ public class PopulateDatabase implements ServletContextListener {
             UserRoles ur2 = new UserRoles("emp@redoair.com", "employee");
             em.persist(u1); em.persist(u2);
             em.persist(ur1); em.persist(ur2);
+            em.flush();
+
+            Trip t1 = new Trip(LocalDate.now(), LocalDate.now().plusDays(5), f1, f4, 55.55, "RD Travel");
+            Trip t2 = new Trip(LocalDate.now().plusDays(2), LocalDate.now().plusDays(5), f2, f5, 44.44, "RD Travel");
+            em.persist(t1); em.persist(t2);
             em.flush();
 
 
