@@ -3,6 +3,7 @@ package com.realdolmen.air.controllers;
 import com.realdolmen.redoair.ejb.UserRepository;
 import com.realdolmen.redoair.entities.User;
 
+import javax.annotation.PostConstruct;
 import javax.enterprise.context.RequestScoped;
 
 import javax.faces.context.ExternalContext;
@@ -28,6 +29,20 @@ public class LoginController implements Serializable {
     private Principal principal;
 
     private User user = new User();
+    private boolean loggedIn = false;
+    private boolean loggedOut = true;
+
+    @PostConstruct
+    public void checkIfLoggedInOrLoggedOut() {
+        if(!principal.getName().equals("anonymous")) {
+            loggedIn = true;
+            loggedOut = false;
+        }
+        else {
+            loggedIn = false;
+            loggedOut = true;
+        }
+    }
 
     public void login() {
         try {
@@ -42,6 +57,11 @@ public class LoginController implements Serializable {
         }
     }
 
+    public String logout() {
+        FacesContext.getCurrentInstance().getExternalContext().invalidateSession();
+        return "../faces/global/loginInNavBar.xhtml";
+    }
+
     public ExternalContext getContext() {
         return FacesContext.getCurrentInstance().getExternalContext();
     }
@@ -54,9 +74,20 @@ public class LoginController implements Serializable {
         this.user = user;
     }
 
-    public String logout() {
-        FacesContext.getCurrentInstance().getExternalContext().invalidateSession();
-        return "/login";
+    public boolean isLoggedIn() {
+        return loggedIn;
+    }
+
+    public void setLoggedIn(boolean loggedIn) {
+        this.loggedIn = loggedIn;
+    }
+
+    public boolean isLoggedOut() {
+        return loggedOut;
+    }
+
+    public void setLoggedOut(boolean loggedOut) {
+        this.loggedOut = loggedOut;
     }
 
     public boolean userIsACustomer(HttpServletRequest request) {
