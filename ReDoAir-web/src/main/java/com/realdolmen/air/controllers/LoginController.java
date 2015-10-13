@@ -44,16 +44,20 @@ public class LoginController implements Serializable {
         }
     }
 
-    public void login() {
+    public String login() {
+        String returnPath = null;
         try {
             HttpServletRequest request = (HttpServletRequest) getContext().getRequest();
             request.login(user.getEmail(), user.getPassword());
+            returnPath = "home.xhtml";
         } catch (ServletException e) {
             //Login failed
             System.out.println("FAAAAIL");
+            returnPath = "../faces/global/loginInNavBar.xhtml";
         }
         finally {
             user.setPassword(null);
+            return returnPath;
         }
     }
 
