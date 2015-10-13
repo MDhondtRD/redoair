@@ -55,7 +55,9 @@ public class PopulateDatabase implements ServletContextListener {
             em.flush();
 
             User u = new User("JetAir", "Maarten", "Dhondt","1EwbrW7te4JQjPjk/JbuzD5H3T5g6CRNrjz7qtnEB1Y=", new Address("Croix ou Pile 1","","Saint-Sauveur","7912","Belgium"), UserType.PARTNER, "info@jetair.com", new Date());
+            UserRoles ur = new UserRoles("info@jetair.com", "partner");
             em.persist(u);
+            em.persist(ur);
             em.flush();
 
 

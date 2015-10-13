@@ -24,7 +24,7 @@
     </servlet-mapping>
 
     <welcome-file-list>
-        <welcome-file>/faces/home.xhtml</welcome-file>
+        <welcome-file>/faces/global/home.xhtml</welcome-file>
     </welcome-file-list>
 
     <security-constraint>
@@ -71,6 +71,17 @@
         <web-resource-collection>
             <web-resource-name>resources</web-resource-name>
             <url-pattern>/resources/*</url-pattern>
+            <http-method>PUT</http-method>
+            <http-method>DELETE</http-method>
+            <http-method>GET</http-method>
+            <http-method>POST</http-method>
+        </web-resource-collection>
+    </security-constraint>
+
+    <security-constraint>
+        <web-resource-collection>
+            <web-resource-name>global</web-resource-name>
+            <url-pattern>/faces/global/*</url-pattern>
             <http-method>PUT</http-method>
             <http-method>DELETE</http-method>
             <http-method>GET</http-method>
