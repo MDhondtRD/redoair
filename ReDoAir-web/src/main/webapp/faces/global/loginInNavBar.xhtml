@@ -3,35 +3,68 @@
 <html xmlns="http://www.w3.org/1999/xhtml"
       xmlns:b="http://bootsfaces.net/ui"
       xmlns:f="http://java.sun.com/jsf/core"
-      xmlns:h="http://java.sun.com/jsf/html">
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets">
 <h:head>
-    <title>BootsFaces Basic Page</title>
+    <title>RedoAir Login</title>
 </h:head>
-<h:body>
-    <b:container>
-        <b:jumbotron>
-            <h1>ReDo Travel</h1>
+<ui:composition template="/resources/template/template.xhtml">
+    <ui:define name="content">
+        <div class="row">
+            <div class="col-md-2"/>
+            <b:container>
+                <b:jumbotron>
+                    <h1>Login</h1>
+                    <p>Login to your account to book a trip!</p>
+                <h:form id ="form">
+                    <h:outputLabel value="Email:"/>
+                    <h:inputText id="email" value="#{loginController.user.email}" tabindex="1" required="true"
+                                 size="20" requiredMessage="Email is required" validator="#{emailValidator.validate}"/>
+                    <h:message for="email" style="color:red"/>
+                    <p></p>
+                    <h:outputLabel value="Password:"/>
+                    <h:inputSecret id="password" value="#{loginController.user.password}" tabindex="2"></h:inputSecret>
+                    <h:commandButton value="Login" action="#{loginController.login()}" tabindex="3" class="btn btn-primary btn-lg"/>
+                    <h:commandButton value="Logout" action="#{loginController.logout()}" tabindex="4" class="btn btn-primary btn-lg"/>
+                    <h:inputHidden id="validatePassword" validator="#{passwordOnLoginValidator.validate}"/>
+                    <h:message for="validatePassword" style="color:red"/>
+                    <p></p>
+                    <h:link class="btn btn-primary btn-lg" id="register" outcome="signup" rendered="false" tabindex="5">Register</h:link><br/>
+                    <h:inputHidden id="checkForEmail" value = "loginInNavbar"/>
+                </h:form>
+                </b:jumbotron>
+            </b:container>
 
-            <p>This is a simple hero unit, a simple jumbotron-style component for calling extra attention to featured content or information.</p>
-
-            <p><a class="btn btn-primary btn-lg">Learn more</a></p>
-        </b:jumbotron>
-        <h:form id ="form">
-            <h:outputLabel value="Email:"/>
-            <h:inputText id="email" value="#{loginController.user.email}" tabindex="1" required="true"
-                         size="20" requiredMessage="Email is required" validator="#{emailValidator.validate}"/>
-            <h:message for="email" style="color:red"/>
-            <p></p>
-            <h:outputLabel value="Password:"/>
-            <h:inputSecret id="password" value="#{loginController.user.password}"></h:inputSecret>
-            <h:commandButton value="Login" action="#{loginController.login()}"/>
-            <h:inputHidden id="validatePassword" validator="#{passwordOnLoginValidator.validate}"/>
-            <h:message for="validatePassword" style="color:red"/>
-            <p></p>
-            <h:link id="register" outcome="/signup.faces" rendered="false">Register</h:link><br/>
-            <h:inputHidden id="checkForEmail" value = "loginInNavbar"/>
-        </h:form>
-    </b:container>
-</h:body>
+            <div class="col-md-2"/>
+        </div>
+    </ui:define>
+</ui:composition>
 </html>
+<!--<h:body>-->
+    <!--<b:container>-->
+        <!--<b:jumbotron>-->
+            <!--<h1>ReDo Travel</h1>-->
+
+            <!--<p>This is a simple hero unit, a simple jumbotron-style component for calling extra attention to featured content or information.</p>-->
+
+            <!--<p><a class="btn btn-primary btn-lg">Learn more</a></p>-->
+        <!--</b:jumbotron>-->
+        <!--<h:form id ="form">-->
+            <!--<h:outputLabel value="Email:"/>-->
+            <!--<h:inputText id="email" value="#{loginController.user.email}" tabindex="1" required="true"-->
+                         <!--size="20" requiredMessage="Email is required" validator="#{emailValidator.validate}"/>-->
+            <!--<h:message for="email" style="color:red"/>-->
+            <!--<p></p>-->
+            <!--<h:outputLabel value="Password:"/>-->
+            <!--<h:inputSecret id="password" value="#{loginController.user.password}"></h:inputSecret>-->
+            <!--<h:commandButton value="Login" action="#{loginController.login()}"/>-->
+            <!--<h:inputHidden id="validatePassword" validator="#{passwordOnLoginValidator.validate}"/>-->
+            <!--<h:message for="validatePassword" style="color:red"/>-->
+            <!--<p></p>-->
+            <!--<h:link id="register" outcome="/signup.faces" rendered="false">Register</h:link><br/>-->
+            <!--<h:inputHidden id="checkForEmail" value = "loginInNavbar"/>-->
+        <!--</h:form>-->
+    <!--</b:container>-->
+<!--</h:body>-->
+<!--</html>-->
 
