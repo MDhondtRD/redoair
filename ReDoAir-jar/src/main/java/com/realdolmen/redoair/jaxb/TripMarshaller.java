@@ -27,7 +27,8 @@ public class TripMarshaller {
 
     public void exportAllTripsInDatabaseToXML(OutputStream outputStream) {
         try {
-            List<Trip> trips = tripRepository.getAllFutureTrips();
+            List<Trip> trips = tripRepository.getAllTrips();
+            System.out.println(trips.size());
             TripsFormat formattedTrips = new TripsFormat();
             for(Trip trip : trips) {
                 FlightFormat outFlight = formatFlight(trip.getOutFlight());
@@ -46,17 +47,17 @@ public class TripMarshaller {
 
     public FlightFormat formatFlight(Flight flight) {
         FlightFormat formattedFlight = new FlightFormat();
-        formattedFlight.setCode(flight.getCode());
-        formattedFlight.setDeparture(flight.getDeparture());
-        formattedFlight.setLengthOfFlight(flight.getLengthOfFlight());
-        formattedFlight.setDepartureAirport(flight.getDepartureAirport().getName());
-        formattedFlight.setPrice(flight.getPrice());
-        formattedFlight.setAvailableSeats(flight.getAvailableSeats());
-        if(flight.getDestinationAirport() != null) {
-            formattedFlight.setDestinationAirport(flight.getDestinationAirport().getCity());
+        if(flight != null) {
+            formattedFlight.setCode(flight.getCode());
+            formattedFlight.setDeparture(flight.getDeparture());
+            formattedFlight.setLengthOfFlight(flight.getLengthOfFlight());
+            formattedFlight.setDestinationAirport(flight.getDestinationAirport().getName());
+            formattedFlight.setDepartureAirport(flight.getDepartureAirport().getName());
+            formattedFlight.setPrice(flight.getPrice());
+            formattedFlight.setAvailableSeats(flight.getAvailableSeats());
         }
         else {
-            formattedFlight.setDestinationAirport(null);
+            formattedFlight = null;
         }
         return formattedFlight;
     }

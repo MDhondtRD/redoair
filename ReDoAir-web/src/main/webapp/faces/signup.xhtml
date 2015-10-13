@@ -8,66 +8,66 @@
 <ui:composition template="/resources/template/template.xhtml">
     <ui:define name="content">
         <h:form id = "form">
-            <h:outputLabel value="First name:"/>
+            <h:outputLabel value="#{msg['firstName']}"/>
             <h:inputText id="name" value="#{signUpController.user.name}" required="true"
-                         requiredMessage="name is required!"></h:inputText>
+                         requiredMessage="#{msg['firstName_validation_message']}"></h:inputText>
             <f:param name = "name" value ="#{signUpController.name}"/>
             <h:message for="name" style="color:red"/>
             <p></p>
-            <h:outputLabel value="Last name:"/>
+            <h:outputLabel value="#{msg['lastName']}"/>
             <h:inputText id="surname" value="#{signUpController.user.surname}" required="true"
-                         requiredMessage="last name is required!"></h:inputText>
+                         requiredMessage="#{msg['lastName_validation_message']}"></h:inputText>
             <h:message id="messageForSurname" for="surname" style="color:red"/>
             <p></p>
-            <h:outputLabel value="Email:"/>
+            <h:outputLabel value="#{msg['email']}"/>
             <h:inputText id="email" value="#{signUpController.user.email}" required="true"
-                         size="20" requiredMessage="email is required" validator="#{emailValidator.validate}"/>
+                         size="20" requiredMessage="#{msg['email_validation_message']}" validator="#{emailValidator.validate}"/>
             <h:message for="email" style="color:red"/>
             <p></p>
-            <h:outputLabel value="Username"/>
+            <h:outputLabel value="#{msg['username']}"/>
             <h:inputText id="username" value="#{signUpController.user.username}" required="true"
-                         requiredMessage="username is required!"></h:inputText>
+                         requiredMessage="#{msg['username_validation_message']}"></h:inputText>
             <h:message id="messageForUsername" for="username" style="color:red"/>
             <p></p>
-            <h:outputLabel value="Password:"/>
+            <h:outputLabel value="#{msg['password']}"/>
             <h:inputSecret id="password" value="#{signUpController.user.password}" required="true"
-                           requiredMessage="Please enter password">
+                           requiredMessage="#{msg['password_validation_message']}">
                 <f:validator validatorId="passwordValidator"/>
                 <f:attribute name="confirmPassword" value="#{confirmPassword}"/>
             </h:inputSecret>
             <h:message for="password" style="color: red;"/>
             <p></p>
-            <h:outputLabel value="Confirm Password:"/>
+            <h:outputLabel value="#{msg['confirmPassword']}"/>
             <h:inputSecret id="confirmPassword" required="true"
                            binding="#{confirmPassword}"
-                           requiredMessage="Please enter confirm password"/>
+                           requiredMessage="#{msg['confirmPassword_validation_message']}"/>
             <h:message for="confirmPassword" style="color: red;"/>
             <p></p>
-            <h:outputLabel value="Street1:"/>
+            <h:outputLabel value="#{msg['street1']}"/>
             <h:inputText id="street1" value="#{signUpController.address.street1}" required="true"
-                         requiredMessage="street1 is required!"></h:inputText>
+                         requiredMessage="#{msg['street1_validation_message']}"></h:inputText>
             <h:message id="messageForStreet1" for="street1" style="color:red"/>
             <p></p>
-            <h:outputLabel value="Street2:"/>
+            <h:outputLabel value="#{msg['street2']}"/>
             <h:inputText value="#{signUpController.address.street2}" id="street2"></h:inputText>
             <p></p>
-            <h:outputLabel value="City:"/>
+            <h:outputLabel value="#{msg['city']}"/>
             <h:inputText id="city" value="#{signUpController.address.city}" required="true"
-                         requiredMessage="city is required!"></h:inputText>
+                         requiredMessage="#{msg['city_validation_message']}"></h:inputText>
             <h:message id="messageForCity" for="city" style="color:red"/>
             <p></p>
-            <h:outputLabel value="Postal Code:"/>
+            <h:outputLabel value="#{msg['postalCode']}"/>
             <h:inputText id="postalCode" value="#{signUpController.address.postalCode}" required="true"
-                         requiredMessage="postal code is required!"></h:inputText>
+                         requiredMessage="#{msg['postalCode_validation_message']}"></h:inputText>
             <h:message id="messageForPostalCode" for="postalCode" style="color:red"/>
             <p></p>
-            <h:outputLabel value="Country:"/>
+            <h:outputLabel value="#{msg['country']}"/>
             <h:selectOneListbox id="country" value="#{signUpController.address.country}"> <!--required="true"
                                 requiredMessage="country is required!">--></h:selectOneListbox>
             <h:message id="messageForCountry" for="country" style="color:red"/>
             <p></p>
-            <h:button value="Cancel" action="#{signUpController.cancel()}"/>
-            <h:commandButton value="Sign Up" action="#{signUpController.createUser()}"/>
+            <h:button value="#{msg['cancel_button']}" action="#{signUpController.cancel()}"/>
+            <h:commandButton value="#{msg['signup_button']}" action="#{signUpController.createUser()}"/>
         </h:form>
     </ui:define>
 </ui:composition>

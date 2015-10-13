@@ -15,7 +15,11 @@ public interface AirportRepositoryInterface {
 
     Airport getAirportById(Integer id);
 
-    List<Airport> getAirportByCity(String city);
+    List<Airport> getAllAirportsByCity(String city);
 
     Airport getAirportByName(String airportName);
+
+    Set<String> getAllCitiesByCountry(String country);
+
+    Set<String> getAllCountries();
 }

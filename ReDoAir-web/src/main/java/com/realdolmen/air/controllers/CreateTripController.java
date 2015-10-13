@@ -9,6 +9,7 @@ import javax.inject.Named;
 import javax.servlet.http.Part;
 import java.io.File;
 import java.io.IOException;
+import java.io.OutputStream;
 import java.util.Scanner;
 
 /**
@@ -21,6 +22,8 @@ public class CreateTripController {
     private String fileContent;
     @Inject
     TripUnmarshaller tripUnmarshaller;
+    @Inject
+    TripMarshaller tripMarshaller;
 
     public void upload() {
         try {
@@ -42,5 +45,10 @@ public class CreateTripController {
     public void readFile() {
         File file = new File("C:\\Users\\jdoax80\\Desktop\\tripsFormat.xml");
         tripUnmarshaller.unmarshal(file);
+    }
+
+    public void createXml() {
+
+        //tripMarshaller.exportAllTripsInDatabaseToXML();
     }
 }
