@@ -3,6 +3,7 @@ package com.realdolmen.air.controllers;
 import com.realdolmen.redoair.ejb.TripRepository;
 import com.realdolmen.redoair.entities.Trip;
 
+import javax.annotation.PostConstruct;
 import javax.enterprise.context.RequestScoped;
 import javax.faces.bean.ManagedProperty;
 import javax.faces.context.FacesContext;
@@ -12,21 +13,44 @@ import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 
-/**
- * Created by JDOAX80 on 12/10/2015.
- */
 @Named
 @RequestScoped
-public class ChooseTripController implements Serializable{
+public class ChooseTripController implements Serializable {
+
+    /**
+     * REPOSITORIES
+     */
+
     @Inject
     private TripRepository tripRepository;
 
-    private List<Trip> trips = new ArrayList<>();
+    /**
+     * ATTRIBUTES
+     */
+
+    private List<Trip> trips;
+
+    private List<Trip> filteredTrips;
+
+    @ManagedProperty("#{param.country}")
+    private String destination;
+
+    @PostConstruct
+    public void init() {
+        trips = tripRepository.getAllTrips();
+    }
 
 
-    public void getTripsForChosenDestination(String destination) {
-        tripRepository.getAllFutureTripsByCountry(destination);
-        //tripRepository.getAllFutureTripsByDestination(destination);//Voor wanneer de mappoints op de map staan
+    /**
+     * GETTERS & SETTERS
+     */
+
+    public String getDestination() {
+        return destination;
+    }
+
+    public void setDestination(String destination) {
+        this.destination = destination;
     }
 
     public List<Trip> getTrips() {
@@ -35,5 +59,22 @@ public class ChooseTripController implements Serializable{
 
     public void setTrips(List<Trip> trips) {
         this.trips = trips;
+    }
+
+    public List<Trip> getFilteredTrips() {
+        return filteredTrips;
+    }
+
+    public void setFilteredTrips(List<Trip> filteredTrips) {
+        this.filteredTrips = filteredTrips;
+    }
+
+    /**
+     * METHODS
+     */
+
+    public void getTripsForChosenDestination(String destination) {
+        tripRepository.getAllFutureTripsByCountry(destination);
+        //tripRepository.getAllFutureTripsByDestination(destination);//Voor wanneer de mappoints op de map staan
     }
 }

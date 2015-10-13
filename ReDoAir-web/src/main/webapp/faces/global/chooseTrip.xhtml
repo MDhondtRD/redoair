@@ -4,8 +4,136 @@
 <html xmlns="http://www.w3.org/1999/xhtml"
       xmlns:h="http://xmlns.jcp.org/jsf/html"
       xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:p="http://primefaces.org/ui"
       xmlns:f="http://xmlns.jcp.org/jsf/core">
+
+<h:head>
+    Choose Trip
+</h:head>
 <h:body>
-    <h:inputText id="outputLabel" value ="#{chooseDestinationController.country}"></h:inputText>
+    <ui:composition template="/resources/template/template.xhtml">
+        <ui:define name="content">
+            <div class="jumbotron">
+                <div class="container">
+                    <div class="row">
+                        <h:outputText value="Choose a Trip" style="font-size: 50px; font-weight: bold"/>
+                    </div>
+                </div>
+
+                <p:dataTable var="trip" value="#{chooseTripController.trips}" widgetVar="tripsTable"
+                             emptyMessage="No trips found with given criteria" filteredValue="#{chooseTripController.filteredTrips}">
+                    <f:facet name="header">
+                        <p:outputPanel>
+                            <h:outputText value="Search all fields:" />
+                            <p:inputText id="globalFilter" onkeyup="PF('tripsTable').filter()" style="width:150px" placeholder="Enter keyword"/>
+                        </p:outputPanel>
+                    </f:facet>
+
+                    <p:column filterBy="#{trip.id}" headerText="Id" filterMatchMode="contains">
+                        <h:outputText value="#{trip.id}" />
+                    </p:column>
+
+                    <!--<p:column filterBy="#{car.year}" headerText="Year" footerText="lte" filterMatchMode="lte">-->
+                        <!--<f:facet name="filter">-->
+                            <!--<p:spinner onchange="PF('carsTable').filter()" styleClass="year-spinner">-->
+                                <!--<f:converter converterId="javax.faces.Integer" />-->
+                            <!--</p:spinner>-->
+                        <!--</f:facet>-->
+                        <!--<h:outputText value="#{car.year}" />-->
+                    <!--</p:column>-->
+
+                    <!--<p:column filterBy="#{car.brand}" headerText="Brand" footerText="exact" filterMatchMode="exact">-->
+                        <!--<f:facet name="filter">-->
+                            <!--<p:selectOneMenu onchange="PF('carsTable').filter()" >-->
+                                <!--<f:selectItem itemLabel="Select One" itemValue="#{null}" noSelectionOption="true" />-->
+                                <!--<f:selectItems value="#{dtFilterView.brands}" />-->
+                            <!--</p:selectOneMenu>-->
+                        <!--</f:facet>-->
+                        <!--<h:outputText value="#{car.brand}" />-->
+                    <!--</p:column>-->
+
+                    <!--<p:column filterBy="#{car.color}" headerText="Color" footerText="in" filterMatchMode="in">-->
+                        <!--<f:facet name="filter">-->
+                            <!--<p:selectCheckboxMenu label="Colors" onchange="PF('carsTable').filter()" panelStyle="width:125px" scrollHeight="150">-->
+                                <!--<f:selectItems value="#{dtFilterView.colors}" />-->
+                            <!--</p:selectCheckboxMenu>-->
+                        <!--</f:facet>-->
+                        <!--<h:outputText value="#{car.color}" />-->
+                    <!--</p:column>-->
+
+                    <!--<p:column filterBy="#{car.sold}" headerText="Status" footerText="equals" filterMatchMode="equals">-->
+                        <!--<f:facet name="filter">-->
+                            <!--<p:selectOneButton onchange="PF('carsTable').filter()">-->
+                                <!--<f:converter converterId="javax.faces.Boolean" />-->
+                                <!--<f:selectItem itemLabel="All" itemValue="" />-->
+                                <!--<f:selectItem itemLabel="Sold" itemValue="true" />-->
+                                <!--<f:selectItem itemLabel="Sale" itemValue="false" />-->
+                            <!--</p:selectOneButton>-->
+                        <!--</f:facet>-->
+                        <!--<h:outputText value="#{car.sold ? 'Sold': 'Sale'}" />-->
+                    <!--</p:column>-->
+
+                    <!--<p:column filterBy="#{car.price}" headerText="Price" footerText="custom (min)" filterFunction="#{dtFilterView.filterByPrice}">-->
+                        <!--<h:outputText value="#{car.price}">-->
+                            <!--<f:convertNumber currencySymbol="$" type="currency"/>-->
+                        <!--</h:outputText>-->
+                    <!--</p:column>-->
+                </p:dataTable>
+
+            </div>
+        </ui:define>
+    </ui:composition>
 </h:body>
 </html>
+        <!--<f:view>-->
+        <!--<h:inputText id="outputLabel" value ="#{chooseTripController.destination}"></h:inputText>-->
+        <!--<h:dataTable id="trips" value="#{chooseTripController.trips}" var="trip">-->
+        <!--<h:column>-->
+        <!--<f:facet name="header">-->
+        <!--<h:outputText value="Travel agency"/>-->
+        <!--</f:facet>-->
+        <!--<h:outputText value="#{trip.travelAgency}"/>-->
+        <!--</h:column>-->
+        <!--<h:column>-->
+        <!--<f:facet name="header">-->
+        <!--<h:outputText value="Departure date"/>-->
+        <!--</f:facet>-->
+        <!--<h:outputText value="#{trip.departureDate}"/>-->
+        <!--</h:column>-->
+        <!--<h:column>-->
+        <!--<f:facet name="header">-->
+        <!--<h:outputText value="Return date"/>-->
+        <!--</f:facet>-->
+        <!--<h:outputText value="#{trip.returnDate}"/>-->
+        <!--</h:column>-->
+        <!--<h:column>-->
+        <!--<f:facet name="header">-->
+        <!--<h:outputText value="Price per day"/>-->
+        <!--</f:facet>-->
+        <!--<h:outputText value="#{trip.tripDayPrice}"/>-->
+        <!--</h:column>-->
+        <!--<h:column>-->
+        <!--<f:facet name="header">-->
+        <!--<h:outputText value="Price per day"/>-->
+        <!--</f:facet>-->
+        <!--<h:outputText value="#{trip.tripDayPrice}"/>-->
+        <!--</h:column>-->
+        <!--<h:column>-->
+        <!--<f:facet name="header">-->
+        <!--<h:outputText value="Price per day"/>-->
+        <!--</f:facet>-->
+        <!--<h:outputText value="#{trip.tripDayPrice}"/>-->
+        <!--</h:column>-->
+        <!--<h:column>-->
+        <!--<h:form>-->
+        <!--<h:commandLink value="Remove">-->
+        <!--<f:ajax render="books" event="click" listener="#{bookController.remove(book.id)}"/>-->
+        <!--&lt;!&ndash; event:Duidt op welke event er geluisterd wordt, in dit geval de onClickEvent; render:Geeft aan welke html component je opnieuw wilt renderen, in dit geval-->
+        <!--de datatable met id books; listener:Is de methode die luistert naar de meegegeven event, bij de opgegeven event zal de remove methode uit de bookController opgeroepen-->
+        <!--worden.->De methode allBooks uit bookcontroller wordt opnieuw opgeroepen.&ndash;&gt;-->
+        <!--</h:commandLink>-->
+        <!--</h:form>-->
+        <!--</h:column>-->
+        <!--</h:dataTable>-->
+        <!--</f:view>-->
+        <!--</html>-->

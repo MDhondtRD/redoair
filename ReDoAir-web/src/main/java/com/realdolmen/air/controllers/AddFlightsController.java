@@ -10,10 +10,8 @@ import com.realdolmen.redoair.entities.User;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.SessionScoped;
 import javax.inject.Inject;
-import javax.inject.Named;
 import java.io.Serializable;
 import java.security.Principal;
-import java.time.LocalDateTime;
 import java.time.ZoneId;
 import java.util.*;
 
