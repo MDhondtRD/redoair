@@ -60,7 +60,7 @@ var iconStyle = new ol.style.Style({
         anchorXUnits: 'fraction',
         anchorYUnits: 'pixels',
         opacity: 0.75,
-        src: '../resources/images/map_icon.png'
+        src: '../../resources/images/map_icon.png'
     }))
 });
 
@@ -71,7 +71,6 @@ var vectorSource = new ol.source.Vector({
 var mapMarkers = [];
 
 function createMapMarker(latitude, longitude, destinationName) {
-    ;
     var coordinate = [latitude, longitude];
     var convertedCoordinates = ol.proj.transform(coordinate, 'EPSG:4326', 'EPSG:3857');
     coordinate = [convertedCoordinates[0], convertedCoordinates[1]];//array holding long, lat values : 50.970319, 4.515209
@@ -97,7 +96,7 @@ var markerLayer = new ol.layer.Vector({
 //-----------------------------------------------------------------------------END OF MARKER-------------------------------------------------------
 var vectorLayer = new ol.layer.Vector({
     source: new ol.source.Vector({
-        url: '../resources/data/countries.geojson',
+        url: '../../resources/data/countries.geojson',
         format: new ol.format.GeoJSON(),
         wrapX: false
     }),

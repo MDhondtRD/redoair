@@ -2,6 +2,7 @@ package com.realdolmen.redoair.ejb;
 
 import com.realdolmen.redoair.entities.Trip;
 
+import java.io.Serializable;
 import java.util.List;
 
 /**

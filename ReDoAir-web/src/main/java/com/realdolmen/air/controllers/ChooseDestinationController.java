@@ -3,10 +3,12 @@ package com.realdolmen.air.controllers;
 import com.realdolmen.redoair.ejb.TripRepository;
 import com.realdolmen.redoair.entities.Trip;
 
+import javax.enterprise.context.ConversationScoped;
 import javax.enterprise.context.RequestScoped;
 import javax.faces.view.ViewScoped;
 import javax.inject.Inject;
 import javax.inject.Named;
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -14,8 +16,8 @@ import java.util.List;
  * Created by JDOAX80 on 7/10/2015.
  */
 @Named
-@RequestScoped
-public class ChooseDestinationController {
+@ConversationScoped
+public class ChooseDestinationController implements Serializable {
 
     private String country;
     private List<Trip> trips = new ArrayList<>();
@@ -24,14 +26,14 @@ public class ChooseDestinationController {
     @Inject
     private TripRepository tripRepository;
 
-    public String retrieveDestinationsForCountry() {
+    public void retrieveDestinationsForCountry() {
         System.out.println("Calling retrieveDestinationsForCountry");
+        System.out.println(country);
         trips = tripRepository.getAllFutureTripsByCountry(country);
         for(Trip trip: trips) {
             System.out.println("TRIP id: " + trip.getId());
             tripName = trip.getTravelAgency();
         }
-        return "chooseTrip";
 /*        if(trips.size() > 0) {
             return "chooseTrip";
         }
@@ -62,5 +64,15 @@ public class ChooseDestinationController {
 
     public void setTripName(String tripName) {
         this.tripName = tripName;
+    }
+
+    public String startBooking() {
+        System.out.println("Start booking");
+        trips = tripRepository.getAllFutureTripsByCountry(country);
+        return "../faces/global/chooseTrip";
+    }
+
+    public String endBooking() {
+        return "addFlight.xhtml";
     }
 }

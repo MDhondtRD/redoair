@@ -6,11 +6,12 @@ import javax.ejb.LocalBean;
 import javax.ejb.Stateless;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
+import java.io.Serializable;
 import java.util.List;
 
 @Stateless
 @LocalBean
-public class TripRepository implements TripRepositoryInterface{
+public class TripRepository implements TripRepositoryInterface, Serializable{
 
     @PersistenceContext
     private EntityManager em;

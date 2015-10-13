@@ -15,15 +15,15 @@
         <div class="row-fluid">
             <div class="span12">
                 <div id="map" class="map"><div id="popup"/></div>
-                <h:form id="hiddenForm" style="display: none;">
-                    <h:inputHidden id="country" value="#{chooseDestinationController.country}"/>
-                    <h:commandButton id="invisibleClickTarget">
-                        <f:param value = "#{chooseDestinationController.country}" name="country"/>
-                        <f:ajax execute="@form" listener="#{chooseDestinationController.retrieveDestinationsForCountry()}"/>
-                    </h:commandButton>
-                </h:form>
             </div>
         </div>
+        <h:form id="hiddenForm" style="display: none;">
+            <h:inputHidden id="country" value="#{chooseDestinationController.country}"/>
+            <h:commandButton id="invisibleClickTarget" action="chooseTrip">
+                <f:ajax execute="@form" listener="#{chooseTripConversationController.startConversation()}"/>
+                <!--<f:param value = "#{chooseDestinationController.country}" name="country"/>-->
+            </h:commandButton>
+        </h:form>
     </div>
     <script src="../../resources/js/mapScript.js"></script>
 </h:body>

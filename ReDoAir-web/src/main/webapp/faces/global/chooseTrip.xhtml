@@ -5,55 +5,7 @@
       xmlns:h="http://xmlns.jcp.org/jsf/html"
       xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
       xmlns:f="http://xmlns.jcp.org/jsf/core">
-<f:view>
-    <h:inputText id="outputLabel" value ="#{chooseTripController.destination}"></h:inputText>
-    <h:dataTable id="trips" value="#{chooseTripController.trips}" var="trip">
-        <h:column>
-            <f:facet name="header">
-                <h:outputText value="Travel agency"/>
-            </f:facet>
-            <h:outputText value="#{trip.travelAgency}"/>
-        </h:column>
-        <h:column>
-            <f:facet name="header">
-                <h:outputText value="Departure date"/>
-            </f:facet>
-            <h:outputText value="#{trip.departureDate}"/>
-        </h:column>
-        <h:column>
-            <f:facet name="header">
-                <h:outputText value="Return date"/>
-            </f:facet>
-            <h:outputText value="#{trip.returnDate}"/>
-        </h:column>
-        <h:column>
-            <f:facet name="header">
-                <h:outputText value="Price per day"/>
-            </f:facet>
-            <h:outputText value="#{trip.tripDayPrice}"/>
-        </h:column>
-        <h:column>
-            <f:facet name="header">
-                <h:outputText value="Price per day"/>
-            </f:facet>
-            <h:outputText value="#{trip.tripDayPrice}"/>
-        </h:column>
-        <h:column>
-            <f:facet name="header">
-                <h:outputText value="Price per day"/>
-            </f:facet>
-            <h:outputText value="#{trip.tripDayPrice}"/>
-        </h:column>
-        <h:column>
-            <h:form>
-                <h:commandLink value="Remove">
-                    <f:ajax render="books" event="click" listener="#{bookController.remove(book.id)}"/>
-                    <!-- event:Duidt op welke event er geluisterd wordt, in dit geval de onClickEvent; render:Geeft aan welke html component je opnieuw wilt renderen, in dit geval
-                     de datatable met id books; listener:Is de methode die luistert naar de meegegeven event, bij de opgegeven event zal de remove methode uit de bookController opgeroepen
-                     worden.->De methode allBooks uit bookcontroller wordt opnieuw opgeroepen.-->
-                </h:commandLink>
-            </h:form>
-        </h:column>
-    </h:dataTable>
-</f:view>
+<h:body>
+    <h:inputText id="outputLabel" value ="#{chooseDestinationController.country}"></h:inputText>
+</h:body>
 </html>

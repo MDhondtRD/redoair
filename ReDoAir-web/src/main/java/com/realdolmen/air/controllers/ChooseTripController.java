@@ -23,17 +23,6 @@ public class ChooseTripController implements Serializable{
 
     private List<Trip> trips = new ArrayList<>();
 
-    @ManagedProperty("#{param.country}")
-    private String destination;
-
-    public String getDestination() {
-        return destination;
-    }
-
-    public void setDestination(String destination) {
-        this.destination = destination;
-    }
-
 
     public void getTripsForChosenDestination(String destination) {
         tripRepository.getAllFutureTripsByCountry(destination);
