@@ -27,8 +27,8 @@ public abstract class DataPersistenceTest extends PersistenceTest {
         connection.getConfig().setProperty(DatabaseConfig.PROPERTY_DATATYPE_FACTORY, new MySqlDataTypeFactory()); // Set factorytype in dbconfig to remove warning
         DatabaseOperation.CLEAN_INSERT.execute(connection, dataSet);
         connection.close();
-        PopulateDatabase pd = new PopulateDatabase();
-        pd.setup(entityManager());
+//        PopulateDatabase pd = new PopulateDatabase();
+//        pd.setup(entityManager());
     }
 
     @After

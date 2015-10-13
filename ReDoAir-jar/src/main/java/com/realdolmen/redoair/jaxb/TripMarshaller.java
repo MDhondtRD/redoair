@@ -22,10 +22,7 @@ import javax.xml.bind.Marshaller;
 @LocalBean
 public class TripMarshaller {
 
-    @EJB
-    private TripRepository tripRepository;
-
-    public void exportAllTripsInDatabaseToXML(OutputStream outputStream) {
+    public void exportAllTripsInDatabaseToXML(OutputStream outputStream, TripRepository tripRepository) {
         try {
             List<Trip> trips = tripRepository.getAllTrips();
             System.out.println(trips.size());

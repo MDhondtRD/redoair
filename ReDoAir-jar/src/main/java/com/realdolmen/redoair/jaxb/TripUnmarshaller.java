@@ -13,6 +13,8 @@ import javax.xml.bind.JAXBContext;
 import javax.xml.bind.JAXBException;
 import javax.xml.bind.Unmarshaller;
 import java.io.File;
+import java.io.InputStream;
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -22,17 +24,13 @@ import java.util.List;
 @LocalBean
 public class TripUnmarshaller {
 
-    @EJB
-    private TripRepository tripRepository;
-    @EJB
-    private AirportRepository airportRepository;
 
-    public int unmarshal(File file) {
+    public List<Trip> unmarshal(InputStream inputStream, AirportRepository airportRepository, TripRepository tripRepository) {
+        List<Trip> trips = new ArrayList<>();
         try {
             JAXBContext jaxbContext = JAXBContext.newInstance(TripsFormat.class);
             Unmarshaller jaxbUnmarshaller = jaxbContext.createUnmarshaller();
-            TripsFormat tripsFormat = (TripsFormat) jaxbUnmarshaller.unmarshal(file);
-            int amountOfTrips = 0;
+            TripsFormat tripsFormat = (TripsFormat) jaxbUnmarshaller.unmarshal(inputStream);
             for (TripFormat tripFormat : tripsFormat.getTrips()) {
                 Airport departureAirportForOutFlight = airportRepository.getAirportByName(tripFormat.getOutFlight().getDepartureAirport());
                 Airport destinationAirportForOutFlight = airportRepository.getAirportByName(tripFormat.getOutFlight().getDestinationAirport());
@@ -49,12 +47,13 @@ public class TripUnmarshaller {
                 }
                 Trip trip = new Trip(tripFormat.getDepartureDate(), tripFormat.getReturnDate(), outFlight, returnFlight, tripFormat.getTripDayPrice(), tripFormat.getTravelAgency());
                 tripRepository.createTrip(trip);
-                amountOfTrips++;
+                trips.add(trip);
             }
-            return amountOfTrips;
         } catch (JAXBException e) {
             e.printStackTrace();
-            return 0;
+        }
+        finally {
+            return trips;
         }
     }
 }

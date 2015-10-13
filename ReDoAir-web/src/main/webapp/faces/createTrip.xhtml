@@ -7,9 +7,14 @@
       xmlns:f="http://xmlns.jcp.org/jsf/core">
 <body>
     <h:form id="form" enctype="multipart/form-data">
-        <h:inputFile id="file" value="#{crea.file}"/>
+        <h:inputFile id="file" value="#{createTripController.file}"/>
         <h:commandButton value="Upload"
-                         action="#{bean.upload}"/>
+                         action="#{createTripController.upload()}"/>
     </h:form>
+    <h:form id="form2">
+        <h:commandButton value="Export"
+                         action="#{createTripController.createXml()}"/>
+    </h:form>
+
 </body>
 </html>

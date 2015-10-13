@@ -27,9 +27,6 @@ public class SignUpController {
 
     private Address address = new Address();
 
-    @NotNull(message = "This field cannot be left open")
-    private String someText;
-
     @ManagedProperty("#{param.name}")
     private String name;
 
@@ -68,11 +65,4 @@ public class SignUpController {
         this.name = name;
     }
 
-    public String getSomeText() {
-        return someText;
-    }
-
-    public void setSomeText(String someText) {
-        this.someText = someText;
-    }
 }

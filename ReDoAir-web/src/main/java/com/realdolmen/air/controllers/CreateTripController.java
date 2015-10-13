@@ -1,9 +1,15 @@
 package com.realdolmen.air.controllers;
 
+import com.realdolmen.redoair.ejb.AirportRepository;
+import com.realdolmen.redoair.ejb.TripRepository;
 import com.realdolmen.redoair.jaxb.TripMarshaller;
 import com.realdolmen.redoair.jaxb.TripUnmarshaller;
 
 import javax.enterprise.context.RequestScoped;
+import javax.faces.bean.ManagedBean;
+import javax.faces.bean.ViewScoped;
+import javax.faces.context.ExternalContext;
+import javax.faces.context.FacesContext;
 import javax.inject.Inject;
 import javax.inject.Named;
 import javax.servlet.http.Part;
@@ -19,16 +25,19 @@ import java.util.Scanner;
 @RequestScoped
 public class CreateTripController {
     private Part file;
-    private String fileContent;
+    private static final String DEFAULT_FILE_NAME = "marshalledTrips.xml";
     @Inject
     TripUnmarshaller tripUnmarshaller;
     @Inject
     TripMarshaller tripMarshaller;
+    @Inject
+    TripRepository tripRepository;
+    @Inject
+    AirportRepository airportRepository;
 
     public void upload() {
         try {
-            fileContent = new Scanner(file.getInputStream())
-                    .useDelimiter("\\A").next();
+            tripUnmarshaller.unmarshal(file.getInputStream(), airportRepository, tripRepository);
         } catch (IOException e) {
             // Error handling
         }
@@ -42,13 +51,21 @@ public class CreateTripController {
         this.file = file;
     }
 
-    public void readFile() {
-        File file = new File("C:\\Users\\jdoax80\\Desktop\\tripsFormat.xml");
-        tripUnmarshaller.unmarshal(file);
-    }
-
     public void createXml() {
+        ExternalContext externalContext = FacesContext.getCurrentInstance().getExternalContext();
+        externalContext.responseReset();
+        externalContext.setResponseContentType("application/xml");
+        externalContext.setResponseCharacterEncoding("UTF-8");
+        externalContext.setResponseHeader("Content-Disposition", "attachment; filename=\"" + DEFAULT_FILE_NAME + "\"");
+        try {
+            OutputStream output = externalContext.getResponseOutputStream();
+            tripMarshaller.exportAllTripsInDatabaseToXML(output, tripRepository);
 
-        //tripMarshaller.exportAllTripsInDatabaseToXML();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        finally {
+            FacesContext.getCurrentInstance().responseComplete();
+        }
     }
 }

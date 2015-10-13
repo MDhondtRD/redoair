@@ -22,7 +22,7 @@ public class AirportRepositoryTest extends DataPersistenceTest {
     }
 
 
-    private int sizeOfAirportList = 5;
+    private int sizeOfAirportList = 8107;
 
     @Test
     public void allAirportsCanBeRetrieved() {
@@ -45,6 +45,12 @@ public class AirportRepositoryTest extends DataPersistenceTest {
     @Test
     public void canRetrieveAirportByCity() {
         List<Airport> airports = airportRepository.getAllAirportsByCity("London");
+        int i = 0;
+        for(Airport airport : airports) {
+            System.out.println(airport.getName());
+            i++;
+        }
+        System.out.println("COUNT: " + i);
         assertEquals(6, airports.size());
     }
 
@@ -57,12 +63,18 @@ public class AirportRepositoryTest extends DataPersistenceTest {
     @Test
     public void canRetrieveAllCitiesByCountry() {
         Set<String> citiesByCountry = airportRepository.getAllCitiesByCountry("Belgium");
-        assertEquals(18, citiesByCountry.size());
+        assertEquals(28, citiesByCountry.size());//Filters all entries that have the same city
     }
 
     @Test
     public void canRetrieveAllCountries() {
         Set<String> countries = airportRepository.getAllCountries();
+        int i = 0;
+        for(String country : countries) {
+            System.out.println(country);
+            i++;
+        }
+        System.out.println("COUNT: " + i);
         assertEquals(50, countries.size());
     }
 }
