@@ -32,7 +32,8 @@ public class AirportConverter implements Converter {
         }
 
         try {
-            return repo.getAirportByName(value);
+            Airport temp = repo.getAirportById(Integer.parseInt(value));
+            return repo.getAirportById(Integer.parseInt(value));
         } catch (NumberFormatException e) {
             throw new ConverterException(new FacesMessage(value + " is not a valid Airport Name"), e);
         }
@@ -45,6 +46,7 @@ public class AirportConverter implements Converter {
         }
 
         if (value instanceof Airport) {
+            String temp = String.valueOf(((Airport) value).getId());
             return String.valueOf(((Airport) value).getId());
         } else {
             throw new ConverterException(new FacesMessage(value + " is not a valid Airport"));

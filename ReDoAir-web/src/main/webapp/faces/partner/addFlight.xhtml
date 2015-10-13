@@ -23,7 +23,7 @@
                     </div>
                     <div class="row" style="min-height: 20px;"></div>
                     <h:form>
-                        <div class="row">
+                        <div class="row" style="min-height: 50px">
                             <div class="col-md-1"><h:outputText value="Departure"
                                                                 style="text-decoration: underline; font-weight: bold; font-size: larger"/>
                             </div>
@@ -36,7 +36,7 @@
                                 <h:selectOneMenu id="depCountry" value="#{addFlightsController.departureCountry}"
                                                  style="width: 500px;">
                                     <f:selectItems value="#{addFlightsController.allCountries}"/>
-                                    <f:ajax render="depCity" execute="@this" event="change"/>
+                                    <p:ajax update="depCity" event="change"/>
                                 </h:selectOneMenu>
                             </div>
                         </div>
@@ -47,7 +47,7 @@
                                 <h:selectOneMenu id="depCity" value="#{addFlightsController.departureCity}"
                                                  style="width: 500px;">
                                     <f:selectItems value="#{addFlightsController.allDepartureCities}"/>
-                                    <f:ajax render="depAirport" execute="@this"/>
+                                    <p:ajax update="depAirport" event="change"/>
                                 </h:selectOneMenu>
                             </div>
                         </div>
@@ -58,7 +58,7 @@
                                 <h:selectOneMenu id="depAirport" value="#{addFlightsController.departureAirport}"
                                                  style="width: 500px;">
                                     <f:selectItems value="#{addFlightsController.allDepartureAirports}"
-                                                   var="airport" itemLabel="#{airportOut.name}"
+                                                   var="airportOut" itemLabel="#{airportOut.name}"
                                                    itemValue="#{airportOut}"/>
                                     <f:converter binding="#{airportConverter}"/>
                                 </h:selectOneMenu>
@@ -66,7 +66,7 @@
                         </div>
                         <div class="row" style="min-height: 20px;"></div>
 
-                        <div class="row">
+                        <div class="row" style="min-height: 50px">
                             <div class="col-md-1"><h:outputText value="Destination"
                                                                 style="text-decoration: underline; font-weight: bold; font-size: larger"/>
                             </div>
@@ -79,7 +79,7 @@
                                 <h:selectOneMenu id="destCountry" value="#{addFlightsController.destinationCountry}"
                                                  style="width: 500px;">
                                     <f:selectItems value="#{addFlightsController.allCountries}"/>
-                                    <f:ajax render="destCity" execute="@this"/>
+                                    <p:ajax update="destCity" event="change"/>
                                 </h:selectOneMenu>
                             </div>
                         </div>
@@ -90,7 +90,7 @@
                                 <h:selectOneMenu id="destCity" value="#{addFlightsController.destinationCity}"
                                                  style="width: 500px;">
                                     <f:selectItems value="#{addFlightsController.allDestinationCities}"/>
-                                    <f:ajax render="destAirport" execute="@this"/>
+                                    <p:ajax update="destAirport" event="change"/>
                                 </h:selectOneMenu>
                             </div>
                         </div>
@@ -105,6 +105,21 @@
                                                    itemValue="#{airportReturn}"/>
                                     <f:converter binding="#{airportConverter}"/>
                                 </h:selectOneMenu>
+                            </div>
+                        </div>
+
+                        <div class="row" style="min-height: 20px;"></div>
+
+                        <div class="row" style="min-height: 50px">
+                            <div class="col-md-1"><h:outputText value="Flight Details"
+                                                                style="text-decoration: underline; font-weight: bold; font-size: larger"/>
+                            </div>
+                            <div class="col-md-11"></div>
+                        </div>
+                        <div class="row" style="min-height: 50px">
+                            <div class="col-md-1"></div>
+                            <div class="col-md-1" style="text-align: right"><h:outputText value="Code:"/></div>
+                            <div class="col-md-10">
                             </div>
                         </div>
 
