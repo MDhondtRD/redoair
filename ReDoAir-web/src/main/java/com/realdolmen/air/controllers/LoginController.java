@@ -63,7 +63,7 @@ public class LoginController implements Serializable {
 
     public String logout() {
         FacesContext.getCurrentInstance().getExternalContext().invalidateSession();
-        return "../faces/global/loginInNavBar.xhtml";
+        return "loginInNavBar.xhtml";
     }
 
     public ExternalContext getContext() {
