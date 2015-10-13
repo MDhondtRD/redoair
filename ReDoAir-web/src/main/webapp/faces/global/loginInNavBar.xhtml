@@ -15,23 +15,34 @@
             <b:container>
                 <b:jumbotron>
                     <h1>Login</h1>
+
                     <p>Login to your account to book a trip!</p>
-                <h:form id ="form">
-                    <h:outputLabel value="Email:"/>
-                    <h:inputText id="email" value="#{loginController.user.email}" tabindex="1" required="true"
-                                 size="20" requiredMessage="Email is required" validator="#{emailValidator.validate}"/>
-                    <h:message for="email" style="color:red"/>
-                    <p></p>
-                    <h:outputLabel value="Password:"/>
-                    <h:inputSecret id="password" value="#{loginController.user.password}" tabindex="2"></h:inputSecret>
-                    <h:commandButton value="Login" action="#{loginController.login()}" tabindex="3" class="btn btn-primary btn-lg"/>
-                    <h:commandButton value="Logout" action="#{loginController.logout()}" tabindex="4" class="btn btn-primary btn-lg"/>
-                    <h:inputHidden id="validatePassword" validator="#{passwordOnLoginValidator.validate}"/>
-                    <h:message for="validatePassword" style="color:red"/>
-                    <p></p>
-                    <h:link class="btn btn-primary btn-lg" id="register" outcome="signup" rendered="false" tabindex="5">Register</h:link><br/>
-                    <h:inputHidden id="checkForEmail" value = "loginInNavbar"/>
-                </h:form>
+                    <h:form id="form">
+                        <h:outputLabel value="Email:" rendered="#{loginController.loggedOut}"/>
+                        <h:inputText id="email" value="#{loginController.user.email}" tabindex="1" required="true"
+                                     size="20" requiredMessage="Email is required"
+                                     validator="#{emailValidator.validate}" rendered="#{loginController.loggedOut}"/>
+                        <h:message for="email" style="color:red"/>
+
+                        <p></p>
+                        <h:outputLabel value="Password:" rendered="#{loginController.loggedOut}"/>
+                        <h:inputSecret id="password" value="#{loginController.user.password}"
+                                       rendered="#{loginController.loggedOut}" tabindex="2"></h:inputSecret>
+                        <h:commandButton class="btn btn-primary btn-lg" id="loginButton" value="Login"
+                                         action="#{loginController.login()}"
+                                         rendered="#{loginController.loggedOut}" tabindex="3"/>
+                        <h:commandButton class="btn btn-primary btn-lg" value="Logout"
+                                         action="#{loginController.logout()}"
+                                         rendered="#{loginController.loggedIn}"/>
+                        <h:inputHidden id="validatePassword" validator="#{passwordOnLoginValidator.validate}"
+                                       rendered="#{loginController.loggedOut}"/>
+                        <h:message for="validatePassword" style="color:red"/>
+
+                        <p></p>
+                        <b:navLink id="register" outcome="signup" class="btn btn-primary btn-lg"
+                                   rendered="false" tabindex="4" value="Register"/><br/>
+                        <h:inputHidden id="checkForEmail" value="loginInNavbar"/>
+                    </h:form>
                 </b:jumbotron>
             </b:container>
 
@@ -40,31 +51,31 @@
     </ui:define>
 </ui:composition>
 </html>
-<!--<h:body>-->
-    <!--<b:container>-->
+        <!--<h:body>-->
+        <!--<b:container>-->
         <!--<b:jumbotron>-->
-            <!--<h1>ReDo Travel</h1>-->
+        <!--<h1>ReDo Travel</h1>-->
 
-            <!--<p>This is a simple hero unit, a simple jumbotron-style component for calling extra attention to featured content or information.</p>-->
+        <!--<p>This is a simple hero unit, a simple jumbotron-style component for calling extra attention to featured content or information.</p>-->
 
-            <!--<p><a class="btn btn-primary btn-lg">Learn more</a></p>-->
+        <!--<p><a class="btn btn-primary btn-lg">Learn more</a></p>-->
         <!--</b:jumbotron>-->
         <!--<h:form id ="form">-->
-            <!--<h:outputLabel value="Email:"/>-->
-            <!--<h:inputText id="email" value="#{loginController.user.email}" tabindex="1" required="true"-->
-                         <!--size="20" requiredMessage="Email is required" validator="#{emailValidator.validate}"/>-->
-            <!--<h:message for="email" style="color:red"/>-->
-            <!--<p></p>-->
-            <!--<h:outputLabel value="Password:"/>-->
-            <!--<h:inputSecret id="password" value="#{loginController.user.password}"></h:inputSecret>-->
-            <!--<h:commandButton value="Login" action="#{loginController.login()}"/>-->
-            <!--<h:inputHidden id="validatePassword" validator="#{passwordOnLoginValidator.validate}"/>-->
-            <!--<h:message for="validatePassword" style="color:red"/>-->
-            <!--<p></p>-->
-            <!--<h:link id="register" outcome="/signup.faces" rendered="false">Register</h:link><br/>-->
-            <!--<h:inputHidden id="checkForEmail" value = "loginInNavbar"/>-->
+        <!--<h:outputLabel value="Email:"/>-->
+        <!--<h:inputText id="email" value="#{loginController.user.email}" tabindex="1" required="true"-->
+        <!--size="20" requiredMessage="Email is required" validator="#{emailValidator.validate}"/>-->
+        <!--<h:message for="email" style="color:red"/>-->
+        <!--<p></p>-->
+        <!--<h:outputLabel value="Password:"/>-->
+        <!--<h:inputSecret id="password" value="#{loginController.user.password}"></h:inputSecret>-->
+        <!--<h:commandButton value="Login" action="#{loginController.login()}"/>-->
+        <!--<h:inputHidden id="validatePassword" validator="#{passwordOnLoginValidator.validate}"/>-->
+        <!--<h:message for="validatePassword" style="color:red"/>-->
+        <!--<p></p>-->
+        <!--<h:link id="register" outcome="/signup.faces" rendered="false">Register</h:link><br/>-->
+        <!--<h:inputHidden id="checkForEmail" value = "loginInNavbar"/>-->
         <!--</h:form>-->
-    <!--</b:container>-->
-<!--</h:body>-->
-<!--</html>-->
+        <!--</b:container>-->
+        <!--</h:body>-->
+        <!--</html>-->
 
