@@ -19,67 +19,38 @@
                         <h:outputText value="Choose a Trip" style="font-size: 50px; font-weight: bold"/>
                     </div>
                 </div>
+                <h:form>
 
-                <p:dataTable var="trip" value="#{chooseTripController.trips}" widgetVar="tripsTable"
-                             emptyMessage="No trips found with given criteria" filteredValue="#{chooseTripController.filteredTrips}">
-                    <f:facet name="header">
-                        <p:outputPanel>
-                            <h:outputText value="Search all fields:" />
-                            <p:inputText id="globalFilter" onkeyup="PF('tripsTable').filter()" style="width:150px" placeholder="Enter keyword"/>
-                        </p:outputPanel>
-                    </f:facet>
+                    <p:dataTable var="trip" value="#{chooseTripController.trips}" widgetVar="tripsTable"
+                                 emptyMessage="No trips found with given criteria"
+                                 filteredValue="#{chooseTripController.filteredTrips}"
+                                 selectionMode="single" selection="#{chooseTripController.selectedTrip}"
+                                 rowKey="#{trip.id}">
+                        <f:facet name="header">
+                            <p:outputPanel>
+                                <h:outputText value="Search all fields:"/>
+                                <p:inputText id="globalFilter" onkeyup="PF('tripsTable').filter()" style="width:150px"
+                                             placeholder="Enter keyword"/>
+                            </p:outputPanel>
+                        </f:facet>
 
-                    <p:column filterBy="#{trip.id}" headerText="Id" filterMatchMode="contains">
-                        <h:outputText value="#{trip.id}" />
-                    </p:column>
-
-                    <!--<p:column filterBy="#{car.year}" headerText="Year" footerText="lte" filterMatchMode="lte">-->
-                        <!--<f:facet name="filter">-->
-                            <!--<p:spinner onchange="PF('carsTable').filter()" styleClass="year-spinner">-->
-                                <!--<f:converter converterId="javax.faces.Integer" />-->
-                            <!--</p:spinner>-->
-                        <!--</f:facet>-->
-                        <!--<h:outputText value="#{car.year}" />-->
-                    <!--</p:column>-->
-
-                    <!--<p:column filterBy="#{car.brand}" headerText="Brand" footerText="exact" filterMatchMode="exact">-->
-                        <!--<f:facet name="filter">-->
-                            <!--<p:selectOneMenu onchange="PF('carsTable').filter()" >-->
-                                <!--<f:selectItem itemLabel="Select One" itemValue="#{null}" noSelectionOption="true" />-->
-                                <!--<f:selectItems value="#{dtFilterView.brands}" />-->
-                            <!--</p:selectOneMenu>-->
-                        <!--</f:facet>-->
-                        <!--<h:outputText value="#{car.brand}" />-->
-                    <!--</p:column>-->
-
-                    <!--<p:column filterBy="#{car.color}" headerText="Color" footerText="in" filterMatchMode="in">-->
-                        <!--<f:facet name="filter">-->
-                            <!--<p:selectCheckboxMenu label="Colors" onchange="PF('carsTable').filter()" panelStyle="width:125px" scrollHeight="150">-->
-                                <!--<f:selectItems value="#{dtFilterView.colors}" />-->
-                            <!--</p:selectCheckboxMenu>-->
-                        <!--</f:facet>-->
-                        <!--<h:outputText value="#{car.color}" />-->
-                    <!--</p:column>-->
-
-                    <!--<p:column filterBy="#{car.sold}" headerText="Status" footerText="equals" filterMatchMode="equals">-->
-                        <!--<f:facet name="filter">-->
-                            <!--<p:selectOneButton onchange="PF('carsTable').filter()">-->
-                                <!--<f:converter converterId="javax.faces.Boolean" />-->
-                                <!--<f:selectItem itemLabel="All" itemValue="" />-->
-                                <!--<f:selectItem itemLabel="Sold" itemValue="true" />-->
-                                <!--<f:selectItem itemLabel="Sale" itemValue="false" />-->
-                            <!--</p:selectOneButton>-->
-                        <!--</f:facet>-->
-                        <!--<h:outputText value="#{car.sold ? 'Sold': 'Sale'}" />-->
-                    <!--</p:column>-->
-
-                    <!--<p:column filterBy="#{car.price}" headerText="Price" footerText="custom (min)" filterFunction="#{dtFilterView.filterByPrice}">-->
-                        <!--<h:outputText value="#{car.price}">-->
-                            <!--<f:convertNumber currencySymbol="$" type="currency"/>-->
-                        <!--</h:outputText>-->
-                    <!--</p:column>-->
-                </p:dataTable>
-
+                        <!--<p:column headerText="Id">-->
+                            <!--<h:outputText value="#{trip.id}"/>-->
+                        <!--</p:column>-->
+                        <p:column filterBy="#{trip.departureDate}" headerText="Departure date"
+                                  filterMatchMode="contains">
+                            <h:outputText value="#{trip.departureDate}"/>
+                        </p:column>
+                        <p:column filterBy="#{trip.returnDate}" headerText="Return date" filterMatchMode="contains">
+                            <h:outputText value="#{trip.returnDate}"/>
+                        </p:column>
+                        <p:column filterBy="#{trip.outFlight.destinationCity} (#{trip.outFlight.destinationCountry})"
+                                  headerText="Destination" filterMatchMode="contains">
+                            <h:outputText
+                                    value="#{trip.outFlight.destinationCity} (#{trip.outFlight.destinationCountry})"/>
+                        </p:column>
+                    </p:dataTable>
+                </h:form>
             </div>
         </ui:define>
     </ui:composition>

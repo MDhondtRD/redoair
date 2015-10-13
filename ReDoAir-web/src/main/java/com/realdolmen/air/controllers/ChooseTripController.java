@@ -5,6 +5,7 @@ import com.realdolmen.redoair.entities.Trip;
 
 import javax.annotation.PostConstruct;
 import javax.enterprise.context.RequestScoped;
+import javax.enterprise.context.SessionScoped;
 import javax.faces.bean.ManagedProperty;
 import javax.faces.context.FacesContext;
 import javax.inject.Inject;
@@ -14,7 +15,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 @Named
-@RequestScoped
+@SessionScoped
 public class ChooseTripController implements Serializable {
 
     /**
@@ -34,6 +35,8 @@ public class ChooseTripController implements Serializable {
 
     @ManagedProperty("#{param.country}")
     private String destination;
+
+    private Trip selectedTrip;
 
     @PostConstruct
     public void init() {
@@ -67,6 +70,14 @@ public class ChooseTripController implements Serializable {
 
     public void setFilteredTrips(List<Trip> filteredTrips) {
         this.filteredTrips = filteredTrips;
+    }
+
+    public Trip getSelectedTrip() {
+        return selectedTrip;
+    }
+
+    public void setSelectedTrip(Trip selectedTrip) {
+        this.selectedTrip = selectedTrip;
     }
 
     /**
