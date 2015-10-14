@@ -72,7 +72,7 @@ public class PopulateDatabase implements ServletContextListener {
             em.persist(new User("Jantje", "zJQZX8N2g73S9FmIPAiHTaqu8I/gl+5Te9UREeYsqYY=", "jan@flan.com"));
             em.persist(new UserRoles("de@rudy.com", "employee"));
             em.persist(new UserRoles("onze@jef.com", "employee"));
-            em.persist(new UserRoles("jan@flan.com", "partner"));
+            em.persist(new UserRoles("jan@flan.com", "customer"));
             em.flush();
             System.out.println("3 employees persisted");
 

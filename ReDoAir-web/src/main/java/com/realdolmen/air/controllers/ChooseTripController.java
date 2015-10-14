@@ -98,8 +98,13 @@ public class ChooseTripController implements Serializable {
     public String startBooking() {
         System.out.println("Start booking(conversation)");
         System.out.println("Navigating to tripOverView");
-        System.out.println(selectedTrip.getOutFlight().getId());
-        return "tripOverview";
+        if(selectedTrip != null) {
+            System.out.println(selectedTrip.getOutFlight().getId());
+            return "tripOverview";
+        }
+        else {
+            return "chooseTrip";
+        }
     }
 
 

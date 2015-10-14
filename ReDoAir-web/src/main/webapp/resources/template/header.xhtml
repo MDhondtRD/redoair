@@ -30,22 +30,33 @@
 
                     <ul class="nav navbar-nav navbar-right">
 
-                        <li>
-                            <a href="../../faces/global/signup.xhtml" style="padding: 15px 15px;">
-                                <button type="button" class="btn btn-default btn-sm" style="color: #0099DA;">
-                                    #{msg['signup_button']}
-                                </button>
-                            </a>
-                        </li>
-                        <li>
-                            <a href="../../faces/global/loginInNavBar.xhtml" style="padding: 15px 15px;">
-                                <button type="button" class="btn btn-default btn-sm" style="color: #0099DA;">
-                                    Log In
-                                </button>
-                            </a>
-                        </li>
-                    </ul>
+                        <ui:fragment rendered="#{loginController.checkIfLoggedInOrLoggedOut()}">
 
+                            <li>
+                                <a href="../../faces/global/signup.xhtml" style="padding: 15px 15px;">
+                                    <button type="button" class="btn btn-default btn-sm" style="color: #0099DA;">
+                                        #{msg['signup_button']}
+                                    </button>
+                                </a>
+                            </li>
+                            <li>
+                                <a href="../../faces/global/loginInNavBar.xhtml" style="padding: 15px 15px;">
+                                    <button type="button" class="btn btn-default btn-sm" style="color: #0099DA;">
+                                        Log In
+                                    </button>
+                                </a>
+                            </li>
+                        </ui:fragment>
+                        <ui:fragment rendered="#{!loginController.checkIfLoggedInOrLoggedOut()}">
+                            <li>
+                                <a href="../../faces/global/loginInNavBar.xhtml" style="padding: 15px 15px;">
+                                    <button type="button" class="btn btn-default btn-sm" style="color: #0099DA;">
+                                        Log Out
+                                    </button>
+                                </a>
+                            </li>
+                        </ui:fragment>
+                    </ul>
                 </div>
                 <!-- /.nav-collapse -->
             </div>

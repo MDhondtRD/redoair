@@ -32,15 +32,12 @@ public class LoginController implements Serializable {
     private boolean loggedIn = false;
     private boolean loggedOut = true;
 
-    @PostConstruct
-    public void checkIfLoggedInOrLoggedOut() {
+    public boolean checkIfLoggedInOrLoggedOut() {
         if(!principal.getName().equals("anonymous")) {
-            loggedIn = true;
-            loggedOut = false;
+            return loggedOut = false;
         }
         else {
-            loggedIn = false;
-            loggedOut = true;
+            return loggedOut = true;
         }
     }
 
@@ -63,7 +60,7 @@ public class LoginController implements Serializable {
 
     public String logout() {
         FacesContext.getCurrentInstance().getExternalContext().invalidateSession();
-        return "lloginInNavBar.xhtml";
+        return "home.xhtml";
     }
 
     public ExternalContext getContext() {
