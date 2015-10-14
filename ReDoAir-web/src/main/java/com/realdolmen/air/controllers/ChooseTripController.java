@@ -53,7 +53,6 @@ public class ChooseTripController implements Serializable {
         destination = chooseDestinationController.getCountry();
     }
 
-
     /**
      * GETTERS & SETTERS
      */
@@ -95,6 +94,14 @@ public class ChooseTripController implements Serializable {
         System.out.println(selectedTrip.getOutFlight().getDestinationAirport().getCity() +" COUNTRY: " + selectedTrip.getOutFlight().getDestinationAirport().getCountry());
         //return "tripOverview";
     }
+
+    public String startBooking() {
+        System.out.println("Start booking(conversation)");
+        System.out.println("Navigating to tripOverView");
+        System.out.println(selectedTrip.getOutFlight().getId());
+        return "tripOverview";
+    }
+
 
     /**
      * METHODS

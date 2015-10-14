@@ -1,14 +1,17 @@
 package com.realdolmen.redoair.ejb;
 
 import com.realdolmen.redoair.entities.Booking;
+import com.realdolmen.redoair.entities.Flight;
 import com.realdolmen.redoair.entities.Trip;
 import com.realdolmen.redoair.entities.User;
 
 import javax.ejb.LocalBean;
 import javax.ejb.Stateless;
+import javax.inject.Inject;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 import java.io.Serializable;
+import java.util.ArrayList;
 import java.util.List;
 
 @Stateless
@@ -17,6 +20,9 @@ public class BookingsRepository implements BookingsRepositoryInterface, Serializ
 
     @PersistenceContext
     private EntityManager em;
+
+    @Inject
+    private FlightRepository flightRepository;
 
     @Override
     public List<Booking> getAllBookings() {
@@ -35,6 +41,20 @@ public class BookingsRepository implements BookingsRepositoryInterface, Serializ
 
     @Override
     public void createBooking(Booking booking) {
+        List<Flight> flights = new ArrayList<>();
+        Flight outFlight;
+        Flight returnFlight;
+        for(Trip trip : booking.getTrips()) {
+            outFlight = flightRepository.getFlightById(trip.getOutFlight().getId());
+            outFlight.setAvailableSeats(outFlight.getAvailableSeats()- booking.getSeatsBooked());
+            returnFlight = flightRepository.getFlightById(trip.getReturnFlight().getId());
+            returnFlight.setAvailableSeats(returnFlight.getAvailableSeats()- booking.getSeatsBooked());
+            flights.add(outFlight);
+            flights.add(returnFlight);
+        }
+        for(Flight flight: flights) {
+            em.merge(flight);
+        }
         em.persist(booking);
     }
 

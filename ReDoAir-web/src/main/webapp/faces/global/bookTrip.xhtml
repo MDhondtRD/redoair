@@ -19,7 +19,7 @@
                     <h:inputText id="creditCardNumber" value="#{bookingController.creditCardNumber}"></h:inputText>
                     <h:message for="creditCardNumber" style="color:red"/>
                         <h:commandButton value="Cancel" action="#{bookingController.cancel()}"></h:commandButton>
-                        <h:commandButton value="Pay" action="#{bookingController.validateCreditCard()}"></h:commandButton>
+                        <h:commandButton value="Pay" action="#{chooseTripConversationController.endConversation()}"></h:commandButton>
                     </h:form>
                 </b:jumbotron>
             </b:container>

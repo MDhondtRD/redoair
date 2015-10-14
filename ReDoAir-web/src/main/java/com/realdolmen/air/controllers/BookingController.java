@@ -74,6 +74,7 @@ public class BookingController implements Serializable {
     }
 
     public String pay() {
+        System.out.println("Navigating to bookTrip view");
         return "bookTrip";
     }
 
@@ -82,6 +83,7 @@ public class BookingController implements Serializable {
     }
 
     public String endBooking()  {
+        System.out.println("End booking(conversationg)");
         User user = userRepository.getUserByEmail("jan@flan.com");
         Trip trip = chooseTripController.getSelectedTrip();
         List<Trip> trips = new ArrayList<>();

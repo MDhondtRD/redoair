@@ -17,16 +17,22 @@ public class ChooseTripConversationController {
     @Inject
     private ChooseDestinationController chooseDestinationController;
     @Inject
+    private ChooseTripController chooseTripController;
+    @Inject
     private BookingController bookingController;
 
     public String startConversation() {
         conversation.begin();
-        return chooseDestinationController.startBooking();//Start van de flow
+        //return chooseDestinationController.startBooking();//Start van de flow
+        return chooseTripController.startBooking();
     }
 
     public String endConversation() {
         conversation.end();
-        return bookingController.endBooking();//eind van de flow(booking succeeded)
+        return bookingController.validateCreditCard();//eind van de flow(booking succeeded)
     }
 
+    public void endConversationOnRedirect() {
+        conversation.end();
+    }
 }

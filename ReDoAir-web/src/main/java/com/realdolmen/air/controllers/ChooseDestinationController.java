@@ -33,7 +33,7 @@ public class ChooseDestinationController implements Serializable {
 
     @Inject
     private AirportRepository airportRepository;
-    
+
     public String getCountry() {
         return country;
     }
@@ -75,14 +75,16 @@ public class ChooseDestinationController implements Serializable {
         this.destination = destination;
     }
 
-    public String startBooking() {
-        System.out.println("Start booking");
+//    public String startBooking() {
+//        System.out.println("Start booking");
+//        retrieveTripsForCountry();
+//        return "chooseTrip";
+//    }
+
+    public String goToChooseTrip() {
+        System.out.println("Navigating to chooseTripView");
         retrieveTripsForCountry();
         return "chooseTrip";
-    }
-
-    public String endBooking() {
-        return "addFlight";
     }
 
     public void retrieveTripsForCountry() {

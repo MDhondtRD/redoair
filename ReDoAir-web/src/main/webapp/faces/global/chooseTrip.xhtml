@@ -52,7 +52,7 @@
                                 value="#{trip.outFlight.destinationCity} (#{trip.outFlight.destinationCountry})"/>
                     </p:column>
                 </p:dataTable>
-                <h:commandButton action="#{bookingController.doBooking()}" value="Continue"/>
+                <h:commandButton action="#{chooseTripConversationController.startConversation()}" value="Continue"/>
             </h:form>
         </div>
         <script type="text/javascript" src="../../resources/js/tableScript.js"></script>
