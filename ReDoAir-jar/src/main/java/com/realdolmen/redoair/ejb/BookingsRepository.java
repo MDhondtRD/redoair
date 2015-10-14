@@ -8,11 +8,12 @@ import javax.ejb.LocalBean;
 import javax.ejb.Stateless;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
+import java.io.Serializable;
 import java.util.List;
 
 @Stateless
 @LocalBean
-public class BookingsRepository implements BookingsRepositoryInterface {
+public class BookingsRepository implements BookingsRepositoryInterface, Serializable {
 
     @PersistenceContext
     private EntityManager em;

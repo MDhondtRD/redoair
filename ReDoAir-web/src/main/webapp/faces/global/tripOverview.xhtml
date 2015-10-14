@@ -1,0 +1,58 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+        "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:b="http://bootsfaces.net/ui"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:f="http://xmlns.jcp.org/jsf/core">
+<ui:composition template="/resources/template/template.xhtml">
+    <ui:define name="content">
+        <div class="row">
+            <div class="col-md-2"/>
+            <b:container>
+                <b:jumbotron>
+                    <h2>Trip Info</h2>
+                    <h:outputLabel id="travelAgencyLabel" value="Travel agency:"/>
+                    <h:outputLabel id="travelAgency" value="#{chooseTripController.selectedTrip.travelAgency}"/>
+                    <h:outputLabel id="pricePerDayLabel" value="Price per Day:"/>
+                    <h:outputLabel id="pricePerDay" value="#{chooseTripController.selectedTrip.tripDayPrice}"/>
+                    <h:outputLabel id="totalPriceLabel" value="Total price:"/>
+                    <h:outputLabel id="totalPrice" value="#{chooseTripController.selectedTrip.tripPrice}"/>
+
+                    <h3>Out Flight</h3>
+                    <h:outputLabel id="departureDateLabel" value="Departure Date:"/>
+                    <h:outputLabel id="departureDate" value="#{chooseTripController.selectedTrip.outFlight.departure}"/>
+                    <h:outputLabel id="destinationCountryLabel" value="Destination country:"/>
+                    <h:outputLabel id="destinationCountry"
+                                   value="#{chooseTripController.selectedTrip.outFlight.destinationCountry}"/>
+                    <h:outputLabel id="destinationCityLabel" value="Destination city:"/>
+                    <h:outputLabel id="destinationCity"
+                                   value="#{chooseTripController.selectedTrip.outFlight.destinationCity}"/>
+                    <h:outputLabel id="destinationAirportLabel" value="Destination airport:"/>
+                    <h:outputLabel id="destinationAirport"
+                                   value="#{chooseTripController.selectedTrip.outFlight.destinationAirport.name}"/>
+
+                    <h3>Return Flight</h3>
+                    <h:outputLabel id="returnDateLabel" value="Return Date:"/>
+                    <h:outputLabel id="returnDate" value="#{chooseTripController.selectedTrip.returnFlight.departure}"/>
+                    <h:outputLabel id="returnDestinationCountryLabel" value="Destination country:"/>
+                    <h:outputLabel id="returnDestinationCountry"
+                                   value="#{chooseTripController.selectedTrip.returnFlight.destinationCountry}"/>
+                    <h:outputLabel id="returnDestinationCityLabel" value="Destination city:"/>
+                    <h:outputLabel id="returnDestinationCity"
+                                   value="#{chooseTripController.selectedTrip.returnFlight.destinationCity}"/>
+                    <h:outputLabel id="returnDestinationAirportLabel" value="Destination airport:"/>
+                    <h:outputLabel id="returnDestinationAirport"
+                                   value="#{chooseTripController.selectedTrip.returnFlight.destinationAirport.name}"/>
+                <h:form>
+                    <h:commandButton value="Cancel" action="#{bookingController.cancel()}"></h:commandButton>
+                    <h:commandButton value="Pay" action="#{bookingController.pay()}"></h:commandButton>
+                </h:form>
+                </b:jumbotron>
+            </b:container>
+            <div class="col-md-2"/>
+        </div>
+    </ui:define>
+</ui:composition>
+</html>

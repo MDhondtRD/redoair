@@ -216,8 +216,6 @@ map.on('click', function (evt) {
     }
     else if(feature.getId() !== "MAPMARKER" && feature.getId() !== undefined) {
         retrieveDestinationsForClickedCountry(feature.get('name'));
-        createMapMarker(50, 50, "BORAT");
-        addMapMarkersToMap();
         $(element).popover('destroy');
     } else {
         $(element).popover('destroy');

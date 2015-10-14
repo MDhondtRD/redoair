@@ -74,7 +74,7 @@ public class PopulateDatabase implements ServletContextListener {
             em.persist(new UserRoles("onze@jef.com", "employee"));
             em.persist(new UserRoles("jan@flan.com", "partner"));
             em.flush();
-            System.out.println("2 employees persisted");
+            System.out.println("3 employees persisted");
 
             System.out.println("Creating and persisting customers");
             em.persist(new User("MaartenDhondt", "Maarten", "Dhondt", "1EwbrW7te4JQjPjk/JbuzD5H3T5g6CRNrjz7qtnEB1Y=", new Address("Main street 1", "", "Brussels", "1000", "Belgium"), UserType.CUSTOMER, "maarten@dhondt.com", null));
@@ -100,7 +100,7 @@ public class PopulateDatabase implements ServletContextListener {
             System.out.println("750 flights persisted");
 
             System.out.println("Creating and persisting trips");
-            for (int i = 1; i <= 25; i++) {
+            for (int i = 1; i <= 10; i++) {
                 List<Flight> outFlights = new ArrayList<Flight>();
                 List<Flight> returnFlights = new ArrayList<Flight>();
                 Flight outFlight = null;

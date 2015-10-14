@@ -27,7 +27,6 @@ public class ChooseTripConversationController {
     public String endConversation() {
         conversation.end();
         return bookingController.endBooking();//eind van de flow(booking succeeded)
-
     }
 
 }

@@ -33,7 +33,7 @@ public class ChooseDestinationController implements Serializable {
 
     @Inject
     private AirportRepository airportRepository;
-
+    
     public String getCountry() {
         return country;
     }

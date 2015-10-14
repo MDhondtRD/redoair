@@ -2,6 +2,9 @@ package com.realdolmen.air.controllers;
 
 import com.realdolmen.redoair.ejb.TripRepository;
 import com.realdolmen.redoair.entities.Trip;
+import org.primefaces.event.SelectEvent;
+import org.primefaces.event.UnselectEvent;
+import org.primefaces.event.data.FilterEvent;
 
 import javax.annotation.PostConstruct;
 import javax.enterprise.context.ConversationScoped;
@@ -13,7 +16,9 @@ import javax.inject.Inject;
 import javax.inject.Named;
 import java.io.Serializable;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 @Named
 @ConversationScoped
@@ -26,6 +31,10 @@ public class ChooseTripController implements Serializable {
     @Inject
     private TripRepository tripRepository;
 
+    @Inject
+    private ChooseDestinationController  chooseDestinationController;
+
+
     /**
      * ATTRIBUTES
      */
@@ -34,7 +43,6 @@ public class ChooseTripController implements Serializable {
 
     private List<Trip> filteredTrips;
 
-    @ManagedProperty("#{param.country}")
     private String destination;
 
     private Trip selectedTrip;
@@ -42,6 +50,7 @@ public class ChooseTripController implements Serializable {
     @PostConstruct
     public void init() {
         trips = tripRepository.getAllFutureTrips();
+        destination = chooseDestinationController.getCountry();
     }
 
 
@@ -81,6 +90,12 @@ public class ChooseTripController implements Serializable {
         this.selectedTrip = selectedTrip;
     }
 
+    public void onRowSelect(SelectEvent event) {
+        selectedTrip = (Trip) event.getObject();
+        System.out.println(selectedTrip.getOutFlight().getDestinationAirport().getCity() +" COUNTRY: " + selectedTrip.getOutFlight().getDestinationAirport().getCountry());
+        //return "tripOverview";
+    }
+
     /**
      * METHODS
      */
@@ -89,4 +104,5 @@ public class ChooseTripController implements Serializable {
         tripRepository.getAllFutureTripsByCountry(destination);
         //tripRepository.getAllFutureTripsByDestination(destination);//Voor wanneer de mappoints op de map staan
     }
+
 }

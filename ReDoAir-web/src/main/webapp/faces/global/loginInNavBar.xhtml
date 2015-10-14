@@ -22,7 +22,6 @@
                                      size="20" requiredMessage="Email is required"
                                      validator="#{emailValidator.validate}" rendered="#{loginController.loggedOut}"/>
                         <h:message for="email" style="color:red"/>
-
                         <p></p>
                         <h:outputLabel value="Password:" rendered="#{loginController.loggedOut}"/>
                         <h:inputSecret id="password" value="#{loginController.user.password}"
@@ -36,7 +35,6 @@
                         <h:inputHidden id="validatePassword" validator="#{passwordOnLoginValidator.validate}"
                                        rendered="#{loginController.loggedOut}"/>
                         <h:message for="validatePassword" style="color:red"/>
-
                         <p></p>
                         <b:navLink id="register" outcome="signup" class="btn btn-primary btn-lg"
                                    rendered="false" tabindex="4" value="Register"/><br/>

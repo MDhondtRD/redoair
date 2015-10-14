@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+        "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:b="http://bootsfaces.net/ui"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:f="http://xmlns.jcp.org/jsf/core">
+<ui:composition template="/resources/template/template.xhtml">
+    <ui:define name="content">
+        <div class="row">
+            <div class="col-md-2"/>
+            <b:container>
+                <b:jumbotron>
+                    <h:form>
+                    <h:outputLabel id="numberOfPeopleLabel" value="Number of persons:"/>
+                    <h:inputText id="numberOfPeople" value="#{bookingController.numberOfPersons}"></h:inputText>
+                    <h:outputLabel id="creditCarNumberLabel" value="CreditCard Number:"/>
+                    <h:inputText id="creditCardNumber" value="#{bookingController.creditCardNumber}"></h:inputText>
+                    <h:message for="creditCardNumber" style="color:red"/>
+                        <h:commandButton value="Cancel" action="#{bookingController.cancel()}"></h:commandButton>
+                        <h:commandButton value="Pay" action="#{bookingController.validateCreditCard()}"></h:commandButton>
+                    </h:form>
+                </b:jumbotron>
+            </b:container>
+            <div class="col-md-2"/>
+        </div>
+    </ui:define>
+</ui:composition>
+</html>
