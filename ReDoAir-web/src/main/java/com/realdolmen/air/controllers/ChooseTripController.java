@@ -4,6 +4,7 @@ import com.realdolmen.redoair.ejb.TripRepository;
 import com.realdolmen.redoair.entities.Trip;
 
 import javax.annotation.PostConstruct;
+import javax.enterprise.context.ConversationScoped;
 import javax.enterprise.context.RequestScoped;
 import javax.enterprise.context.SessionScoped;
 import javax.faces.bean.ManagedProperty;
@@ -15,7 +16,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 @Named
-@SessionScoped
+@ConversationScoped
 public class ChooseTripController implements Serializable {
 
     /**
@@ -40,7 +41,7 @@ public class ChooseTripController implements Serializable {
 
     @PostConstruct
     public void init() {
-        trips = tripRepository.getAllTrips();
+        trips = tripRepository.getAllFutureTrips();
     }
 
 

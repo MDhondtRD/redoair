@@ -19,9 +19,7 @@
         </div>
         <h:form id="hiddenForm" style="display: none;">
             <h:inputHidden id="country" value="#{chooseDestinationController.country}"/>
-            <h:commandButton id="invisibleClickTarget" action="chooseTrip">
-                <f:ajax execute="@form" listener="#{chooseTripConversationController.startConversation()}"/>
-                <!--<f:param value = "#{chooseDestinationController.country}" name="country"/>-->
+            <h:commandButton id="invisibleClickTarget" action = "#{chooseTripConversationController.startConversation()}">
             </h:commandButton>
         </h:form>
     </div>

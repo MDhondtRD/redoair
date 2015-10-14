@@ -7,16 +7,19 @@ import com.realdolmen.redoair.entities.Airport;
 import com.realdolmen.redoair.entities.Flight;
 import com.realdolmen.redoair.entities.User;
 
+import javax.enterprise.context.RequestScoped;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.SessionScoped;
+import javax.faces.view.ViewScoped;
 import javax.inject.Inject;
+import javax.inject.Named;
 import java.io.Serializable;
 import java.security.Principal;
 import java.time.ZoneId;
 import java.util.*;
 
-@ManagedBean
-@SessionScoped
+@Named
+@ViewScoped
 public class AddFlightsController implements Serializable {
 
     /**

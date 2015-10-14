@@ -69,8 +69,10 @@ public class PopulateDatabase implements ServletContextListener {
             System.out.println("Creating and persisting employees");
             em.persist(new User("De Rudy", "De", "Rudy", "1EwbrW7te4JQjPjk/JbuzD5H3T5g6CRNrjz7qtnEB1Y=", new Address("Main street 1", "", "Brussels", "1000", "Belgium"), UserType.EMPLOYEE, "de@rudy.com", null));
             em.persist(new User("Onze Jef", "Onze", "Jef", "1EwbrW7te4JQjPjk/JbuzD5H3T5g6CRNrjz7qtnEB1Y=", new Address("Main street 1", "", "Brussels", "1000", "Belgium"), UserType.EMPLOYEE, "onze@jef.com", null));
+            em.persist(new User("Jantje", "zJQZX8N2g73S9FmIPAiHTaqu8I/gl+5Te9UREeYsqYY=", "jan@flan.com"));
             em.persist(new UserRoles("de@rudy.com", "employee"));
             em.persist(new UserRoles("onze@jef.com", "employee"));
+            em.persist(new UserRoles("jan@flan.com", "partner"));
             em.flush();
             System.out.println("2 employees persisted");
 

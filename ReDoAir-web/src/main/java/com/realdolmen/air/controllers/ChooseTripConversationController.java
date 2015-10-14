@@ -16,6 +16,8 @@ public class ChooseTripConversationController {
 
     @Inject
     private ChooseDestinationController chooseDestinationController;
+    @Inject
+    private BookingController bookingController;
 
     public String startConversation() {
         conversation.begin();
@@ -24,7 +26,7 @@ public class ChooseTripConversationController {
 
     public String endConversation() {
         conversation.end();
-        return chooseDestinationController.endBooking();//eind van de flow(booking succeeded)
+        return bookingController.endBooking();//eind van de flow(booking succeeded)
 
     }
 
