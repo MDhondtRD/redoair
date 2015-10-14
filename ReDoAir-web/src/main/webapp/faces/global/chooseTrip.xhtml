@@ -12,7 +12,6 @@
 </h:head>
 <ui:composition template="/resources/template/template.xhtml">
     <ui:define name="content">
-        <body onload="filter()">
         <div class="jumbotron">
             <div class="container">
                 <div class="row">
@@ -20,6 +19,7 @@
                 </div>
             </div>
             <h:form>
+                <p:remoteCommand name="onload" oncomplete="PF('tripsTable').filter()" autoRun="true"/>
                 <p:dataTable var="trip" value="#{chooseTripController.trips}" widgetVar="tripsTable"
                              emptyMessage="No trips found with given criteria"
                              filteredValue="#{chooseTripController.filteredTrips}"
@@ -56,7 +56,6 @@
             </h:form>
         </div>
         <script type="text/javascript" src="../../resources/js/tableScript.js"></script>
-        </body>
     </ui:define>
 </ui:composition>
 </html>
