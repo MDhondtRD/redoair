@@ -100,7 +100,7 @@ public class ChooseTripController implements Serializable {
         System.out.println("Navigating to tripOverView");
         if(selectedTrip != null) {
             System.out.println(selectedTrip.getOutFlight().getId());
-            return "tripOverview";
+            return "/faces/customer/tripOverview";
         }
         else {
             return "chooseTrip";

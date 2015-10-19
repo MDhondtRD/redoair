@@ -22,7 +22,9 @@ public class ChooseTripConversationController {
     private BookingController bookingController;
 
     public String startConversation() {
-        conversation.begin();
+        if(chooseTripController.getSelectedTrip() != null) {
+            conversation.begin();
+        }
         //return chooseDestinationController.startBooking();//Start van de flow
         return chooseTripController.startBooking();
     }
@@ -30,9 +32,5 @@ public class ChooseTripConversationController {
     public String endConversation() {
         conversation.end();
         return bookingController.validateCreditCard();//eind van de flow(booking succeeded)
-    }
-
-    public void endConversationOnRedirect() {
-        conversation.end();
     }
 }
